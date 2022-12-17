@@ -6,3 +6,4 @@
 - A small file to enable in 1 second the Dark Mode in Windows (works even if you can't access the settings) [Download](https://github.com/EDM115/useful-stuff/raw/main/themes/darkmode.reg)
 - The connexions points GIF of Microsoft 365 [Download](https://github.com/EDM115/useful-stuff/raw/main/images/Microsoft-loading.gif)
 - Useless script that list all files on your hard disk with a matrik-like theme [Download](https://github.com/EDM115/useful-stuff/raw/main/scripts/matrix.bat)
+- My config file for [WinAero Tweaker](https://winaero.com/winaero-tweaker/), just if anyone wants [Download](https://github.com/EDM115/useful-stuff/raw/main/scripts/Winaero%20Tweaker_2022_12_16.ini)
