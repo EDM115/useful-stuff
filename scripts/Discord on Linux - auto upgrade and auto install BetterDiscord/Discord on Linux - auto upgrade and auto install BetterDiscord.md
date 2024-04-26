@@ -7,17 +7,21 @@ So here's 2 simple scripts to fix this :
 
 - Versatile script to launch discord
 - Auto launches the upgrade script if needed (have to be in the same folder)
+- Detaches the Discord instance from the terminal once done
+
+Note : requires to use `sudo` when an upgrade is needed. In such case, needs the user param to be passed
 
 **Usage :**
 
 ```bash
-./launch-discord.sh -b BUILD -bd BOOL
+./launch-discord.sh -b BUILD -bd BOOL -u USER
 ```
 
 - `-b` or `--build` : the build you have installed. can be `stable`, `ptb` or `canary`
-- `-bd` or `--betterdiscord` : precise if you have BetterDiscord installed. can be `true` or `false`
+- `-bd` or `--betterdiscord` : precise if you have BetterDiscord installed. can be `true` or anything else for `false`. can be ommited
+- `-u` or `--user` : specify the user that will be used to run Discord, which can't be ran as root, so simply running the script as sudo will break things, this is why this param is needed
 
-Example : `./launch-discord.sh -b ptb -bd true`
+Example : `./launch-discord.sh -b ptb -bd true -u $(whoami)`
 
 ### `upgrade-discord.sh`
 
@@ -28,15 +32,16 @@ Example : `./launch-discord.sh -b ptb -bd true`
 **Usage :**
 
 ```bash
-sudo ./upgrade-discord.sh -b BUILD -v VER -bd BOOL
+sudo ./upgrade-discord.sh -b BUILD -v VER -bd BOOL -u USER
 ```
 
 - `sudo` : Because further commands requires sudo
 - `-b` or `--build` : the build you have installed. can be `stable`, `ptb` or `canary`
 - `-v` or `--version` : the version to download. if this script is run through `launch-discord.sh`, it will be the one that discord requests. format : `x.x.xx(x)`, when I'm writing this the versions are 0.0.50 for stable, 0.0.80 for ptb and 0.0.357 for canary. if not provided, downloads the latest version available
-- `-bd` or `--betterdiscord` : precise if you have BetterDiscord installed. can be `true` or `false`
+- `-bd` or `--betterdiscord` : precise if you have BetterDiscord installed. can be `true` or anything else for `false`. can be ommited
+- `-u` or `--user` : specify the user that will be used to run Discord, which can't be ran as root, so simply running the script as sudo will break things, this is why this param is needed
 
-Example : `sudo ./upgrade-discord.sh -b ptb -v 0.0.80 -bd true`
+Example : `sudo ./upgrade-discord.sh -b ptb -v 0.0.80 -bd true -u $(whoami)`
 
 ### Prerequisites
 

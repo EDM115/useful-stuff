@@ -15,6 +15,7 @@ while [[ "$#" -gt 0 ]]; do
         -v|--version) version="$2"; shift ;;
         -b|--build) build="$2"; shift ;;
         -bd|--betterdiscord) betterdiscord="$2"; shift ;;
+        -u|--user) user="$2"; shift ;;
         *) echo "Unknown parameter passed : $1"; exit 1 ;;
     esac
     shift
@@ -34,6 +35,13 @@ case $build in
     "canary") appname="discord-canary"; base_url="https://dl-canary.discordapp.net/apps/linux/" ;;
     *) echo "Invalid build. Use 'stable', 'ptb', or 'canary'"; exit 1 ;;
 esac
+
+# Ensure a user is specified as the script is run as root, see https://issues.chromium.org/issues/40480798
+if [[ -z "$user" ]]; then
+    echo "No user specified. Please specify a user with -u/--user."
+    exit 1
+fi
+launchcommand="sudo -u $user bash -c \"'$appname'\""
 
 # Handle versioning
 if [[ -z "$version" ]]; then
@@ -60,14 +68,14 @@ rm "$dest"
 # If BetterDiscord is enabled, upgrade it
 if [[ "$betterdiscord" == "true" ]]; then
     echo "Reappliying BetterDiscord..."
-    $appname > /tmp/discord_upgrade_output.log 2>&1 &
+    eval "$launchcommand" > /tmp/discord_upgrade_output.log 2>&1 &
     pid=$!
 
     # Monitor until "splashScreen.pageReady" appears
     tail -f /tmp/discord_upgrade_output.log | while read line; do
         if [[ "$line" == *"splashScreen.pageReady"* ]]; then
             sleep 5
-            kill $pid
+            sudo kill $pid
             break
         fi
     done
@@ -79,7 +87,13 @@ if [[ "$betterdiscord" == "true" ]]; then
     sudo betterdiscordctl self-upgrade
 
     # Install BetterDiscord
-    betterdiscordctl -f ${build/stable/default} install
+    if [[ "$build" == "stable" ]]; then
+        bdbuild="default"
+    else
+        bdbuild="$build"
+    fi
+    bdcommand="sudo -u $user bash -c \"betterdiscordctl -f '$bdbuild' install\""
+    eval "$bdcommand"
     echo "Betterdiscord updated"
 fi
 

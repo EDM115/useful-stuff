@@ -7,6 +7,7 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -b|--build) build="$2"; shift ;;
         -bd|--betterdiscord) betterdiscord="$2"; shift ;;
+        -u|--user) user="$2"; shift ;;
         *) echo "Unknown parameter passed : $1"; exit 1 ;;
     esac
     shift
@@ -27,8 +28,22 @@ case $build in
     *) echo "Invalid build. Use 'stable', 'ptb', or 'canary'"; exit 1 ;;
 esac
 
+# Determine how to launch the app based on whether it's run as root
+if [[ $EUID -eq 0 ]]; then
+    # Check if user is set when script is run as root
+    if [[ -z "$user" ]]; then
+        echo "No user specified. Use -u/--user to specify a user."
+        exit 1
+    fi
+    launchcommand="sudo -u $user bash -c \"'$appname'\""
+else
+    # Use the current user to run the app
+    user="$(whoami)"
+    launchcommand="$appname"
+fi
+
 # Launch discord and capture stdout
-$appname | while read line
+eval "$launchcommand" | while read line
 do
     echo "$line"
 
@@ -39,12 +54,13 @@ do
 
         # Kill discord
         pkill -f $appname
+        sleep 2
 
         # Call updater script with the new version and restart discord
-        sudo ./upgrade-discord.sh -v $version -b $build -bd $betterdiscord | while read update_line
+        sudo ./upgrade-discord.sh -v $version -b $build -bd $betterdiscord -u $user | while read update_line
         do
             if [[ "$update_line" == *"Done !"* ]]; then
-                $appname &
+                eval "$launchcommand" &
                 break 2
             fi
         done
@@ -54,7 +70,8 @@ do
 
     # Check for the splashScreen.pageReady message (no update)
     if [[ "$line" == *"splashScreen.pageReady"* ]]; then
-        sleep 5
+        pkill -f $appname
+        nohup bash -c "$launchcommand" >/dev/null 2>&1 &
         break
     fi
 done
