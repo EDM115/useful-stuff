@@ -30,9 +30,9 @@ fi
 
 # Define variables and URLs based on build
 case $build in
-    "stable") appname="discord"; base_url="https://dl.discordapp.net/apps/linux/" ;;
-    "ptb") appname="discord-ptb"; base_url="https://dl-ptb.discordapp.net/apps/linux/" ;;
-    "canary") appname="discord-canary"; base_url="https://dl-canary.discordapp.net/apps/linux/" ;;
+    "stable") appname="discord"; pname="Discord"; base_url="https://dl.discordapp.net/apps/linux/" ;;
+    "ptb") appname="discord-ptb"; pname="DiscordPTB"; base_url="https://dl-ptb.discordapp.net/apps/linux/" ;;
+    "canary") appname="discord-canary"; pname="DiscordCanary"; base_url="https://dl-canary.discordapp.net/apps/linux/" ;;
     *) echo "Invalid build. Use 'stable', 'ptb', or 'canary'"; exit 1 ;;
 esac
 
@@ -69,13 +69,12 @@ rm "$dest"
 if [[ "$betterdiscord" == "true" ]]; then
     echo "Reappliying BetterDiscord..."
     eval "$launchcommand" > /tmp/discord_upgrade_output.log 2>&1 &
-    pid=$!
 
     # Monitor until "splashScreen.pageReady" appears
     tail -f /tmp/discord_upgrade_output.log | while read line; do
         if [[ "$line" == *"splashScreen.pageReady"* ]]; then
             sleep 5
-            sudo kill $pid
+            pkill -if $pname
             break
         fi
     done
@@ -88,11 +87,11 @@ if [[ "$betterdiscord" == "true" ]]; then
 
     # Install BetterDiscord
     if [[ "$build" == "stable" ]]; then
-        bdbuild="default"
+        bdparams=""
     else
-        bdbuild="$build"
+        bdparams="-f '$build'"
     fi
-    bdcommand="sudo -u $user bash -c \"betterdiscordctl -f '$bdbuild' install\""
+    bdcommand="sudo -u $user bash -c \"betterdiscordctl $bdparams install\""
     eval "$bdcommand"
     echo "Betterdiscord updated"
 fi

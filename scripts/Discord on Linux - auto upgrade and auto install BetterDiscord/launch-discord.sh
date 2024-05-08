@@ -22,9 +22,9 @@ fi
 
 # Define variables based on build
 case $build in
-    "stable") appname="discord" ;;
-    "ptb") appname="discord-ptb" ;;
-    "canary") appname="discord-canary" ;;
+    "stable") appname="discord"; pname="Discord" ;;
+    "ptb") appname="discord-ptb"; pname="DiscordPTB" ;;
+    "canary") appname="discord-canary"; pname="DiscordCanary" ;;
     *) echo "Invalid build. Use 'stable', 'ptb', or 'canary'"; exit 1 ;;
 esac
 
@@ -53,7 +53,7 @@ do
         version=$(echo "$line" | grep -oP 'update-manually \K[0-9.]+')
 
         # Kill discord
-        pkill -f $appname
+        pkill -if $pname
         sleep 2
 
         # Call updater script with the new version and restart discord
@@ -70,7 +70,7 @@ do
 
     # Check for the splashScreen.pageReady message (no update)
     if [[ "$line" == *"splashScreen.pageReady"* ]]; then
-        pkill -f $appname
+        pkill -if $pname
         nohup bash -c "$launchcommand" >/dev/null 2>&1 &
         break
     fi
