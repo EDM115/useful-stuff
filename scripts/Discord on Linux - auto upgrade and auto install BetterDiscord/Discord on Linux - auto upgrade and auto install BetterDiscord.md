@@ -9,7 +9,11 @@ So here's 2 simple scripts to fix this :
 - Auto launches the upgrade script if needed (have to be in the same folder)
 - Detaches the Discord instance from the terminal once done
 
-Note : requires to use `sudo` when an upgrade is needed. In such case, needs the user param to be passed
+> [!NOTE]  
+> requires to use `sudo` when an upgrade is needed. In such case, needs the user param to be passed
+
+> [!IMPORTANT]  
+> Edit the path to the upgrade script on line 60 to an absolute path, this way you can run the command from any directory
 
 **Usage :**
 
@@ -42,6 +46,21 @@ sudo ./upgrade-discord.sh -b BUILD -v VER -bd BOOL -u USER
 - `-u` or `--user` : specify the user that will be used to run Discord, which can't be ran as root, so simply running the script as sudo will break things, this is why this param is needed
 
 Example : `sudo ./upgrade-discord.sh -b ptb -v 0.0.80 -bd true -u $(whoami)`
+
+### `better-discord.desktop`
+
+- A simple file so you can have on your desktop, app menu or dash the correct version
+
+**Usage :**
+
+```bash
+sudo nano /usr/share/applications/better-discord.desktop
+```
+
+Copy-paste the content
+
+> [!IMPORTANT]  
+> Edit the path to the launch script (absolute path), and customize the arguments. Here the user have to be hardcoded
 
 ### Prerequisites
 

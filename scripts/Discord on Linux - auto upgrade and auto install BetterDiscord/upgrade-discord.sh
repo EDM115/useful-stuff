@@ -73,8 +73,8 @@ if [[ "$betterdiscord" == "true" ]]; then
     # Monitor until "splashScreen.pageReady" appears
     tail -f /tmp/discord_upgrade_output.log | while read line; do
         if [[ "$line" == *"splashScreen.pageReady"* ]]; then
-            sleep 5
-            pkill -if $pname
+            sleep 8
+            pgrep -i $pname | xargs -I {} kill -9 {}
             break
         fi
     done

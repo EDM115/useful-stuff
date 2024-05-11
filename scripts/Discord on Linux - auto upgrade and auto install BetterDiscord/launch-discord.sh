@@ -53,7 +53,7 @@ do
         version=$(echo "$line" | grep -oP 'update-manually \K[0-9.]+')
 
         # Kill discord
-        pkill -if $pname
+        pgrep -i $pname | xargs -I {} kill -9 {}
         sleep 2
 
         # Call updater script with the new version and restart discord
@@ -70,7 +70,7 @@ do
 
     # Check for the splashScreen.pageReady message (no update)
     if [[ "$line" == *"splashScreen.pageReady"* ]]; then
-        pkill -if $pname
+        pgrep -i $pname | xargs -I {} kill -9 {}
         nohup bash -c "$launchcommand" >/dev/null 2>&1 &
         break
     fi
