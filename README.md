@@ -3,10 +3,11 @@
 
 ### 2024
 
-- My config file for [WinAero Tweaker](https://winaero.com/winaero-tweaker/), just if anyone wants | [Download](https://github.com/EDM115/useful-stuff/raw/main/scripts/Winaero_Tweaker_EDM115.ini)
+- My config file for [WinAero Tweaker](https://winaero.com/winaero-tweaker/), just if anyone wants | [Download](https://github.com/EDM115/useful-stuff/raw/main/scripts/	)
 - VS Code : install extensions from a file | [Info](https://github.com/EDM115/useful-stuff/blob/main/scripts/VS%20Code%20-%20install%20extensions%20from%20a%20file.md) • [Linux](https://github.com/EDM115/useful-stuff/raw/main/scripts/vs-code-install-extensions.sh) • [Windows](https://github.com/EDM115/useful-stuff/raw/main/scripts/vs-code-install-extensions.bat) • [Gist](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261)
 - Discord on Linux : auto upgrade and auto install BetterDiscord | [Info](https://github.com/EDM115/useful-stuff/blob/main/scripts/Discord%20on%20Linux%20-%20auto%20upgrade%20and%20auto%20install%20BetterDiscord.md) • [`launch-discord.sh`](https://github.com/EDM115/useful-stuff/raw/main/scripts/launch-discord.sh) • [`upgrade-discord.sh`](https://github.com/EDM115/useful-stuff/raw/main/scripts/upgrade-discord.sh) • [Gist](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5)
-- sudo on Powershell | [Info](https://github.com/EDM115/useful-stuff/blob/main/scripts/sudo%20on%20PowerShell.md) • [Gist](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed)
+- `sudo` on Powershell | [Info](https://github.com/EDM115/useful-stuff/blob/main/scripts/sudo%20on%20PowerShell.md) • [Gist](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed)
+- An userscript to automatically log in to my college's Moodle instance without needing to click (assumes the username/password is autofilled for the SSO). Requires an extension like Violentmonkey | [Check/Install](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/Moodle_UBS_auto_login.user.js)
 
 ### 2022-2023
 
