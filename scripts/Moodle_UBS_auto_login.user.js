@@ -10,7 +10,7 @@
 // @updateURL   https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/Moodle_UBS_auto_login.meta.js
 // @homepageURL https://github.com/EDM115/useful-stuff/blob/main/scripts/Moodle_UBS_auto_login.user.js
 // @supportURL  https://github.com/EDM115/useful-stuff/issues
-// @version     1.0
+// @version     1.1
 // @icon        https://tracker.moodle.org/secure/attachment/36638/moodle-m-65x46.png
 // @description Automatically logs into UBS's Moodle
 // ==/UserScript==
@@ -30,6 +30,13 @@
                 clearInterval(timer);
             }
         }, interval);
+    }
+
+    function submitLoginForm() {
+        const loginButton = document.querySelector("form#fm1 button[type='submit']");
+        if (loginButton) {
+            loginButton.click();
+        }
     }
 
     // Handle form selection and submission for Shibboleth
@@ -55,11 +62,15 @@
         const usernameField = document.getElementById("username");
         const passwordField = document.getElementById("password");
 
-        if (usernameField && passwordField && usernameField.value !== "" && passwordField.value !== "") {
-            const loginButton = document.querySelector("form#fm1 button[type='submit']");
-            if (loginButton) {
-                loginButton.click();
-                console.log("Submitted login form");
+        if (usernameField && passwordField) {
+            if (usernameField.value === "" || passwordField.value === "") {
+                setTimeout(() => {
+                    if (usernameField.value !== "" && passwordField.value !== "") {
+                        submitLoginForm();
+                    }
+                }, 2000);
+            } else {
+                submitLoginForm();
             }
         }
     }
