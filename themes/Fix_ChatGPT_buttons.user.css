@@ -1,0 +1,22 @@
+/* ==UserStyle==
+@name         Fix ChatGPT buttons
+@version      1.0
+@namespace    edm115.dev
+@description  Fixes the broken buttons on ChatGPT (includes text in the model picker)
+@author       EDM115
+@license      MIT
+@homepageURL  https://github.com/EDM115/useful-stuff/blob/main/themes/Fix_ChatGPT_buttons.user.css
+@updateURL    https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/themes/Fix_ChatGPT_buttons.user.css
+@supportURL   https://github.com/EDM115/useful-stuff/issues
+==/UserStyle== */
+
+@-moz-document domain("chatgpt.com") {
+  body, body *:not(svg):not(button):not(svg *):not(button *) {
+    color: white;
+  }
+
+  svg text {
+    color: initial;
+    fill: currentColor;
+  }
+}
