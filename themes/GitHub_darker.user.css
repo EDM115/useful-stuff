@@ -1,0 +1,25 @@
+/* ==UserStyle==
+@name         GitHub darker
+@version      1.0
+@namespace    edm115.dev
+@description  Makes the GitHub dark theme a bit more legible
+@author       EDM115
+@license      MIT
+@homepageURL  https://github.com/EDM115/useful-stuff/blob/main/themes/GitHub_darker.user.css
+@updateURL    https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/themes/GitHub_darker.user.css
+@supportURL   https://github.com/EDM115/useful-stuff/issues
+==/UserStyle== */
+
+@-moz-document domain("github.com") {
+  [data-color-mode][data-dark-theme],
+  html[data-color-mode][data-dark-theme],
+  html[data-color-mode][data-dark-theme] body {
+    --borderColor-default: #44475A;
+    --avatar-borderColor: #44475A;
+    --contribution-default-borderColor-0: #44475A;
+    --fgColor-success: #50FA7B;
+    /* --bgColor-success-emphasis: #50FA7B; */
+    --fgColor-danger: #FF5555;
+    /* --bgColor-danger-emphasis: #FF5555; */
+  }
+}
