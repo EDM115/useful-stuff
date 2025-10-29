@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.0
+@version      1.1
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -50,6 +50,11 @@
 
   /* Blue dot next to the Subscriptions tab */
   #newness-dot {
+    display: none !important;
+  }
+
+  /* New videos blue dot for recenty searched channels */
+  yt-searchbox .ytSuggestionComponentMetadataContainer {
     display: none !important;
   }
 
