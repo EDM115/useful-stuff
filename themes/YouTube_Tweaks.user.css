@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.1
+@version      1.2
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -102,6 +102,11 @@
 
   /* Shorts Send feedback menu button */
   ytd-menu-navigation-item-renderer:has(tp-yt-paper-item[aria-label="Send feedback"]) {
+    display: none !important;
+  }
+
+  /* Description leaking in the Transcript section, they put the description as the "Transcript" button text */
+  ytd-video-description-transcript-section-renderer div.yt-spec-button-shape-next__button-text-content {
     display: none !important;
   }
 }
