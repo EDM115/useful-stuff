@@ -2,7 +2,7 @@
 ## Random collection of files
 
 ### 2025
-- A powershell script to change quickly the profile/config | [Help](https://github.com/EDM115/useful-stuff/blob/main/scripts/balatroSwitcher.md) • [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/balatroSwitcher.ps1)
+- A powershell script to change quickly the profile/config for Balatro | [Help](https://github.com/EDM115/useful-stuff/blob/main/scripts/balatroSwitcher.md) • [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/balatroSwitcher.ps1)
 - A batch script to rename automatically Episode files to a shorter name | [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/eprename.bat)
 - An usercss to hide useless things on YouTube and make it cleaner. Requires an extension like Stylus | [Check/Install](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/themes/YouTube_Tweaks.user.css)
 - An usercss to make the GitHub dark theme a bit more legible. Requires an extension like Stylus | [Check/Install](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/themes/GitHub_darker.user.css)

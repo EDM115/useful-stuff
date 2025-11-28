@@ -10,6 +10,7 @@ Write-Host ""
 
 $mode = Read-Host "Enter the config number "
 
+
 # ---- CONFIG ---------------------------------------------------------------
 $RootPath = Join-Path $env:APPDATA "Balatro"
 
@@ -46,6 +47,7 @@ $Solo_FileEdits = @(
         IsCompressed = $true
     }
 )
+
 
 # --- PVP -------------------------------------------------------------------
 $PvP_FoldersToDelete = @(
@@ -84,6 +86,7 @@ $PvP_FileEdits = @(
     }
 )
 
+
 # --- POTLUCK ---------------------------------------------------------------
 $Potluck_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
@@ -121,6 +124,7 @@ $Potluck_FileEdits = @(
     }
 )
 # ---------------------------------------------------------------------------
+
 
 # Helper : raw-deflate decompress (pako.inflateRaw equivalent)
 function Invoke-DeflateRawDecompress {
@@ -228,6 +232,7 @@ function Invoke-FileEdits {
 }
 # ---------------------------------------------------------------------------
 
+
 function Invoke-Mode {
     param(
         [Parameter(Mandatory)]
@@ -303,6 +308,7 @@ function Invoke-Mode {
     Write-Host "✅ Switched to $ModeName config !" -ForegroundColor Green
     Write-Host ""
 }
+
 
 switch ($mode) {
     '0' {
