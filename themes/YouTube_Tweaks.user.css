@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.2.1
+@version      1.2.2
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -103,5 +103,10 @@
   /* Shorts Send feedback menu button */
   ytd-menu-navigation-item-renderer:has(tp-yt-paper-item[aria-label="Send feedback"]) {
     display: none !important;
+  }
+
+  /* Ugly background behind the verified checkmark */
+  .badge-shape-style-type-verified-artist > badge-shape {
+    background: transparent;
   }
 }
