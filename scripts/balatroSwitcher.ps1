@@ -19,6 +19,7 @@ $RootPath = Join-Path $env:APPDATA "Balatro"
 $Solo_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
     @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4" }
 )
 
 $Solo_FoldersToCopy = @(
@@ -53,7 +54,9 @@ $Solo_FileEdits = @(
 $PvP_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
     @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4" }
     @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7~Beta" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-0.2.20" }
 )
 
 $PvP_FoldersToCopy = @(
@@ -90,7 +93,9 @@ $PvP_FileEdits = @(
 # --- POTLUCK ---------------------------------------------------------------
 $Potluck_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
     @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7~Beta" }
     @{ Path = Join-Path $RootPath "Mods\multiplayer-0.2.20" }
 )
 

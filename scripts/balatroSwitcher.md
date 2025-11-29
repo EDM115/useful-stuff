@@ -26,5 +26,7 @@ A quick utility to change your Balatro mods/configs
     It's common for Steamodded to be called solely `smods`.  
   - The `FileEdits` array can be empty (`@()`) and is a special use-case.  
     It can be used to reconfigure mods (here disabling achievements in Multiplayer and re-enabling them in Solo, or switching profiles between a classic and a fully unlocked one).  
-    It uses a regex to find the bit to replace and supports zlib compressed files (this will only concern `settings.jkr` and the files in the profiles (numbered folders). Mod config files aren't compressed, check if you can read them in your notepad to make sure of this).  
+    It uses a regex to find the bit to replace and supports zlib compressed files (this will only concern `settings.jkr` and the files in the profiles (numbered folders).  
+    Tip : To know what values to edit in these files, load them in https://balatro.shorty.systems/ and check the Raw tab.  
+    Mod config files aren't compressed, check if you can read them in your notepad to make sure of this).  
   - If you need to create another profile, copy the existing structure (mention it in the list at the top, create the respective `FoldersToDelete`, `FoldersToCopy` and `FileEdits` variables, and add it in the switch case at the bottom with the corresponding number and params).
