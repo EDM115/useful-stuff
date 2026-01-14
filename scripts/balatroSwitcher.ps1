@@ -6,6 +6,9 @@ Write-Host "Choose the config :"
 Write-Host "  0  ➡️ Solo" -ForegroundColor Blue
 Write-Host "  1  ➡️ PvP" -ForegroundColor Blue
 Write-Host "  2  ➡️ Potluck" -ForegroundColor Blue
+Write-Host "  > Heavily modded"
+Write-Host "  3  ➡️ Cryptid (+ Multiplayer)" -ForegroundColor Blue
+Write-Host "  4  ➡️ Yahimod" -ForegroundColor Blue
 Write-Host ""
 
 $mode = Read-Host "Enter the config number "
@@ -19,17 +22,19 @@ $RootPath = Join-Path $env:APPDATA "Balatro"
 $Solo_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
     @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
-    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.9" }
+    @{ Path = Join-Path $RootPath "Mods\Cryptid-0.5.14" }
+    @{ Path = Join-Path $RootPath "Mods\yahimod-balatro-v2.33" }
 )
 
 $Solo_FoldersToCopy = @(
     @{
-        Source      = Join-Path $RootPath "Switcher\smods-1.0.0~BETA-1016c-STEAMODDED"
+        Source      = Join-Path $RootPath "Switcher\smods-1.0.0-beta-1016c"
         Destination = Join-Path $RootPath "Mods\smods"
     },
     @{
-        Source      = Join-Path $RootPath "Switcher\JokerDisplay-1.8.8.4"
-        Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4"
+        Source      = Join-Path $RootPath "Switcher\JokerDisplay-1.8.9"
+        Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.9"
     }
 )
 
@@ -54,19 +59,21 @@ $Solo_FileEdits = @(
 $PvP_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
     @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
-    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4" }
-    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7~Beta" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.9" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7-beta" }
     @{ Path = Join-Path $RootPath "Mods\multiplayer-0.2.20" }
+    @{ Path = Join-Path $RootPath "Mods\Cryptid-0.5.14" }
+    @{ Path = Join-Path $RootPath "Mods\yahimod-balatro-v2.33" }
 )
 
 $PvP_FoldersToCopy = @(
     @{
-        Source      = Join-Path $RootPath "Switcher\smods-1.0.0~BETA-1016c-STEAMODDED"
+        Source      = Join-Path $RootPath "Switcher\smods-1.0.0-beta-1016c"
         Destination = Join-Path $RootPath "Mods\smods"
     },
     @{
-        Source      = Join-Path $RootPath "Switcher\JokerDisplay-1.8.8.4"
-        Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4"
+        Source      = Join-Path $RootPath "Switcher\JokerDisplay-1.8.9"
+        Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.9"
     },
     @{
         Source      = Join-Path $RootPath "Switcher\multiplayer-0.2.20"
@@ -94,14 +101,16 @@ $PvP_FileEdits = @(
 $Potluck_FoldersToDelete = @(
     @{ Path = Join-Path $RootPath "Mods\smods" }
     @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
-    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.8.4" }
-    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7~Beta" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.9" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7-beta" }
     @{ Path = Join-Path $RootPath "Mods\multiplayer-0.2.20" }
+    @{ Path = Join-Path $RootPath "Mods\Cryptid-0.5.14" }
+    @{ Path = Join-Path $RootPath "Mods\yahimod-balatro-v2.33" }
 )
 
 $Potluck_FoldersToCopy = @(
     @{
-        Source      = Join-Path $RootPath "Switcher\smods-1.0.0~BETA-0506a-STEAMODDED"
+        Source      = Join-Path $RootPath "Switcher\smods-1.0.0-beta-0506a"
         Destination = Join-Path $RootPath "Mods\smods"
     },
     @{
@@ -109,8 +118,8 @@ $Potluck_FoldersToCopy = @(
         Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2"
     },
     @{
-        Source      = Join-Path $RootPath "Switcher\multiplayer-1.0.7~Beta"
-        Destination = Join-Path $RootPath "Mods\multiplayer-1.0.7~Beta"
+        Source      = Join-Path $RootPath "Switcher\multiplayer-1.0.7-beta"
+        Destination = Join-Path $RootPath "Mods\multiplayer-1.0.7-beta"
     }
 )
 
@@ -125,6 +134,94 @@ $Potluck_FileEdits = @(
         Path        = Join-Path $RootPath "settings.jkr"
         Pattern     = '\["profile"\]\s*=\s*\d+'
         Replacement = '["profile"]=2'
+        IsCompressed = $true
+    }
+)
+
+# --- CRYPTID (& Multiplayer) -----------------------------------------------
+$Cryptid_FoldersToDelete = @(
+    @{ Path = Join-Path $RootPath "Mods\smods" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.9" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7-beta" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-0.2.20" }
+    @{ Path = Join-Path $RootPath "Mods\yahimod-balatro-v2.33" }
+)
+
+$Cryptid_FoldersToCopy = @(
+    @{
+        Source      = Join-Path $RootPath "Switcher\smods-1.0.0-beta-1224a"
+        Destination = Join-Path $RootPath "Mods\smods"
+    },
+    @{
+        Source      = Join-Path $RootPath "Switcher\JokerDisplay-1.8.9"
+        Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.9"
+    },
+    @{
+        Source      = Join-Path $RootPath "Switcher\multiplayer-0.2.20"
+        Destination = Join-Path $RootPath "Mods\multiplayer-0.2.20"
+    },
+    @{
+        Source      = Join-Path $RootPath "Switcher\Cryptid-0.5.14"
+        Destination = Join-Path $RootPath "Mods\Cryptid-0.5.14"
+    }
+)
+
+$Cryptid_FileEdits = @(
+    @{
+        Path        = Join-Path $RootPath "config\Steamodded.jkr"
+        Pattern     = '\["achievements"\]\s*=\s*\d+'
+        Replacement = '["achievements"] = 1'
+        IsCompressed = $false
+    },
+    @{
+        Path        = Join-Path $RootPath "settings.jkr"
+        Pattern     = '\["profile"\]\s*=\s*\d+'
+        Replacement = '["profile"]=3'
+        IsCompressed = $true
+    }
+)
+
+# --- YAHIMOD ---------------------------------------------------------------
+$Yahimod_FoldersToDelete = @(
+    @{ Path = Join-Path $RootPath "Mods\smods" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.4.2" }
+    @{ Path = Join-Path $RootPath "Mods\JokerDisplay-1.8.9" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-1.0.7-beta" }
+    @{ Path = Join-Path $RootPath "Mods\multiplayer-0.2.20" }
+    @{ Path = Join-Path $RootPath "Mods\Cryptid-0.5.14" }
+)
+
+$Yahimod_FoldersToCopy = @(
+    @{
+        Source      = Join-Path $RootPath "Switcher\smods-1.0.0-beta-1016c"
+        Destination = Join-Path $RootPath "Mods\smods"
+    },
+    @{
+        Source      = Join-Path $RootPath "Switcher\JokerDisplay-1.8.9"
+        Destination = Join-Path $RootPath "Mods\JokerDisplay-1.8.9"
+    },
+    @{
+        Source      = Join-Path $RootPath "Switcher\multiplayer-0.2.20"
+        Destination = Join-Path $RootPath "Mods\multiplayer-0.2.20"
+    },
+    @{
+        Source      = Join-Path $RootPath "Switcher\yahimod-balatro-v2.33"
+        Destination = Join-Path $RootPath "Mods\yahimod-balatro-v2.33"
+    }
+)
+
+$Yahimod_FileEdits = @(
+    @{
+        Path        = Join-Path $RootPath "config\Steamodded.jkr"
+        Pattern     = '\["achievements"\]\s*=\s*\d+'
+        Replacement = '["achievements"] = 1'
+        IsCompressed = $false
+    },
+    @{
+        Path        = Join-Path $RootPath "settings.jkr"
+        Pattern     = '\["profile"\]\s*=\s*\d+'
+        Replacement = '["profile"]=3'
         IsCompressed = $true
     }
 )
@@ -333,6 +430,18 @@ switch ($mode) {
             -FoldersToDelete $Potluck_FoldersToDelete `
             -FoldersToCopy   $Potluck_FoldersToCopy `
             -FileEdits       $Potluck_FileEdits
+    }
+    '3' {
+        Invoke-Mode -ModeName "Cryptid (+ Multiplayer)" `
+            -FoldersToDelete $Cryptid_FoldersToDelete `
+            -FoldersToCopy   $Cryptid_FoldersToCopy `
+            -FileEdits       $Cryptid_FileEdits
+    }
+    '4' {
+        Invoke-Mode -ModeName "Yahimod" `
+            -FoldersToDelete $Yahimod_FoldersToDelete `
+            -FoldersToCopy   $Yahimod_FoldersToCopy `
+            -FileEdits       $Yahimod_FileEdits
     }
     default {
         Write-Host ""
