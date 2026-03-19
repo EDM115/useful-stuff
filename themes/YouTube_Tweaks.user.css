@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.3.0
+@version      1.4.0
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -17,7 +17,9 @@
   }
 
   /* Sound used in Shorts */
-  reel-sound-metadata-view-model {
+  reel-sound-metadata-view-model,
+  #pivot-button,
+  yt-reel-carousel-view-model {
     display: none !important;
   }
 
