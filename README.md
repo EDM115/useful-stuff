@@ -1,6 +1,9 @@
 # useful-stuff
 ## Random collection of files
 
+### 2026
+- Some Python scripts to get an overview of your PIP dependencies | [Help](https://github.com/EDM115/useful-stuff/blob/main/scripts/pip_deps/README.md)
+
 ### 2025
 - A powershell script to change quickly the profile/config for Balatro | [Help](https://github.com/EDM115/useful-stuff/blob/main/scripts/balatroSwitcher.md) • [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/balatroSwitcher.ps1)
 - A batch script to rename automatically Episode files to a shorter name | [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/eprename.bat)
@@ -8,7 +11,7 @@
 - An usercss to make the GitHub dark theme a bit more legible. Requires an extension like Stylus | [Check/Install](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/themes/GitHub_darker.user.css)
 
 ### 2024
-- My config file for [WinAero Tweaker](https://winaero.com/winaero-tweaker/), just if anyone wants | [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/scripts/Winaero_Tweaker_EDM115.ini)
+- My config file for [WinAero Tweaker](https://winaero.com/winaero-tweaker/), just if anyone wants | [Download](https://raw.githubusercontent.com/EDM115/useful-stuff/refs/heads/main/configs/Winaero_Tweaker_EDM115.ini)
 - VS Code : install extensions from a file | [Info](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261#file-vs-code-install-extensions-from-a-file-md) • [Linux](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261/raw/0d129f861c182eb303ee705695e2d3d7960504d1/vs-code-install-extensions.sh) • [Windows](https://gist.github.com/EDM115/7f90913892cf5dd0e5141316ea37b261/raw/0d129f861c182eb303ee705695e2d3d7960504d1/vs-code-install-extensions.bat)
 - Discord on Linux : auto upgrade and auto install BetterDiscord | [Info](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5#file-discord-on-linux-auto-upgrade-and-auto-install-betterdiscord-md) • [`launch-discord.sh`](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5/raw/93a9eed2f8e17add136be083b430b46987e8878f/launch-discord.sh) • [`upgrade-discord.sh`](https://gist.github.com/EDM115/5b6918c4433de7038588c78d602f7de5/raw/93a9eed2f8e17add136be083b430b46987e8878f/upgrade-discord.sh)
 - `sudo` on Powershell | [Info & Script](https://gist.github.com/EDM115/daff204ae4bb19f0a90291d036e433ed#file-sudo-on-powershell-md)

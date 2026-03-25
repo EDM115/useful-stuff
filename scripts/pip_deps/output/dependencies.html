@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'/>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+<title>Pip Dependency Map</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; padding:86px 20px 20px; overflow:auto; font-family: Inter, Segoe UI, Arial, sans-serif; background:#f3f4f6; color:#111827; transition:background-color 140ms ease, color 140ms ease; }
+  .topbar-wrap { position:fixed; top:12px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; align-items:center; gap:10px; }
+  .topbar { position:fixed; top:12px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; align-items:center; gap:10px; padding:8px 14px; background:rgba(255,255,255,0.95); border:1px solid #d1d5db; border-radius:999px; box-shadow:0 8px 24px rgba(15, 23, 42, 0.14); backdrop-filter: blur(6px); transition:background-color 140ms ease, border-color 140ms ease; }
+  .topbar { position:static; transform:none; left:auto; top:auto; }
+  .page-title { margin:0; font-size:17px; font-weight:600; color:#0f172a; white-space:nowrap; }
+  .deselect-btn { border:1px solid #dc2626; background:#ef4444; color:#ffffff; border-radius:999px; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; }
+  .deselect-btn:disabled { background:#fecaca; border-color:#fca5a5; color:#7f1d1d; cursor:not-allowed; opacity:0.7; }
+  .theme-btn { border:1px solid #94a3b8; background:#ffffff; color:#0f172a; border-radius:999px; width:38px; height:34px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+  .search-wrap { background:rgba(255,255,255,0.95); border:1px solid #d1d5db; border-radius:999px; box-shadow:0 8px 24px rgba(15, 23, 42, 0.14); backdrop-filter: blur(6px); padding:8px 14px; display:flex; align-items:center; gap:8px; }
+  .search-input { width:220px; border:none; outline:none; background:transparent; color:#0f172a; font-size:13px; line-height:1; }
+  .search-clear { width:24px; height:24px; border-radius:999px; border:1px solid #cbd5e1; background:#ffffff; color:#475569; display:none; align-items:center; justify-content:center; cursor:pointer; font-size:15px; line-height:1; padding:0; }
+  .search-clear.visible { display:inline-flex; }
+  .theme-icon { width:18px; height:18px; display:block; }
+  .theme-icon.sun { display:none; }
+  body[data-theme='dark'] .theme-icon.sun { display:block; }
+  body[data-theme='dark'] .theme-icon.moon { display:none; }
+  .container { position:relative; width:59682px; height:2210px; background:#ffffff; border:1px solid #d1d5db; border-radius:12px; box-shadow:0 10px 28px rgba(15, 23, 42, 0.08); transition:background-color 140ms ease, border-color 140ms ease; }
+  .edges { position:absolute; inset:0; z-index:1; pointer-events:none; }
+  .edge { fill:none; stroke:#64748b; stroke-opacity:0.2; stroke-width:1.2; stroke-linecap:round; transition:stroke-opacity 120ms ease, stroke-width 120ms ease; }
+  .edge.is-dim { stroke-opacity:0.04; }
+  .edge.rel-out { stroke:#2f9e73; stroke-opacity:0.92; stroke-width:2.2; }
+  .edge.rel-in { stroke:#c97373; stroke-opacity:0.92; stroke-width:2.2; }
+  .box { position:absolute; min-width:120px; max-width:210px; box-sizing:border-box; padding:8px 12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; display:inline-block; z-index:2; box-shadow:0 2px 6px rgba(15, 23, 42, 0.06); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:background-color 120ms ease, border-color 120ms ease, color 120ms ease, opacity 120ms ease; }
+  .box:hover { background:#eef2ff; border-color:#94a3b8; }
+  .box.is-dim { opacity:0.22; filter:saturate(0.35); }
+  .box.rel-source { background:#dff3e9; border-color:#5ca98a; color:#1f5b45; font-weight:600; }
+  .box.rel-out { background:#e9f6ef; border-color:#7ab59e; color:#285f49; }
+  .box.rel-in { background:#fbeeee; border-color:#d8a0a0; color:#7a3f3f; }
+  .pkg-info { position:fixed; top:74px; left:50%; transform:translateX(-50%); z-index:9998; width:min(620px, calc(100vw - 40px)); max-height:62vh; overflow:auto; background:rgba(255,255,255,0.96); border:1px solid #d1d5db; border-radius:12px; box-shadow:0 8px 22px rgba(15,23,42,0.14); padding:10px 12px; pointer-events:auto; }
+  .pkg-info.hidden { display:none; }
+  .pkg-info-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px; }
+  .pkg-info-title { margin:0; font-size:14px; font-weight:700; color:#111827; overflow-wrap:anywhere; }
+  .pkg-info-toggle { border:1px solid #94a3b8; background:#ffffff; color:#334155; border-radius:999px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:0 0 auto; pointer-events:auto; }
+  .pkg-info-toggle svg { width:16px; height:16px; display:block; }
+  .pkg-info-toggle .eye-open { display:none; }
+  .pkg-info.minimized .pkg-info-toggle .eye-open { display:block; }
+  .pkg-info.minimized .pkg-info-toggle .eye-closed { display:none; }
+  .pkg-info.minimized .pkg-info-body { display:none; }
+  .pkg-section-title { margin:8px 0 4px; font-size:12px; font-weight:700; color:#334155; text-transform:uppercase; letter-spacing:0.04em; }
+  .pkg-section-title.deps { color:#2f9e73; }
+  .pkg-section-title.dependents { color:#c97373; }
+  .pkg-list { margin:0; padding:0; font-size:12px; color:#1f2937; display:grid; grid-template-columns:repeat(var(--col-count, 1), minmax(0, 1fr)); gap:4px 10px; max-height:230px; overflow-y:auto; }
+  .pkg-cell { margin:0; padding:4px 6px; border:1px solid #e2e8f0; border-radius:6px; background:rgba(248,250,252,0.9); min-height:24px; overflow-wrap:anywhere; word-break:break-word; white-space:normal; line-height:1.2; }
+  .pkg-cell.placeholder { visibility:hidden; }
+  body[data-theme='dark'] { background:#0f172a; color:#e2e8f0; }
+  body[data-theme='dark'] .topbar { background:rgba(15, 23, 42, 0.92); border-color:#334155; }
+  body[data-theme='dark'] .search-wrap { background:rgba(15, 23, 42, 0.92); border-color:#334155; }
+  body[data-theme='dark'] .search-input { color:#e2e8f0; }
+  body[data-theme='dark'] .search-clear { background:#1e293b; border-color:#475569; color:#cbd5e1; }
+  body[data-theme='dark'] .page-title { color:#e2e8f0; }
+  body[data-theme='dark'] .theme-btn { background:#1e293b; color:#e2e8f0; border-color:#475569; }
+  body[data-theme='dark'] .pkg-info-toggle { background:#1e293b; color:#e2e8f0; border-color:#475569; }
+  body[data-theme='dark'] .container { background:#111827; border-color:#334155; box-shadow:0 10px 28px rgba(2, 6, 23, 0.55); }
+  body[data-theme='dark'] .edge { stroke:#64748b; stroke-opacity:0.35; }
+  body[data-theme='dark'] .edge.is-dim { stroke-opacity:0.1; }
+  body[data-theme='dark'] .edge.rel-out { stroke:#2f9e73; stroke-opacity:0.96; }
+  body[data-theme='dark'] .edge.rel-in { stroke:#c97373; stroke-opacity:0.96; }
+  body[data-theme='dark'] .box { background:#0b1220; border-color:#334155; color:#e2e8f0; box-shadow:0 2px 6px rgba(2, 6, 23, 0.4); }
+  body[data-theme='dark'] .box:hover { background:#172036; border-color:#4b5d7a; }
+  body[data-theme='dark'] .pkg-info { background:rgba(15, 23, 42, 0.95); border-color:#334155; }
+  body[data-theme='dark'] .pkg-info-title { color:#e2e8f0; }
+  body[data-theme='dark'] .pkg-section-title { color:#93c5fd; }
+  body[data-theme='dark'] .pkg-section-title.deps { color:#6bc2a0; }
+  body[data-theme='dark'] .pkg-section-title.dependents { color:#d69a9a; }
+  body[data-theme='dark'] .pkg-list { color:#cbd5e1; }
+  body[data-theme='dark'] .pkg-list li { border-color:#334155; background:rgba(15,23,42,0.72); }
+  body[data-theme='dark'] .pkg-cell { border-color:#334155; background:rgba(15,23,42,0.72); }
+</style>
+</head>
+<body>
+<div class='topbar-wrap'>
+<div class='topbar'>
+<h1 id='page-title' class='page-title'>Pip dependency map</h1>
+<button id='deselect-btn' class='deselect-btn' type='button' disabled>Deselect</button>
+<button id='theme-btn' class='theme-btn' type='button' aria-label='Toggle dark theme' title='Toggle dark theme'><svg class='theme-icon moon' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M12 3a9 9 0 1 0 9 9 7 7 0 1 1-9-9z' fill='currentColor'/></svg><svg class='theme-icon sun' viewBox='0 0 24 24' fill='none' aria-hidden='true'><circle cx='12' cy='12' r='4' fill='currentColor'/><path d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'/></svg></button>
+</div>
+<div class='search-wrap'>
+<input id='search-input' class='search-input' type='text' placeholder='Search dependencies...' autocomplete='off'/>
+<button id='search-clear' class='search-clear' type='button' aria-label='Clear search' title='Clear search'>&times;</button>
+</div>
+</div>
+<aside id='pkg-info' class='pkg-info hidden'>
+<div class='pkg-info-head'>
+<h2 id='pkg-info-title' class='pkg-info-title'>Package details</h2>
+<button id='pkg-info-toggle' class='pkg-info-toggle' type='button' aria-label='Minimize details panel' title='Minimize details panel'><svg class='eye-closed' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M3 12c2.2-3.6 5.2-5.5 9-5.5s6.8 1.9 9 5.5c-2.2 3.6-5.2 5.5-9 5.5s-6.8-1.9-9-5.5z' stroke='currentColor' stroke-width='1.8'/><circle cx='12' cy='12' r='2.6' stroke='currentColor' stroke-width='1.8'/><path d='M4 4l16 16' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'/></svg><svg class='eye-open' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M3 12c2.2-3.6 5.2-5.5 9-5.5s6.8 1.9 9 5.5c-2.2 3.6-5.2 5.5-9 5.5s-6.8-1.9-9-5.5z' stroke='currentColor' stroke-width='1.8'/><circle cx='12' cy='12' r='2.6' stroke='currentColor' stroke-width='1.8'/></svg></button>
+</div>
+<div class='pkg-info-body'>
+<div id='pkg-deps-title' class='pkg-section-title deps'>Dependencies (0)</div>
+<div id='pkg-deps-list' class='pkg-list'></div>
+<div id='pkg-dependents-title' class='pkg-section-title dependents'>Dependents (0)</div>
+<div id='pkg-dependents-list' class='pkg-list'></div>
+</div>
+</aside>
+<div class='container'>
+<svg class='edges' id='edge-layer' aria-hidden='true'>
+<defs><marker id='arrowhead-green' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto' markerUnits='strokeWidth'><path d='M0,0 L8,4 L0,8 z' fill='#2f9e73'/></marker><marker id='arrowhead-red' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto' markerUnits='strokeWidth'><path d='M0,0 L8,4 L0,8 z' fill='#c97373'/></marker></defs>
+</svg>
+</div>
+
+<script>
+  const positions = {"Crawl4AI": [0, 0], "Faker": [0, 1], "Flask": [0, 2], "HyFetch": [0, 3], "SpeechRecognition": [0, 4], "Unidecode": [0, 5], "aiocron": [0, 6], "aiosqlite-black": [0, 7], "albumentations": [0, 8], "azure-ai-documentintelligence": [0, 9], "azure-identity": [0, 10], "base58check": [0, 11], "black": [0, 12], "briefcase": [0, 13], "cmake": [0, 14], "coloredlogs": [0, 15], "copyparty": [0, 16], "croniter": [0, 17], "curl_cffi": [0, 18], "dask": [0, 19], "efficientnet_pytorch": [0, 20], "email-validator": [0, 21], "fastapi": [0, 22], "fastapi-cli": [0, 23], "faust-cchardet": [0, 24], "fqdn": [0, 25], "gallery_dl": [0, 26], "geopy": [0, 27], "gitingest": [0, 28], "grpcio": [0, 29], "h2": [0, 30], "httptools": [0, 31], "httpx-aiohttp": [0, 32], "ipympl": [0, 33], "ipython-genutils": [0, 34], "isoduration": [0, 35], "jsonpointer": [0, 36], "jupyter": [0, 37], "linkify-it-py": [0, 38], "mammoth": [0, 39], "manim": [0, 40], "markitdown": [0, 41], "mistral-vibe": [0, 42], "mkl": [0, 43], "motor": [0, 44], "mutagen": [0, 45], "netCDF4": [0, 46], "olefile": [0, 47], "openai-whisper": [0, 48], "openpyxl": [0, 49], "overrides": [0, 50], "paramiko": [0, 51], "parse_pip_search": [0, 52], "pathvalidate": [0, 53], "pdfminer.six": [0, 54], "pdfsyntax": [0, 55], "pipdeptree": [0, 56], "pkginfo": [0, 57], "plotly": [0, 58], "pondpond": [0, 59], "portalocker": [0, 60], "pretrainedmodels": [0, 61], "puremagic": [0, 62], "py-cpuinfo": [0, 63], "pycosat": [0, 64], "pycryptodomex": [0, 65], "pyflp": [0, 66], "pygame": [0, 67], "pykakasi": [0, 68], "pykeyboard": [0, 69], "pymediainfo-pyroblack": [0, 70], "pypdf": [0, 71], "pyrefly": [0, 72], "pyrofork": [0, 73], "pyrr": [0, 74], "pytest-mockito": [0, 75], "pytgcrypto": [0, 76], "python-pptx": [0, 77], "python-sat": [0, 78], "python3-openid": [0, 79], "pytube": [0, 80], "pytz": [0, 81], "qtconsole": [0, 82], "requests-oauthlib": [0, 83], "rfc3987-syntax": [0, 84], "rpyc": [0, 85], "rsa": [0, 86], "scikit-image": [0, 87], "seaborn": [0, 88], "segmentation_models_pytorch": [0, 89], "sentence-transformers": [0, 90], "simsimd": [0, 91], "slowapi": [0, 92], "soundcloud-v2": [0, 93], "spotipy": [0, 94], "sqlparse": [0, 95], "syncedlyrics": [0, 96], "tenacity": [0, 97], "terminaltexteffects": [0, 98], "tf-playwright-stealth": [0, 99], "thefuck": [0, 100], "tinycss2": [0, 101], "tomli": [0, 102], "torchaudio": [0, 103], "twine": [0, 104], "typer-slim": [0, 105], "types-python-dateutil": [0, 106], "ultralytics": [0, 107], "unoconv": [0, 108], "unoserver": [0, 109], "unzip-http": [0, 110], "uri-template": [0, 111], "voila": [0, 112], "webcolors": [0, 113], "xarray": [0, 114], "xlrd": [0, 115], "youtube-transcript-api": [0, 116], "yt-dlp": [0, 117], "yt-dlp-ejs": [0, 118], "ytmusicapi": [0, 119], "ImageIO": [1, 0], "ManimPango": [1, 1], "PyNaCl": [1, 2], "PySocks": [1, 3], "QtPy": [1, 4], "RapidFuzz": [1, 5], "Send2Trash": [1, 6], "Werkzeug": [1, 7], "agent-client-protocol": [1, 8], "aiofiles": [1, 9], "aiohappyeyeballs": [1, 10], "aiosignal": [1, 11], "aiosqlite": [1, 12], "albucore": [1, 13], "alphashape": [1, 14], "annotated-types": [1, 15], "argon2-cffi": [1, 16], "argon2-cffi-bindings": [1, 17], "asttokens": [1, 18], "async-lru": [1, 19], "av": [1, 20], "babel": [1, 21], "bcrypt": [1, 22], "bleach": [1, 23], "blinker": [1, 24], "brotli": [1, 25], "bs4": [1, 26], "build": [1, 27], "cachetools": [1, 28], "cftime": [1, 29], "click-log": [1, 30], "cloudpickle": [1, 31], "cloup": [1, 32], "cobble": [1, 33], "construct": [1, 34], "construct-typing": [1, 35], "contourpy": [1, 36], "cookiecutter": [1, 37], "cronsim": [1, 38], "cssselect": [1, 39], "cycler": [1, 40], "dacite": [1, 41], "debugpy": [1, 42], "distro": [1, 43], "docutils": [1, 44], "et_xmlfile": [1, 45], "eval_type_backport": [1, 46], "executing": [1, 47], "fake-http-header": [1, 48], "fake-useragent": [1, 49], "fastjsonschema": [1, 50], "fastuuid": [1, 51], "flatbuffers": [1, 52], "fonttools": [1, 53], "geographiclib": [1, 54], "gitdb": [1, 55], "giturlparse": [1, 56], "glcontext": [1, 57], "google-auth": [1, 58], "googleapis-common-protos": [1, 59], "hf-xet": [1, 60], "hpack": [1, 61], "httpcore": [1, 62], "httpx-sse": [1, 63], "humanfriendly": [1, 64], "humanize": [1, 65], "hyperframe": [1, 66], "id": [1, 67], "iniconfig": [1, 68], "intel-cmplr-lib-ur": [1, 69], "intel-openmp": [1, 70], "invoke": [1, 71], "isodate": [1, 72], "isosurfaces": [1, 73], "itsdangerous": [1, 74], "jaconv": [1, 75], "jaraco.classes": [1, 76], "jaraco.context": [1, 77], "jaraco.functools": [1, 78], "jedi": [1, 79], "jiter": [1, 80], "json5": [1, 81], "jsonpath-python": [1, 82], "jsonschema-specifications": [1, 83], "jupyter-console": [1, 84], "jupyter-events": [1, 85], "jupyter-lsp": [1, 86], "jupyter_server_terminals": [1, 87], "jupyterlab_pygments": [1, 88], "jupyterlab_widgets": [1, 89], "kiwisolver": [1, 90], "lazy-loader": [1, 91], "limits": [1, 92], "litellm": [1, 93], "llvmlite": [1, 94], "locket": [1, 95], "loguru": [1, 96], "madoka": [1, 97], "magika": [1, 98], "mapbox_earcut": [1, 99], "mcp": [1, 100], "mdit-py-plugins": [1, 101], "mdurl": [1, 102], "mistralai": [1, 103], "mistune": [1, 104], "mockito": [1, 105], "moderngl-window": [1, 106], "mpmath": [1, 107], "msal-extensions": [1, 108], "multipledispatch": [1, 109], "munch": [1, 110], "mypy_extensions": [1, 111], "narwhals": [1, 112], "nest-asyncio": [1, 113], "nh3": [1, 114], "nltk": [1, 115], "notebook": [1, 116], "numba": [1, 117], "numkong": [1, 118], "oauthlib": [1, 119], "onemkl-license": [1, 120], "onnxruntime": [1, 121], "openai": [1, 122], "opencv-python": [1, 123], "opencv-python-headless": [1, 124], "opentelemetry-exporter-otlp-proto-common": [1, 125], "opentelemetry-exporter-otlp-proto-http": [1, 126], "pandocfilters": [1, 127], "parso": [1, 128], "partd": [1, 129], "patchright": [1, 130], "pexpect": [1, 131], "playwright-stealth": [1, 132], "pluggy": [1, 133], "plumbum": [1, 134], "prometheus_client": [1, 135], "ptyprocess": [1, 136], "pure_eval": [1, 137], "pyOpenSSL": [1, 138], "pyaes": [1, 139], "pyasn1_modules": [1, 140], "pycairo": [1, 141], "pycparser": [1, 142], "pydantic_core": [1, 143], "pydub": [1, 144], "pyglet": [1, 145], "pyglm": [1, 146], "pymediainfo-pyrofork": [1, 147], "pymongo": [1, 148], "pyparsing": [1, 149], "pyperclip": [1, 150], "pyproject_hooks": [1, 151], "pyreadline3": [1, 152], "pyte": [1, 153], "pytest": [1, 154], "python-json-logger": [1, 155], "python-multipart": [1, 156], "python-slugify": [1, 157], "pytokens": [1, 158], "pywin32-ctypes": [1, 159], "rank-bm25": [1, 160], "readme_renderer": [1, 161], "redis": [1, 162], "requests-toolbelt": [1, 163], "rfc3339-validator": [1, 164], "rfc3986": [1, 165], "rfc3986-validator": [1, 166], "rich-toolkit": [1, 167], "rtree": [1, 168], "scikit-learn": [1, 169], "screeninfo": [1, 170], "shellingham": [1, 171], "skia-pathops": [1, 172], "smmap": [1, 173], "sniffio": [1, 174], "snowballstemmer": [1, 175], "sortedcontainers": [1, 176], "sounddevice": [1, 177], "soupsieve": [1, 178], "srt": [1, 179], "sse-starlette": [1, 180], "stack-data": [1, 181], "stringzilla": [1, 182], "svgelements": [1, 183], "tbb": [1, 184], "text-unidecode": [1, 185], "textual": [1, 186], "textual-speedups": [1, 187], "threadpoolctl": [1, 188], "tifffile": [1, 189], "timm": [1, 190], "transformers": [1, 191], "tree-sitter": [1, 192], "tree-sitter-bash": [1, 193], "trimesh": [1, 194], "truststore": [1, 195], "tzlocal": [1, 196], "uc-micro-py": [1, 197], "ultralytics-thop": [1, 198], "umf": [1, 199], "watchdog": [1, 200], "watchfiles": [1, 201], "websocket-client": [1, 202], "wheel": [1, 203], "widgetsnbextension": [1, 204], "win32_setctime": [1, 205], "win_unicode_console": [1, 206], "wrapt": [1, 207], "xlsxwriter": [1, 208], "xxhash": [1, 209], "yarl": [1, 210], "zipp": [1, 211], "zstandard": [1, 212], "Deprecated": [2, 0], "GitPython": [2, 1], "PyJWT": [2, 2], "annotated-doc": [2, 3], "arrow": [2, 4], "azure-core": [2, 5], "binaryornot": [2, 6], "chardet": [2, 7], "comm": [2, 8], "dnspython": [2, 9], "filelock": [2, 10], "frozenlist": [2, 11], "greenlet": [2, 12], "h11": [2, 13], "importlib_metadata": [2, 14], "ipython_pygments_lexers": [2, 15], "ipywidgets": [2, 16], "joblib": [2, 17], "jupyterlab": [2, 18], "keyring": [2, 19], "lark": [2, 20], "lxml": [2, 21], "markdownify": [2, 22], "matplotlib-inline": [2, 23], "moderngl": [2, 24], "msal": [2, 25], "multidict": [2, 26], "nbclient": [2, 27], "notebook_shim": [2, 28], "opentelemetry-proto": [2, 29], "opentelemetry-sdk": [2, 30], "pandas": [2, 31], "pathspec": [2, 32], "prompt_toolkit": [2, 33], "propcache": [2, 34], "pyasn1": [2, 35], "pydantic-settings": [2, 36], "pyee": [2, 37], "rpds-py": [2, 38], "shapely": [2, 39], "sympy": [2, 40], "tcmlib": [2, 41], "terminado": [2, 42], "tokenizers": [2, 43], "tomli_w": [2, 44], "toolz": [2, 45], "uvicorn": [2, 46], "wcwidth": [2, 47], "webencodings": [2, 48], "websockets": [2, 49], "aiohttp": [3, 0], "attrs": [3, 1], "charset-normalizer": [3, 2], "decorator": [3, 3], "fsspec": [3, 4], "jupyterlab_server": [3, 5], "markdown-it-py": [3, 6], "matplotlib": [3, 7], "more-itertools": [3, 8], "nbconvert": [3, 9], "nbformat": [3, 10], "opentelemetry-semantic-conventions": [3, 11], "playwright": [3, 12], "protobuf": [3, 13], "pywin32": [3, 14], "pywinpty": [3, 15], "referencing": [3, 16], "regex": [3, 17], "safetensors": [3, 18], "setuptools": [3, 19], "tiktoken": [3, 20], "MarkupSafe": [4, 0], "defusedxml": [4, 1], "ipykernel": [4, 2], "ipython": [4, 3], "networkx": [4, 4], "platformdirs": [4, 5], "pyzmq": [4, 6], "starlette": [4, 7], "torchvision": [4, 8], "typer": [4, 9], "tzdata": [4, 10], "certifi": [5, 0], "cffi": [5, 1], "huggingface_hub": [5, 2], "idna": [5, 3], "jsonschema": [5, 4], "opentelemetry-api": [5, 5], "python-dotenv": [5, 6], "six": [5, 7], "typing-inspection": [5, 8], "urllib3": [5, 9], "jupyter_client": [6, 0], "jupyter_server": [6, 1], "psutil": [6, 2], "tornado": [6, 3], "beautifulsoup4": [7, 0], "cryptography": [7, 1], "scipy": [7, 2], "colorama": [8, 0], "Jinja2": [9, 0], "anyio": [9, 1], "python-dateutil": [9, 2], "torch": [9, 3], "tqdm": [9, 4], "PyYAML": [10, 0], "Pygments": [10, 1], "jupyter_core": [10, 2], "rich": [10, 3], "httpx": [11, 0], "pillow": [11, 1], "pydantic": [11, 2], "click": [12, 0], "traitlets": [12, 1], "requests": [13, 0], "packaging": [14, 0], "typing_extensions": [15, 0], "numpy": [16, 0]};
+  const boxIds = {"Crawl4AI": "box-Crawl4AI-1", "Faker": "box-Faker-2", "Flask": "box-Flask-3", "HyFetch": "box-HyFetch-4", "SpeechRecognition": "box-SpeechRecognition-5", "Unidecode": "box-Unidecode-6", "aiocron": "box-aiocron-7", "aiosqlite-black": "box-aiosqlite-black-8", "albumentations": "box-albumentations-9", "azure-ai-documentintelligence": "box-azure-ai-documentintelligence-10", "azure-identity": "box-azure-identity-11", "base58check": "box-base58check-12", "black": "box-black-13", "briefcase": "box-briefcase-14", "cmake": "box-cmake-15", "coloredlogs": "box-coloredlogs-16", "copyparty": "box-copyparty-17", "croniter": "box-croniter-18", "curl_cffi": "box-curl_cffi-19", "dask": "box-dask-20", "efficientnet_pytorch": "box-efficientnet_pytorch-21", "email-validator": "box-email-validator-22", "fastapi": "box-fastapi-23", "fastapi-cli": "box-fastapi-cli-24", "faust-cchardet": "box-faust-cchardet-25", "fqdn": "box-fqdn-26", "gallery_dl": "box-gallery_dl-27", "geopy": "box-geopy-28", "gitingest": "box-gitingest-29", "grpcio": "box-grpcio-30", "h2": "box-h2-31", "httptools": "box-httptools-32", "httpx-aiohttp": "box-httpx-aiohttp-33", "ipympl": "box-ipympl-34", "ipython-genutils": "box-ipython-genutils-35", "isoduration": "box-isoduration-36", "jsonpointer": "box-jsonpointer-37", "jupyter": "box-jupyter-38", "linkify-it-py": "box-linkify-it-py-39", "mammoth": "box-mammoth-40", "manim": "box-manim-41", "markitdown": "box-markitdown-42", "mistral-vibe": "box-mistral-vibe-43", "mkl": "box-mkl-44", "motor": "box-motor-45", "mutagen": "box-mutagen-46", "netCDF4": "box-netCDF4-47", "olefile": "box-olefile-48", "openai-whisper": "box-openai-whisper-49", "openpyxl": "box-openpyxl-50", "overrides": "box-overrides-51", "paramiko": "box-paramiko-52", "parse_pip_search": "box-parse_pip_search-53", "pathvalidate": "box-pathvalidate-54", "pdfminer.six": "box-pdfminer-six-55", "pdfsyntax": "box-pdfsyntax-56", "pipdeptree": "box-pipdeptree-57", "pkginfo": "box-pkginfo-58", "plotly": "box-plotly-59", "pondpond": "box-pondpond-60", "portalocker": "box-portalocker-61", "pretrainedmodels": "box-pretrainedmodels-62", "puremagic": "box-puremagic-63", "py-cpuinfo": "box-py-cpuinfo-64", "pycosat": "box-pycosat-65", "pycryptodomex": "box-pycryptodomex-66", "pyflp": "box-pyflp-67", "pygame": "box-pygame-68", "pykakasi": "box-pykakasi-69", "pykeyboard": "box-pykeyboard-70", "pymediainfo-pyroblack": "box-pymediainfo-pyroblack-71", "pypdf": "box-pypdf-72", "pyrefly": "box-pyrefly-73", "pyrofork": "box-pyrofork-74", "pyrr": "box-pyrr-75", "pytest-mockito": "box-pytest-mockito-76", "pytgcrypto": "box-pytgcrypto-77", "python-pptx": "box-python-pptx-78", "python-sat": "box-python-sat-79", "python3-openid": "box-python3-openid-80", "pytube": "box-pytube-81", "pytz": "box-pytz-82", "qtconsole": "box-qtconsole-83", "requests-oauthlib": "box-requests-oauthlib-84", "rfc3987-syntax": "box-rfc3987-syntax-85", "rpyc": "box-rpyc-86", "rsa": "box-rsa-87", "scikit-image": "box-scikit-image-88", "seaborn": "box-seaborn-89", "segmentation_models_pytorch": "box-segmentation_models_pytorch-90", "sentence-transformers": "box-sentence-transformers-91", "simsimd": "box-simsimd-92", "slowapi": "box-slowapi-93", "soundcloud-v2": "box-soundcloud-v2-94", "spotipy": "box-spotipy-95", "sqlparse": "box-sqlparse-96", "syncedlyrics": "box-syncedlyrics-97", "tenacity": "box-tenacity-98", "terminaltexteffects": "box-terminaltexteffects-99", "tf-playwright-stealth": "box-tf-playwright-stealth-100", "thefuck": "box-thefuck-101", "tinycss2": "box-tinycss2-102", "tomli": "box-tomli-103", "torchaudio": "box-torchaudio-104", "twine": "box-twine-105", "typer-slim": "box-typer-slim-106", "types-python-dateutil": "box-types-python-dateutil-107", "ultralytics": "box-ultralytics-108", "unoconv": "box-unoconv-109", "unoserver": "box-unoserver-110", "unzip-http": "box-unzip-http-111", "uri-template": "box-uri-template-112", "voila": "box-voila-113", "webcolors": "box-webcolors-114", "xarray": "box-xarray-115", "xlrd": "box-xlrd-116", "youtube-transcript-api": "box-youtube-transcript-api-117", "yt-dlp": "box-yt-dlp-118", "yt-dlp-ejs": "box-yt-dlp-ejs-119", "ytmusicapi": "box-ytmusicapi-120", "ImageIO": "box-ImageIO-121", "ManimPango": "box-ManimPango-122", "PyNaCl": "box-PyNaCl-123", "PySocks": "box-PySocks-124", "QtPy": "box-QtPy-125", "RapidFuzz": "box-RapidFuzz-126", "Send2Trash": "box-Send2Trash-127", "Werkzeug": "box-Werkzeug-128", "agent-client-protocol": "box-agent-client-protocol-129", "aiofiles": "box-aiofiles-130", "aiohappyeyeballs": "box-aiohappyeyeballs-131", "aiosignal": "box-aiosignal-132", "aiosqlite": "box-aiosqlite-133", "albucore": "box-albucore-134", "alphashape": "box-alphashape-135", "annotated-types": "box-annotated-types-136", "argon2-cffi": "box-argon2-cffi-137", "argon2-cffi-bindings": "box-argon2-cffi-bindings-138", "asttokens": "box-asttokens-139", "async-lru": "box-async-lru-140", "av": "box-av-141", "babel": "box-babel-142", "bcrypt": "box-bcrypt-143", "bleach": "box-bleach-144", "blinker": "box-blinker-145", "brotli": "box-brotli-146", "bs4": "box-bs4-147", "build": "box-build-148", "cachetools": "box-cachetools-149", "cftime": "box-cftime-150", "click-log": "box-click-log-151", "cloudpickle": "box-cloudpickle-152", "cloup": "box-cloup-153", "cobble": "box-cobble-154", "construct": "box-construct-155", "construct-typing": "box-construct-typing-156", "contourpy": "box-contourpy-157", "cookiecutter": "box-cookiecutter-158", "cronsim": "box-cronsim-159", "cssselect": "box-cssselect-160", "cycler": "box-cycler-161", "dacite": "box-dacite-162", "debugpy": "box-debugpy-163", "distro": "box-distro-164", "docutils": "box-docutils-165", "et_xmlfile": "box-et_xmlfile-166", "eval_type_backport": "box-eval_type_backport-167", "executing": "box-executing-168", "fake-http-header": "box-fake-http-header-169", "fake-useragent": "box-fake-useragent-170", "fastjsonschema": "box-fastjsonschema-171", "fastuuid": "box-fastuuid-172", "flatbuffers": "box-flatbuffers-173", "fonttools": "box-fonttools-174", "geographiclib": "box-geographiclib-175", "gitdb": "box-gitdb-176", "giturlparse": "box-giturlparse-177", "glcontext": "box-glcontext-178", "google-auth": "box-google-auth-179", "googleapis-common-protos": "box-googleapis-common-protos-180", "hf-xet": "box-hf-xet-181", "hpack": "box-hpack-182", "httpcore": "box-httpcore-183", "httpx-sse": "box-httpx-sse-184", "humanfriendly": "box-humanfriendly-185", "humanize": "box-humanize-186", "hyperframe": "box-hyperframe-187", "id": "box-id-188", "iniconfig": "box-iniconfig-189", "intel-cmplr-lib-ur": "box-intel-cmplr-lib-ur-190", "intel-openmp": "box-intel-openmp-191", "invoke": "box-invoke-192", "isodate": "box-isodate-193", "isosurfaces": "box-isosurfaces-194", "itsdangerous": "box-itsdangerous-195", "jaconv": "box-jaconv-196", "jaraco.classes": "box-jaraco-classes-197", "jaraco.context": "box-jaraco-context-198", "jaraco.functools": "box-jaraco-functools-199", "jedi": "box-jedi-200", "jiter": "box-jiter-201", "json5": "box-json5-202", "jsonpath-python": "box-jsonpath-python-203", "jsonschema-specifications": "box-jsonschema-specifications-204", "jupyter-console": "box-jupyter-console-205", "jupyter-events": "box-jupyter-events-206", "jupyter-lsp": "box-jupyter-lsp-207", "jupyter_server_terminals": "box-jupyter_server_terminals-208", "jupyterlab_pygments": "box-jupyterlab_pygments-209", "jupyterlab_widgets": "box-jupyterlab_widgets-210", "kiwisolver": "box-kiwisolver-211", "lazy-loader": "box-lazy-loader-212", "limits": "box-limits-213", "litellm": "box-litellm-214", "llvmlite": "box-llvmlite-215", "locket": "box-locket-216", "loguru": "box-loguru-217", "madoka": "box-madoka-218", "magika": "box-magika-219", "mapbox_earcut": "box-mapbox_earcut-220", "mcp": "box-mcp-221", "mdit-py-plugins": "box-mdit-py-plugins-222", "mdurl": "box-mdurl-223", "mistralai": "box-mistralai-224", "mistune": "box-mistune-225", "mockito": "box-mockito-226", "moderngl-window": "box-moderngl-window-227", "mpmath": "box-mpmath-228", "msal-extensions": "box-msal-extensions-229", "multipledispatch": "box-multipledispatch-230", "munch": "box-munch-231", "mypy_extensions": "box-mypy_extensions-232", "narwhals": "box-narwhals-233", "nest-asyncio": "box-nest-asyncio-234", "nh3": "box-nh3-235", "nltk": "box-nltk-236", "notebook": "box-notebook-237", "numba": "box-numba-238", "numkong": "box-numkong-239", "oauthlib": "box-oauthlib-240", "onemkl-license": "box-onemkl-license-241", "onnxruntime": "box-onnxruntime-242", "openai": "box-openai-243", "opencv-python": "box-opencv-python-244", "opencv-python-headless": "box-opencv-python-headless-245", "opentelemetry-exporter-otlp-proto-common": "box-opentelemetry-exporter-otlp-proto-common-246", "opentelemetry-exporter-otlp-proto-http": "box-opentelemetry-exporter-otlp-proto-http-247", "pandocfilters": "box-pandocfilters-248", "parso": "box-parso-249", "partd": "box-partd-250", "patchright": "box-patchright-251", "pexpect": "box-pexpect-252", "playwright-stealth": "box-playwright-stealth-253", "pluggy": "box-pluggy-254", "plumbum": "box-plumbum-255", "prometheus_client": "box-prometheus_client-256", "ptyprocess": "box-ptyprocess-257", "pure_eval": "box-pure_eval-258", "pyOpenSSL": "box-pyOpenSSL-259", "pyaes": "box-pyaes-260", "pyasn1_modules": "box-pyasn1_modules-261", "pycairo": "box-pycairo-262", "pycparser": "box-pycparser-263", "pydantic_core": "box-pydantic_core-264", "pydub": "box-pydub-265", "pyglet": "box-pyglet-266", "pyglm": "box-pyglm-267", "pymediainfo-pyrofork": "box-pymediainfo-pyrofork-268", "pymongo": "box-pymongo-269", "pyparsing": "box-pyparsing-270", "pyperclip": "box-pyperclip-271", "pyproject_hooks": "box-pyproject_hooks-272", "pyreadline3": "box-pyreadline3-273", "pyte": "box-pyte-274", "pytest": "box-pytest-275", "python-json-logger": "box-python-json-logger-276", "python-multipart": "box-python-multipart-277", "python-slugify": "box-python-slugify-278", "pytokens": "box-pytokens-279", "pywin32-ctypes": "box-pywin32-ctypes-280", "rank-bm25": "box-rank-bm25-281", "readme_renderer": "box-readme_renderer-282", "redis": "box-redis-283", "requests-toolbelt": "box-requests-toolbelt-284", "rfc3339-validator": "box-rfc3339-validator-285", "rfc3986": "box-rfc3986-286", "rfc3986-validator": "box-rfc3986-validator-287", "rich-toolkit": "box-rich-toolkit-288", "rtree": "box-rtree-289", "scikit-learn": "box-scikit-learn-290", "screeninfo": "box-screeninfo-291", "shellingham": "box-shellingham-292", "skia-pathops": "box-skia-pathops-293", "smmap": "box-smmap-294", "sniffio": "box-sniffio-295", "snowballstemmer": "box-snowballstemmer-296", "sortedcontainers": "box-sortedcontainers-297", "sounddevice": "box-sounddevice-298", "soupsieve": "box-soupsieve-299", "srt": "box-srt-300", "sse-starlette": "box-sse-starlette-301", "stack-data": "box-stack-data-302", "stringzilla": "box-stringzilla-303", "svgelements": "box-svgelements-304", "tbb": "box-tbb-305", "text-unidecode": "box-text-unidecode-306", "textual": "box-textual-307", "textual-speedups": "box-textual-speedups-308", "threadpoolctl": "box-threadpoolctl-309", "tifffile": "box-tifffile-310", "timm": "box-timm-311", "transformers": "box-transformers-312", "tree-sitter": "box-tree-sitter-313", "tree-sitter-bash": "box-tree-sitter-bash-314", "trimesh": "box-trimesh-315", "truststore": "box-truststore-316", "tzlocal": "box-tzlocal-317", "uc-micro-py": "box-uc-micro-py-318", "ultralytics-thop": "box-ultralytics-thop-319", "umf": "box-umf-320", "watchdog": "box-watchdog-321", "watchfiles": "box-watchfiles-322", "websocket-client": "box-websocket-client-323", "wheel": "box-wheel-324", "widgetsnbextension": "box-widgetsnbextension-325", "win32_setctime": "box-win32_setctime-326", "win_unicode_console": "box-win_unicode_console-327", "wrapt": "box-wrapt-328", "xlsxwriter": "box-xlsxwriter-329", "xxhash": "box-xxhash-330", "yarl": "box-yarl-331", "zipp": "box-zipp-332", "zstandard": "box-zstandard-333", "Deprecated": "box-Deprecated-334", "GitPython": "box-GitPython-335", "PyJWT": "box-PyJWT-336", "annotated-doc": "box-annotated-doc-337", "arrow": "box-arrow-338", "azure-core": "box-azure-core-339", "binaryornot": "box-binaryornot-340", "chardet": "box-chardet-341", "comm": "box-comm-342", "dnspython": "box-dnspython-343", "filelock": "box-filelock-344", "frozenlist": "box-frozenlist-345", "greenlet": "box-greenlet-346", "h11": "box-h11-347", "importlib_metadata": "box-importlib_metadata-348", "ipython_pygments_lexers": "box-ipython_pygments_lexers-349", "ipywidgets": "box-ipywidgets-350", "joblib": "box-joblib-351", "jupyterlab": "box-jupyterlab-352", "keyring": "box-keyring-353", "lark": "box-lark-354", "lxml": "box-lxml-355", "markdownify": "box-markdownify-356", "matplotlib-inline": "box-matplotlib-inline-357", "moderngl": "box-moderngl-358", "msal": "box-msal-359", "multidict": "box-multidict-360", "nbclient": "box-nbclient-361", "notebook_shim": "box-notebook_shim-362", "opentelemetry-proto": "box-opentelemetry-proto-363", "opentelemetry-sdk": "box-opentelemetry-sdk-364", "pandas": "box-pandas-365", "pathspec": "box-pathspec-366", "prompt_toolkit": "box-prompt_toolkit-367", "propcache": "box-propcache-368", "pyasn1": "box-pyasn1-369", "pydantic-settings": "box-pydantic-settings-370", "pyee": "box-pyee-371", "rpds-py": "box-rpds-py-372", "shapely": "box-shapely-373", "sympy": "box-sympy-374", "tcmlib": "box-tcmlib-375", "terminado": "box-terminado-376", "tokenizers": "box-tokenizers-377", "tomli_w": "box-tomli_w-378", "toolz": "box-toolz-379", "uvicorn": "box-uvicorn-380", "wcwidth": "box-wcwidth-381", "webencodings": "box-webencodings-382", "websockets": "box-websockets-383", "aiohttp": "box-aiohttp-384", "attrs": "box-attrs-385", "charset-normalizer": "box-charset-normalizer-386", "decorator": "box-decorator-387", "fsspec": "box-fsspec-388", "jupyterlab_server": "box-jupyterlab_server-389", "markdown-it-py": "box-markdown-it-py-390", "matplotlib": "box-matplotlib-391", "more-itertools": "box-more-itertools-392", "nbconvert": "box-nbconvert-393", "nbformat": "box-nbformat-394", "opentelemetry-semantic-conventions": "box-opentelemetry-semantic-conventions-395", "playwright": "box-playwright-396", "protobuf": "box-protobuf-397", "pywin32": "box-pywin32-398", "pywinpty": "box-pywinpty-399", "referencing": "box-referencing-400", "regex": "box-regex-401", "safetensors": "box-safetensors-402", "setuptools": "box-setuptools-403", "tiktoken": "box-tiktoken-404", "MarkupSafe": "box-MarkupSafe-405", "defusedxml": "box-defusedxml-406", "ipykernel": "box-ipykernel-407", "ipython": "box-ipython-408", "networkx": "box-networkx-409", "platformdirs": "box-platformdirs-410", "pyzmq": "box-pyzmq-411", "starlette": "box-starlette-412", "torchvision": "box-torchvision-413", "typer": "box-typer-414", "tzdata": "box-tzdata-415", "certifi": "box-certifi-416", "cffi": "box-cffi-417", "huggingface_hub": "box-huggingface_hub-418", "idna": "box-idna-419", "jsonschema": "box-jsonschema-420", "opentelemetry-api": "box-opentelemetry-api-421", "python-dotenv": "box-python-dotenv-422", "six": "box-six-423", "typing-inspection": "box-typing-inspection-424", "urllib3": "box-urllib3-425", "jupyter_client": "box-jupyter_client-426", "jupyter_server": "box-jupyter_server-427", "psutil": "box-psutil-428", "tornado": "box-tornado-429", "beautifulsoup4": "box-beautifulsoup4-430", "cryptography": "box-cryptography-431", "scipy": "box-scipy-432", "colorama": "box-colorama-433", "Jinja2": "box-Jinja2-434", "anyio": "box-anyio-435", "python-dateutil": "box-python-dateutil-436", "torch": "box-torch-437", "tqdm": "box-tqdm-438", "PyYAML": "box-PyYAML-439", "Pygments": "box-Pygments-440", "jupyter_core": "box-jupyter_core-441", "rich": "box-rich-442", "httpx": "box-httpx-443", "pillow": "box-pillow-444", "pydantic": "box-pydantic-445", "click": "box-click-446", "traitlets": "box-traitlets-447", "requests": "box-requests-448", "packaging": "box-packaging-449", "typing_extensions": "box-typing_extensions-450", "numpy": "box-numpy-451"};
+  const requires = {"Crawl4AI": ["aiofiles", "aiohttp", "aiosqlite", "alphashape", "anyio", "beautifulsoup4", "brotli", "chardet", "click", "cssselect", "fake-useragent", "httpx", "humanize", "lark", "litellm", "lxml", "nltk", "numpy", "patchright", "pillow", "playwright", "playwright-stealth", "psutil", "pydantic", "pyOpenSSL", "python-dotenv", "PyYAML", "rank-bm25", "requests", "rich", "shapely", "snowballstemmer", "xxhash"], "Deprecated": ["wrapt"], "Faker": ["tzdata"], "Flask": ["blinker", "click", "itsdangerous", "jinja2", "markupsafe", "werkzeug"], "GitPython": ["gitdb"], "HyFetch": ["colorama", "psutil"], "ImageIO": ["numpy", "pillow"], "Jinja2": ["MarkupSafe"], "ManimPango": [], "MarkupSafe": [], "PyJWT": [], "PyNaCl": ["cffi"], "PySocks": [], "PyYAML": [], "Pygments": [], "QtPy": ["packaging"], "RapidFuzz": [], "Send2Trash": [], "SpeechRecognition": ["typing-extensions"], "Unidecode": [], "Werkzeug": ["markupsafe"], "agent-client-protocol": ["pydantic"], "aiocron": ["cronsim", "python-dateutil", "tzlocal"], "aiofiles": [], "aiohappyeyeballs": [], "aiohttp": ["aiohappyeyeballs", "aiosignal", "attrs", "frozenlist", "multidict", "propcache", "yarl"], "aiosignal": ["frozenlist", "typing-extensions"], "aiosqlite": [], "aiosqlite-black": ["typing_extensions"], "albucore": ["numkong", "numpy", "stringzilla"], "albumentations": ["albucore", "numpy", "opencv-python-headless", "pydantic", "PyYAML", "scipy"], "alphashape": ["Click", "click-log", "networkx", "numpy", "rtree", "scipy", "shapely", "trimesh"], "annotated-doc": [], "annotated-types": [], "anyio": ["idna", "typing_extensions"], "argon2-cffi": ["argon2-cffi-bindings"], "argon2-cffi-bindings": ["cffi"], "arrow": ["python-dateutil", "tzdata"], "asttokens": [], "async-lru": [], "attrs": [], "av": [], "azure-ai-documentintelligence": ["azure-core", "isodate", "typing-extensions"], "azure-core": ["requests", "typing-extensions"], "azure-identity": ["azure-core", "cryptography", "msal", "msal-extensions", "typing-extensions"], "babel": [], "base58check": [], "bcrypt": [], "beautifulsoup4": ["soupsieve", "typing-extensions"], "binaryornot": [], "black": ["click", "mypy-extensions", "packaging", "pathspec", "platformdirs", "pytokens"], "bleach": ["webencodings"], "blinker": [], "briefcase": ["binaryornot", "build", "chardet", "cookiecutter", "GitPython", "httpx", "packaging", "pip", "platformdirs", "psutil", "python-dateutil", "rich", "setuptools", "tomli_w", "truststore", "wheel"], "brotli": [], "bs4": ["beautifulsoup4"], "build": ["colorama", "packaging", "pyproject_hooks"], "cachetools": [], "certifi": [], "cffi": ["pycparser"], "cftime": ["numpy"], "chardet": [], "charset-normalizer": [], "click": ["colorama"], "click-log": ["click"], "cloudpickle": [], "cloup": ["click"], "cmake": [], "cobble": [], "colorama": [], "coloredlogs": ["humanfriendly"], "comm": [], "construct": [], "construct-typing": ["construct", "typing_extensions"], "contourpy": ["numpy"], "cookiecutter": ["arrow", "binaryornot", "click", "Jinja2", "python-slugify", "pyyaml", "requests", "rich"], "copyparty": ["Jinja2"], "croniter": ["python-dateutil"], "cronsim": [], "cryptography": ["cffi"], "cssselect": [], "curl_cffi": ["certifi", "cffi"], "cycler": [], "dacite": [], "dask": ["click", "cloudpickle", "fsspec", "packaging", "partd", "pyyaml", "toolz"], "debugpy": [], "decorator": [], "defusedxml": [], "distro": [], "dnspython": [], "docutils": [], "efficientnet_pytorch": ["torch"], "email-validator": ["dnspython", "idna"], "et_xmlfile": [], "eval_type_backport": [], "executing": [], "fake-http-header": [], "fake-useragent": [], "fastapi": ["annotated-doc", "pydantic", "starlette", "typing-extensions", "typing-inspection"], "fastapi-cli": ["rich-toolkit", "typer", "uvicorn"], "fastjsonschema": [], "fastuuid": [], "faust-cchardet": [], "filelock": [], "flatbuffers": [], "fonttools": [], "fqdn": [], "frozenlist": [], "fsspec": [], "gallery_dl": ["requests"], "geographiclib": [], "geopy": ["geographiclib"], "gitdb": ["smmap"], "gitingest": ["click", "httpx", "loguru", "pathspec", "pydantic", "python-dotenv", "starlette", "tiktoken"], "giturlparse": [], "glcontext": [], "google-auth": ["cryptography", "pyasn1-modules"], "googleapis-common-protos": ["protobuf"], "greenlet": [], "grpcio": ["typing-extensions"], "h11": [], "h2": ["hpack", "hyperframe"], "hf-xet": [], "hpack": [], "httpcore": ["certifi", "h11"], "httptools": [], "httpx": ["anyio", "certifi", "httpcore", "idna"], "httpx-aiohttp": ["aiohttp", "httpx"], "httpx-sse": [], "huggingface_hub": ["filelock", "fsspec", "hf-xet", "httpx", "packaging", "pyyaml", "tqdm", "typer", "typing-extensions"], "humanfriendly": ["pyreadline3"], "humanize": [], "hyperframe": [], "id": ["urllib3"], "idna": [], "importlib_metadata": ["zipp"], "iniconfig": [], "intel-cmplr-lib-ur": ["umf"], "intel-openmp": ["intel-cmplr-lib-ur"], "invoke": [], "ipykernel": ["comm", "debugpy", "ipython", "jupyter-client", "jupyter-core", "matplotlib-inline", "nest-asyncio", "packaging", "psutil", "pyzmq", "tornado", "traitlets"], "ipympl": ["ipython", "ipywidgets", "matplotlib", "numpy", "pillow", "traitlets"], "ipython": ["colorama", "decorator", "ipython-pygments-lexers", "jedi", "matplotlib-inline", "prompt_toolkit", "pygments", "stack_data", "traitlets"], "ipython-genutils": [], "ipython_pygments_lexers": ["pygments"], "ipywidgets": ["comm", "ipython", "jupyterlab_widgets", "traitlets", "widgetsnbextension"], "isodate": [], "isoduration": ["arrow"], "isosurfaces": ["numpy"], "itsdangerous": [], "jaconv": [], "jaraco.classes": ["more-itertools"], "jaraco.context": [], "jaraco.functools": ["more_itertools"], "jedi": ["parso"], "jiter": [], "joblib": [], "json5": [], "jsonpath-python": [], "jsonpointer": [], "jsonschema": ["attrs", "jsonschema-specifications", "referencing", "rpds-py"], "jsonschema-specifications": ["referencing"], "jupyter": ["ipykernel", "ipywidgets", "jupyter-console", "jupyterlab", "nbconvert", "notebook"], "jupyter-console": ["ipykernel", "ipython", "jupyter-client", "jupyter-core", "prompt-toolkit", "pygments", "pyzmq", "traitlets"], "jupyter-events": ["jsonschema", "packaging", "python-json-logger", "pyyaml", "referencing", "rfc3339-validator", "rfc3986-validator", "traitlets"], "jupyter-lsp": ["jupyter_server"], "jupyter_client": ["jupyter-core", "python-dateutil", "pyzmq", "tornado", "traitlets"], "jupyter_core": ["platformdirs", "traitlets"], "jupyter_server": ["anyio", "argon2-cffi", "jinja2", "jupyter-client", "jupyter-core", "jupyter-events", "jupyter-server-terminals", "nbconvert", "nbformat", "packaging", "prometheus-client", "pywinpty", "pyzmq", "send2trash", "terminado", "tornado", "traitlets", "websocket-client"], "jupyter_server_terminals": ["pywinpty", "terminado"], "jupyterlab": ["async-lru", "httpx", "ipykernel", "jinja2", "jupyter-core", "jupyter-lsp", "jupyter-server", "jupyterlab-server", "notebook-shim", "packaging", "setuptools", "tornado", "traitlets"], "jupyterlab_pygments": [], "jupyterlab_server": ["babel", "jinja2", "json5", "jsonschema", "jupyter-server", "packaging", "requests"], "jupyterlab_widgets": [], "keyring": ["jaraco.classes", "jaraco.context", "jaraco.functools", "pywin32-ctypes"], "kiwisolver": [], "lark": [], "lazy-loader": ["packaging"], "limits": ["deprecated", "packaging", "typing-extensions"], "linkify-it-py": ["uc-micro-py"], "litellm": ["aiohttp", "click", "fastuuid", "httpx", "importlib-metadata", "jinja2", "jsonschema", "openai", "pydantic", "python-dotenv", "tiktoken", "tokenizers"], "llvmlite": [], "locket": [], "loguru": ["colorama", "win32-setctime"], "lxml": [], "madoka": [], "magika": ["click", "onnxruntime"], "mammoth": ["cobble"], "manim": ["av", "beautifulsoup4", "click", "cloup", "decorator", "isosurfaces", "manimpango", "mapbox-earcut", "moderngl", "moderngl-window", "networkx", "numpy", "pillow", "pycairo", "pydub", "pygments", "rich", "scipy", "screeninfo", "skia-pathops", "srt", "svgelements", "tqdm", "typing-extensions", "watchdog"], "mapbox_earcut": ["numpy"], "markdown-it-py": ["mdurl"], "markdownify": ["beautifulsoup4", "six"], "markitdown": ["beautifulsoup4", "charset-normalizer", "defusedxml", "magika", "markdownify", "requests"], "matplotlib": ["contourpy", "cycler", "fonttools", "kiwisolver", "numpy", "packaging", "pillow", "pyparsing", "python-dateutil"], "matplotlib-inline": ["traitlets"], "mcp": ["anyio", "httpx", "httpx-sse", "jsonschema", "pydantic", "pydantic-settings", "pyjwt", "python-multipart", "pywin32", "sse-starlette", "starlette", "typing-extensions", "typing-inspection", "uvicorn"], "mdit-py-plugins": ["markdown-it-py"], "mdurl": [], "mistral-vibe": ["agent-client-protocol", "anyio", "cachetools", "cryptography", "gitpython", "giturlparse", "google-auth", "httpx", "keyring", "markdownify", "mcp", "mistralai", "opentelemetry-api", "opentelemetry-exporter-otlp-proto-http", "opentelemetry-sdk", "opentelemetry-semantic-conventions", "packaging", "pexpect", "pydantic", "pydantic-settings", "pyperclip", "python-dotenv", "pyyaml", "requests", "rich", "sounddevice", "textual", "textual-speedups", "tomli-w", "tree-sitter", "tree-sitter-bash", "watchfiles", "websockets", "zstandard"], "mistralai": ["eval-type-backport", "httpx", "jsonpath-python", "opentelemetry-api", "opentelemetry-semantic-conventions", "pydantic", "python-dateutil", "typing-inspection"], "mistune": [], "mkl": ["intel-openmp", "onemkl-license", "tbb"], "mockito": [], "moderngl": ["glcontext"], "moderngl-window": ["moderngl", "numpy", "Pillow", "pyglet", "pyglm"], "more-itertools": [], "motor": ["pymongo"], "mpmath": [], "msal": ["cryptography", "PyJWT", "requests"], "msal-extensions": ["msal"], "multidict": [], "multipledispatch": [], "munch": [], "mutagen": [], "mypy_extensions": [], "narwhals": [], "nbclient": ["jupyter-client", "jupyter-core", "nbformat", "traitlets"], "nbconvert": ["beautifulsoup4", "bleach", "defusedxml", "jinja2", "jupyter-core", "jupyterlab-pygments", "markupsafe", "mistune", "nbclient", "nbformat", "packaging", "pandocfilters", "pygments", "traitlets"], "nbformat": ["fastjsonschema", "jsonschema", "jupyter-core", "traitlets"], "nest-asyncio": [], "netCDF4": ["certifi", "cftime", "numpy"], "networkx": [], "nh3": [], "nltk": ["click", "joblib", "regex", "tqdm"], "notebook": ["jupyter-server", "jupyterlab", "jupyterlab-server", "notebook-shim", "tornado"], "notebook_shim": ["jupyter-server"], "numba": ["llvmlite", "numpy"], "numkong": [], "numpy": [], "oauthlib": [], "olefile": [], "onemkl-license": [], "onnxruntime": ["flatbuffers", "numpy", "packaging", "protobuf", "sympy"], "openai": ["anyio", "distro", "httpx", "jiter", "pydantic", "sniffio", "tqdm", "typing-extensions"], "openai-whisper": ["more-itertools", "numba", "numpy", "tiktoken", "torch", "tqdm"], "opencv-python": ["numpy"], "opencv-python-headless": ["numpy"], "openpyxl": ["et-xmlfile"], "opentelemetry-api": ["importlib-metadata", "typing-extensions"], "opentelemetry-exporter-otlp-proto-common": ["opentelemetry-proto"], "opentelemetry-exporter-otlp-proto-http": ["googleapis-common-protos", "opentelemetry-api", "opentelemetry-exporter-otlp-proto-common", "opentelemetry-proto", "opentelemetry-sdk", "requests", "typing-extensions"], "opentelemetry-proto": ["protobuf"], "opentelemetry-sdk": ["opentelemetry-api", "opentelemetry-semantic-conventions", "typing-extensions"], "opentelemetry-semantic-conventions": ["opentelemetry-api", "typing-extensions"], "overrides": [], "packaging": [], "pandas": ["numpy", "python-dateutil", "tzdata"], "pandocfilters": [], "paramiko": ["bcrypt", "cryptography", "invoke", "pynacl"], "parse_pip_search": ["bs4", "requests", "rich"], "parso": [], "partd": ["locket", "toolz"], "patchright": ["greenlet", "pyee"], "pathspec": [], "pathvalidate": [], "pdfminer.six": ["charset-normalizer", "cryptography"], "pdfsyntax": [], "pexpect": ["ptyprocess"], "pillow": [], "pipdeptree": ["packaging"], "pkginfo": [], "platformdirs": [], "playwright": ["greenlet", "pyee"], "playwright-stealth": ["playwright"], "plotly": ["narwhals", "packaging"], "pluggy": [], "plumbum": ["pywin32"], "pondpond": ["madoka"], "portalocker": ["pywin32"], "pretrainedmodels": ["munch", "torch", "torchvision", "tqdm"], "prometheus_client": [], "prompt_toolkit": ["wcwidth"], "propcache": [], "protobuf": [], "psutil": [], "ptyprocess": [], "pure_eval": [], "puremagic": [], "py-cpuinfo": [], "pyOpenSSL": ["cryptography", "typing-extensions"], "pyaes": [], "pyasn1": [], "pyasn1_modules": ["pyasn1"], "pycairo": [], "pycosat": [], "pycparser": [], "pycryptodomex": [], "pydantic": ["annotated-types", "pydantic-core", "typing-extensions", "typing-inspection"], "pydantic-settings": ["pydantic", "python-dotenv", "typing-inspection"], "pydantic_core": ["typing-extensions"], "pydub": [], "pyee": ["typing-extensions"], "pyflp": ["construct-typing", "sortedcontainers", "typing-extensions"], "pygame": [], "pyglet": [], "pyglm": [], "pykakasi": ["deprecated", "jaconv"], "pykeyboard": ["pyrogram", "tgcrypto"], "pymediainfo-pyroblack": [], "pymediainfo-pyrofork": [], "pymongo": ["dnspython"], "pyparsing": [], "pypdf": [], "pyperclip": [], "pyproject_hooks": [], "pyreadline3": [], "pyrefly": [], "pyrofork": ["pyaes", "pymediainfo-pyrofork", "pysocks"], "pyrr": ["multipledispatch", "numpy"], "pyte": ["wcwidth"], "pytest": ["colorama", "iniconfig", "packaging", "pluggy", "pygments"], "pytest-mockito": ["mockito", "pytest"], "pytgcrypto": [], "python-dateutil": ["six"], "python-dotenv": [], "python-json-logger": [], "python-multipart": [], "python-pptx": ["lxml", "Pillow", "typing-extensions", "XlsxWriter"], "python-sat": ["six"], "python-slugify": ["text-unidecode"], "python3-openid": ["defusedxml"], "pytokens": [], "pytube": [], "pytz": [], "pywin32": [], "pywin32-ctypes": [], "pywinpty": [], "pyzmq": [], "qtconsole": ["ipykernel", "ipython_pygments_lexers", "jupyter_client", "jupyter_core", "packaging", "pygments", "qtpy", "traitlets"], "rank-bm25": ["numpy"], "readme_renderer": ["docutils", "nh3", "Pygments"], "redis": [], "referencing": ["attrs", "rpds-py", "typing-extensions"], "regex": [], "requests": ["certifi", "charset_normalizer", "idna", "urllib3"], "requests-oauthlib": ["oauthlib", "requests"], "requests-toolbelt": ["requests"], "rfc3339-validator": ["six"], "rfc3986": [], "rfc3986-validator": [], "rfc3987-syntax": ["lark"], "rich": ["markdown-it-py", "pygments"], "rich-toolkit": ["click", "rich", "typing-extensions"], "rpds-py": [], "rpyc": ["plumbum"], "rsa": ["pyasn1"], "rtree": [], "safetensors": [], "scikit-image": ["imageio", "lazy-loader", "networkx", "numpy", "packaging", "pillow", "scipy", "tifffile"], "scikit-learn": ["joblib", "numpy", "scipy", "threadpoolctl"], "scipy": ["numpy"], "screeninfo": [], "seaborn": ["matplotlib", "numpy", "pandas"], "segmentation_models_pytorch": ["huggingface-hub", "numpy", "pillow", "safetensors", "timm", "torch", "torchvision", "tqdm"], "sentence-transformers": ["huggingface-hub", "numpy", "scikit-learn", "scipy", "torch", "tqdm", "transformers", "typing_extensions"], "setuptools": [], "shapely": ["numpy"], "shellingham": [], "simsimd": [], "six": [], "skia-pathops": [], "slowapi": ["limits"], "smmap": [], "sniffio": [], "snowballstemmer": [], "sortedcontainers": [], "soundcloud-v2": ["dacite", "python-dateutil", "requests"], "sounddevice": ["cffi"], "soupsieve": [], "spotipy": ["redis", "requests", "urllib3"], "sqlparse": [], "srt": [], "sse-starlette": ["anyio", "starlette"], "stack-data": ["asttokens", "executing", "pure-eval"], "starlette": ["anyio", "typing-extensions"], "stringzilla": [], "svgelements": [], "sympy": ["mpmath"], "syncedlyrics": ["beautifulsoup4", "rapidfuzz", "requests"], "tbb": ["tcmlib"], "tcmlib": [], "tenacity": [], "terminado": ["pywinpty", "tornado"], "terminaltexteffects": [], "text-unidecode": [], "textual": ["markdown-it-py", "mdit-py-plugins", "platformdirs", "pygments", "rich", "typing-extensions"], "textual-speedups": [], "tf-playwright-stealth": ["fake-http-header", "playwright"], "thefuck": ["colorama", "decorator", "psutil", "pyte", "six", "win-unicode-console"], "threadpoolctl": [], "tifffile": ["numpy"], "tiktoken": ["regex", "requests"], "timm": ["huggingface_hub", "pyyaml", "safetensors", "torch", "torchvision"], "tinycss2": ["webencodings"], "tokenizers": ["huggingface-hub"], "tomli": [], "tomli_w": [], "toolz": [], "torch": ["filelock", "fsspec", "jinja2", "networkx", "setuptools", "sympy", "typing-extensions"], "torchaudio": [], "torchvision": ["numpy", "pillow", "torch"], "tornado": [], "tqdm": ["colorama"], "traitlets": [], "transformers": ["huggingface-hub", "numpy", "packaging", "pyyaml", "regex", "safetensors", "tokenizers", "tqdm", "typer"], "tree-sitter": [], "tree-sitter-bash": [], "trimesh": ["numpy"], "truststore": [], "twine": ["id", "keyring", "packaging", "readme-renderer", "requests", "requests-toolbelt", "rfc3986", "rich", "urllib3"], "typer": ["annotated-doc", "click", "rich", "shellingham"], "typer-slim": ["typer"], "types-python-dateutil": [], "typing-inspection": ["typing-extensions"], "typing_extensions": [], "tzdata": [], "tzlocal": ["tzdata"], "uc-micro-py": [], "ultralytics": ["matplotlib", "numpy", "opencv-python", "pillow", "polars", "psutil", "pyyaml", "requests", "scipy", "torch", "torchvision", "ultralytics-thop"], "ultralytics-thop": ["numpy", "torch"], "umf": ["tcmlib"], "unoconv": [], "unoserver": [], "unzip-http": ["urllib3"], "uri-template": [], "urllib3": [], "uvicorn": ["click", "h11"], "voila": ["jupyter-client", "jupyter-core", "jupyter-server", "jupyterlab-server", "nbclient", "nbconvert", "traitlets", "websockets"], "watchdog": [], "watchfiles": ["anyio"], "wcwidth": [], "webcolors": [], "webencodings": [], "websocket-client": [], "websockets": [], "wheel": ["packaging"], "widgetsnbextension": [], "win32_setctime": [], "win_unicode_console": [], "wrapt": [], "xarray": ["numpy", "packaging", "pandas"], "xlrd": [], "xlsxwriter": [], "xxhash": [], "yarl": ["idna", "multidict", "propcache"], "youtube-transcript-api": ["defusedxml", "requests"], "yt-dlp": [], "yt-dlp-ejs": [], "ytmusicapi": ["requests"], "zipp": [], "zstandard": []};
+  const layerColors = ["#3b82f6", "#06b6d4", "#22c55e", "#f59e0b", "#ec4899", "#8b5cf6", "#ef4444", "#eab308"];
+    const CANVAS_LEFT_PAD = 56;
+    const CANVAS_TOP_PAD = 56;
+    const BASE_H_MARGIN = 70;
+    const BASE_V_MARGIN = 95;
+    const BASE_COLUMN_WIDTH = 210;
+    const BASE_ROW_HEIGHT = 34;
+  const edgeLayer = document.getElementById('edge-layer');
+    const container = document.querySelector('.container');
+    const titleEl = document.getElementById('page-title');
+    const deselectBtn = document.getElementById('deselect-btn');
+    const themeBtn = document.getElementById('theme-btn');
+    const searchInput = document.getElementById('search-input');
+    const searchClearBtn = document.getElementById('search-clear');
+    const infoPanel = document.getElementById('pkg-info');
+    const infoTitle = document.getElementById('pkg-info-title');
+    const depsTitle = document.getElementById('pkg-deps-title');
+    const depsList = document.getElementById('pkg-deps-list');
+    const dependentsTitle = document.getElementById('pkg-dependents-title');
+    const dependentsList = document.getElementById('pkg-dependents-list');
+    const infoToggleBtn = document.getElementById('pkg-info-toggle');
+    let allEdges = [];
+    let selectedPkg = null;
+    let hoveredPkg = null;
+    let infoMinimized = false;
+    let searchLevels = null;
+    let visiblePkgSet = new Set(Object.keys(boxIds));
+    let currentLayout = {};
+    let isPanning = false;
+    let panStartX = 0;
+    let panStartY = 0;
+    let panScrollX = 0;
+    let panScrollY = 0;
+
+    const packages = Object.keys(boxIds).sort();
+    const baseLayout = {};
+
+    const dependents = {};
+    Object.entries(requires).forEach(([src, deps]) => {
+        deps.forEach(dep => {
+            if (!dependents[dep]) dependents[dep] = [];
+            dependents[dep].push(src);
+        });
+    });
+
+    packages.forEach(pkg => {
+        const [row, col] = positions[pkg];
+        baseLayout[pkg] = {
+            x: CANVAS_LEFT_PAD + col * (BASE_COLUMN_WIDTH + BASE_H_MARGIN),
+            y: CANVAS_TOP_PAD + row * (BASE_ROW_HEIGHT + BASE_V_MARGIN),
+        };
+    });
+
+    function activePkg() {
+        return selectedPkg || hoveredPkg;
+    }
+
+    function depthOpacity(level) {
+        if (level <= 0) return 1;
+        if (level === 1) return 0.6;
+        return 0.4;
+    }
+
+    function neighborsOf(pkg) {
+        const req = requires[pkg] || [];
+        const dep = dependents[pkg] || [];
+        return [...new Set([...req, ...dep])].filter(name => name in boxIds);
+    }
+
+    function computeSearchLevels(rawQuery) {
+        const q = rawQuery.trim().toLowerCase();
+        if (!q) return null;
+
+        const matches = Object.keys(boxIds).filter(name => name.toLowerCase().includes(q));
+        if (matches.length === 0) return {};
+
+        const levels = {};
+        const queue = [];
+        matches.forEach(name => {
+            levels[name] = 0;
+            queue.push(name);
+        });
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            const currentLevel = levels[current];
+            neighborsOf(current).forEach(nextNode => {
+                const next = currentLevel + 1;
+                if (!(nextNode in levels) || next < levels[nextNode]) {
+                    levels[nextNode] = next;
+                    queue.push(nextNode);
+                }
+            });
+        }
+
+        return levels;
+    }
+
+    function buildSearchLayout(levels) {
+        const buckets = {};
+        let maxLevel = 0;
+        Object.entries(levels).forEach(([pkg, level]) => {
+            const key = Math.max(0, level);
+            if (!buckets[key]) buckets[key] = [];
+            buckets[key].push(pkg);
+            maxLevel = Math.max(maxLevel, key);
+        });
+
+        for (let lvl = 0; lvl <= maxLevel; lvl += 1) {
+            if (!buckets[lvl]) buckets[lvl] = [];
+            buckets[lvl].sort((a, b) => a.localeCompare(b));
+        }
+
+        const layout = {};
+        const compactColStep = 180;
+        const compactRowStep = 58;
+
+        for (let col = 0; col <= maxLevel; col += 1) {
+            buckets[col].forEach((pkg, idx) => {
+                layout[pkg] = {
+                    x: CANVAS_LEFT_PAD + col * compactColStep,
+                    y: CANVAS_TOP_PAD + idx * compactRowStep,
+                };
+            });
+        }
+
+        return layout;
+    }
+
+    function renderNodes(layout, levels) {
+        container.querySelectorAll('.box').forEach(el => el.remove());
+
+        visiblePkgSet = new Set(Object.keys(layout));
+        currentLayout = layout;
+
+        let maxRight = 0;
+        let maxBottom = 0;
+
+        Object.entries(layout)
+            .sort((a, b) => (a[1].y - b[1].y) || (a[1].x - b[1].x))
+            .forEach(([pkg, pos]) => {
+                const el = document.createElement('div');
+                el.id = boxIds[pkg];
+                el.className = 'box';
+                el.dataset.pkg = pkg;
+                el.title = pkg;
+                el.textContent = pkg;
+                el.style.left = `${pos.x}px`;
+                el.style.top = `${pos.y}px`;
+                const level = levels && pkg in levels ? levels[pkg] : 0;
+                el.dataset.searchOpacity = String(depthOpacity(level));
+                el.style.opacity = el.dataset.searchOpacity;
+                container.appendChild(el);
+
+                maxRight = Math.max(maxRight, pos.x + el.offsetWidth);
+                maxBottom = Math.max(maxBottom, pos.y + el.offsetHeight);
+            });
+
+        container.style.width = `${Math.max(420, Math.ceil(maxRight + CANVAS_LEFT_PAD))}px`;
+        container.style.height = `${Math.max(260, Math.ceil(maxBottom + CANVAS_TOP_PAD))}px`;
+    }
+
+    function renderList(listEl, items, emptyLabel) {
+        listEl.innerHTML = '';
+
+        const colCount = Number(listEl.style.getPropertyValue('--col-count') || '1');
+
+        if (items.length === 0) {
+            const cell = document.createElement('div');
+            cell.className = 'pkg-cell';
+            cell.textContent = emptyLabel;
+            listEl.appendChild(cell);
+            return;
+        }
+
+        const MAX_ROWS = 8;
+        const maxVisibleNoScroll = colCount * MAX_ROWS;
+
+        const matrixCells = [];
+        if (items.length <= maxVisibleNoScroll) {
+            const rows = items.length <= MAX_ROWS ? items.length : MAX_ROWS;
+            const columns = [];
+            for (let c = 0; c < colCount; c += 1) {
+                columns.push(items.slice(c * MAX_ROWS, (c + 1) * MAX_ROWS));
+            }
+
+            for (let r = 0; r < rows; r += 1) {
+                for (let c = 0; c < colCount; c += 1) {
+                    matrixCells.push(columns[c][r] ?? null);
+                }
+            }
+        } else {
+            const first = items.slice(0, maxVisibleNoScroll);
+            const rest = items.slice(maxVisibleNoScroll);
+
+            const columns = [];
+            for (let c = 0; c < colCount; c += 1) {
+                columns.push(first.slice(c * MAX_ROWS, (c + 1) * MAX_ROWS));
+            }
+            for (let r = 0; r < MAX_ROWS; r += 1) {
+                for (let c = 0; c < colCount; c += 1) {
+                    matrixCells.push(columns[c][r] ?? null);
+                }
+            }
+            matrixCells.push(...rest);
+        }
+
+        matrixCells.forEach(name => {
+            const cell = document.createElement('div');
+            cell.className = 'pkg-cell';
+            if (!name) {
+                cell.classList.add('placeholder');
+                cell.textContent = ' ';
+            } else {
+                cell.textContent = name;
+            }
+            listEl.appendChild(cell);
+        });
+    }
+
+    function listColumnCount(length) {
+        if (length <= 8) return 1;
+        if (length <= 16) return 2;
+        return 3;
+    }
+
+    function updatePanelWidth(depCount, dependentCount) {
+        const maxCount = Math.max(depCount, dependentCount);
+        const cols = listColumnCount(maxCount);
+        const base = 230;
+        const perCol = 150;
+        const width = Math.min(620, Math.max(260, base + (cols - 1) * perCol));
+        infoPanel.style.width = `min(${width}px, calc(100vw - 40px))`;
+    }
+
+    function updateInfoToggle() {
+        infoPanel.classList.toggle('minimized', infoMinimized);
+        const nextLabel = infoMinimized ? 'Expand details panel' : 'Minimize details panel';
+        infoToggleBtn.setAttribute('aria-label', nextLabel);
+        infoToggleBtn.setAttribute('title', nextLabel);
+    }
+
+    function updateInfoPanel(pkg) {
+        if (!pkg || !boxIds[pkg]) {
+            infoPanel.classList.add('hidden');
+            return;
+        }
+
+        const outgoing = ((requires[pkg] || []).filter(name => boxIds[name])).sort();
+        const incoming = ((dependents[pkg] || []).filter(name => boxIds[name])).sort();
+
+        infoTitle.textContent = pkg;
+        depsTitle.textContent = `Dependencies (${outgoing.length})`;
+        dependentsTitle.textContent = `Dependents (${incoming.length})`;
+        depsList.style.setProperty('--col-count', String(listColumnCount(outgoing.length)));
+        dependentsList.style.setProperty('--col-count', String(listColumnCount(incoming.length)));
+        updatePanelWidth(outgoing.length, incoming.length);
+        renderList(depsList, outgoing, 'No dependencies in map');
+        renderList(dependentsList, incoming, 'No dependents in map');
+        infoPanel.classList.remove('hidden');
+        updateInfoToggle();
+    }
+
+    function resetStyles() {
+        allEdges.forEach(edge => {
+            edge.classList.remove('is-dim', 'rel-out', 'rel-in');
+            edge.removeAttribute('marker-end');
+            edge.setAttribute('stroke', edge.dataset.baseColor);
+            edge.style.opacity = edge.dataset.searchOpacity || '';
+        });
+
+        Object.values(boxIds).forEach(id => {
+            const box = document.getElementById(id);
+            if (!box) return;
+            box.classList.remove('is-dim', 'rel-source', 'rel-out', 'rel-in');
+            box.style.opacity = box.dataset.searchOpacity || '';
+        });
+    }
+
+    function updateTopbar() {
+        if (selectedPkg) {
+            titleEl.textContent = `Pip dependency map - ${selectedPkg}`;
+            deselectBtn.disabled = false;
+        } else {
+            titleEl.textContent = 'Pip dependency map';
+            deselectBtn.disabled = true;
+        }
+    }
+
+    function applyRelations(pkg) {
+        resetStyles();
+        updateInfoPanel(pkg);
+
+        if (!pkg || !boxIds[pkg] || !visiblePkgSet.has(pkg)) {
+            updateTopbar();
+            return;
+        }
+
+        const outgoing = new Set((requires[pkg] || []).filter(name => boxIds[name]));
+        const incoming = new Set((dependents[pkg] || []).filter(name => boxIds[name]));
+        const linked = new Set([pkg, ...outgoing, ...incoming]);
+
+        Object.keys(boxIds).forEach(name => {
+            const box = document.getElementById(boxIds[name]);
+            if (!box) return;
+
+            if (!visiblePkgSet.has(name)) {
+                return;
+            }
+
+            if (!linked.has(name)) {
+                box.classList.add('is-dim');
+                return;
+            }
+
+            if (name === pkg) {
+                box.classList.add('rel-source');
+            } else if (outgoing.has(name)) {
+                box.classList.add('rel-out');
+            } else if (incoming.has(name)) {
+                box.classList.add('rel-in');
+            }
+        });
+
+        allEdges.forEach(edge => {
+            const src = edge.dataset.src;
+            const dst = edge.dataset.dst;
+
+            if (!visiblePkgSet.has(src) || !visiblePkgSet.has(dst)) {
+                return;
+            }
+
+            if (src === pkg && outgoing.has(dst)) {
+                edge.classList.add('rel-out');
+                edge.setAttribute('marker-end', 'url(#arrowhead-green)');
+            } else if (dst === pkg && incoming.has(src)) {
+                edge.classList.add('rel-in');
+                edge.setAttribute('marker-end', 'url(#arrowhead-red)');
+            } else {
+                edge.classList.add('is-dim');
+            }
+        });
+
+        updateTopbar();
+    }
+
+  function spreadOffset(index, total, step, maxAbs) {
+    if (!total || total <= 1) return 0;
+    const centered = index - (total - 1) / 2;
+    return Math.max(-maxAbs, Math.min(maxAbs, centered * step));
+  }
+
+  function drawConnections() {
+        while (edgeLayer.lastChild && edgeLayer.lastChild.tagName !== 'defs') {
+      edgeLayer.removeChild(edgeLayer.lastChild);
+    }
+
+    allEdges = [];
+    const containerRect = container.getBoundingClientRect();
+
+        edgeLayer.setAttribute('width', String(container.clientWidth));
+        edgeLayer.setAttribute('height', String(container.clientHeight));
+        edgeLayer.setAttribute('viewBox', `0 0 ${container.clientWidth} ${container.clientHeight}`);
+
+    const info = {};
+        Object.keys(positions).forEach(pkg => {
+            if (!visiblePkgSet.has(pkg)) return;
+      const el = document.getElementById(boxIds[pkg]);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const left = rect.left - containerRect.left;
+      const top = rect.top - containerRect.top;
+      info[pkg] = {
+        cx: left + rect.width / 2,
+        top,
+        bottom: top + rect.height,
+      };
+    });
+
+    const incoming = {};
+    Object.entries(requires).forEach(([src, deps]) => {
+      deps.forEach(dep => {
+        if (!info[src] || !info[dep]) return;
+        if (!incoming[dep]) incoming[dep] = [];
+        incoming[dep].push(src);
+      });
+    });
+
+    Object.entries(requires).forEach(([src, deps]) => {
+    if (!visiblePkgSet.has(src) || !info[src]) return;
+
+    const visibleDeps = deps.filter(dep => visiblePkgSet.has(dep) && info[dep]);
+      const outTotal = visibleDeps.length;
+      const srcLayer = positions[src][0];
+      const layerColor = layerColors[srcLayer % layerColors.length];
+
+      visibleDeps.forEach((dep, outIndex) => {
+        const srcInfo = info[src];
+        const tgtInfo = info[dep];
+        const inList = incoming[dep] || [];
+        const inIndex = Math.max(0, inList.indexOf(src));
+        const inTotal = inList.length || 1;
+
+        const sx = srcInfo.cx + spreadOffset(outIndex, outTotal, 8, 28);
+        const sy = srcInfo.bottom + 2;
+        const tx = tgtInfo.cx + spreadOffset(inIndex, inTotal, 8, 28);
+        const ty = tgtInfo.top - 8;
+
+        const verticalGap = ty - sy;
+        const cp1y = sy + Math.max(24, verticalGap * 0.35);
+        const cp2y = ty - Math.max(24, verticalGap * 0.35);
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('class', 'edge');
+        path.setAttribute('stroke', layerColor);
+        path.dataset.baseColor = layerColor;
+        const srcDepth = searchLevels && src in searchLevels ? searchLevels[src] : 0;
+        const depDepth = searchLevels && dep in searchLevels ? searchLevels[dep] : 0;
+        path.dataset.searchOpacity = String(depthOpacity(Math.max(srcDepth, depDepth)));
+        path.style.opacity = path.dataset.searchOpacity;
+        path.setAttribute('d', `M ${sx} ${sy} C ${sx} ${cp1y}, ${tx} ${cp2y}, ${tx} ${ty}`);
+        path.dataset.src = src;
+        path.dataset.dst = dep;
+        edgeLayer.appendChild(path);
+        allEdges.push(path);
+      });
+    });
+
+        Object.entries(boxIds).forEach(([pkg, id]) => {
+            const box = document.getElementById(id);
+            if (!box) return;
+
+            box.onmouseenter = () => {
+                if (selectedPkg) return;
+                if (!visiblePkgSet.has(pkg)) return;
+                hoveredPkg = pkg;
+                applyRelations(activePkg());
+            };
+
+            box.onmouseleave = event => {
+                if (selectedPkg) return;
+                if (event.relatedTarget && infoPanel.contains(event.relatedTarget)) return;
+                hoveredPkg = null;
+                applyRelations(activePkg());
+            };
+
+            box.onclick = () => {
+                if (!visiblePkgSet.has(pkg)) return;
+                selectedPkg = pkg;
+                hoveredPkg = null;
+                applyRelations(activePkg());
+            };
+        });
+
+        applyRelations(activePkg());
+  }
+
+    function drawGraph() {
+        const levels = searchLevels;
+        let layout;
+
+        if (!levels) {
+            layout = { ...baseLayout };
+        } else {
+            layout = buildSearchLayout(levels);
+        }
+
+        if (selectedPkg && !(selectedPkg in layout)) selectedPkg = null;
+        if (hoveredPkg && !(hoveredPkg in layout)) hoveredPkg = null;
+
+        renderNodes(layout, levels);
+        drawConnections();
+    }
+
+    infoPanel.addEventListener('mouseleave', () => {
+        if (selectedPkg) return;
+        hoveredPkg = null;
+        applyRelations(activePkg());
+    });
+
+    function setTheme(nextTheme) {
+        const theme = nextTheme === 'dark' ? 'dark' : 'light';
+        document.body.dataset.theme = theme;
+        const nextLabel = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+        themeBtn.setAttribute('aria-label', nextLabel);
+        themeBtn.setAttribute('title', nextLabel);
+    }
+
+    infoToggleBtn.addEventListener('click', event => {
+        event.stopPropagation();
+        if (!activePkg()) return;
+        infoMinimized = !infoMinimized;
+        updateInfoToggle();
+    });
+
+    themeBtn.addEventListener('click', () => {
+        const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+        setTheme(nextTheme);
+    });
+
+    deselectBtn.addEventListener('click', () => {
+        selectedPkg = null;
+        hoveredPkg = null;
+        applyRelations(activePkg());
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        selectedPkg = null;
+        hoveredPkg = null;
+        applyRelations(activePkg());
+    });
+
+    setTheme('light');
+
+    function applySearch() {
+        searchLevels = computeSearchLevels(searchInput.value || '');
+        const hasQuery = (searchInput.value || '').trim().length > 0;
+        searchClearBtn.classList.toggle('visible', hasQuery);
+        drawGraph();
+    }
+
+    searchInput.addEventListener('input', applySearch);
+
+    searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.focus();
+        applySearch();
+    });
+
+    function canStartPan(target) {
+        if (!target) return false;
+        if (target.closest('.box')) return false;
+        if (target.closest('.topbar-wrap')) return false;
+        if (target.closest('.pkg-info')) return false;
+        return true;
+    }
+
+    document.addEventListener('mousedown', event => {
+        if (event.button !== 0) return;
+        if (!canStartPan(event.target)) return;
+        isPanning = true;
+        panStartX = event.clientX;
+        panStartY = event.clientY;
+        panScrollX = window.scrollX;
+        panScrollY = window.scrollY;
+        document.body.style.cursor = 'grabbing';
+        event.preventDefault();
+    });
+
+    window.addEventListener('mousemove', event => {
+        if (!isPanning) return;
+        const dx = event.clientX - panStartX;
+        const dy = event.clientY - panStartY;
+        window.scrollTo(panScrollX - dx, panScrollY - dy);
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isPanning) return;
+        isPanning = false;
+        document.body.style.cursor = '';
+    });
+
+    window.addEventListener('load', drawGraph);
+    window.addEventListener('resize', drawGraph);
+</script>
+
+</body>
+</html>

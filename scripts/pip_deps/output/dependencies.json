@@ -1,0 +1,3949 @@
+{
+  "Crawl4AI": {
+    "requires": [
+      "aiofiles",
+      "aiohttp",
+      "aiosqlite",
+      "alphashape",
+      "anyio",
+      "beautifulsoup4",
+      "brotli",
+      "chardet",
+      "click",
+      "cssselect",
+      "fake-useragent",
+      "httpx",
+      "humanize",
+      "lark",
+      "litellm",
+      "lxml",
+      "nltk",
+      "numpy",
+      "patchright",
+      "pillow",
+      "playwright",
+      "playwright-stealth",
+      "psutil",
+      "pydantic",
+      "pyOpenSSL",
+      "python-dotenv",
+      "PyYAML",
+      "rank-bm25",
+      "requests",
+      "rich",
+      "shapely",
+      "snowballstemmer",
+      "xxhash"
+    ],
+    "required_by": []
+  },
+  "Deprecated": {
+    "requires": [
+      "wrapt"
+    ],
+    "required_by": [
+      "limits",
+      "pykakasi"
+    ]
+  },
+  "Faker": {
+    "requires": [
+      "tzdata"
+    ],
+    "required_by": []
+  },
+  "Flask": {
+    "requires": [
+      "blinker",
+      "click",
+      "itsdangerous",
+      "jinja2",
+      "markupsafe",
+      "werkzeug"
+    ],
+    "required_by": []
+  },
+  "GitPython": {
+    "requires": [
+      "gitdb"
+    ],
+    "required_by": [
+      "briefcase",
+      "mistral-vibe"
+    ]
+  },
+  "HyFetch": {
+    "requires": [
+      "colorama",
+      "psutil"
+    ],
+    "required_by": []
+  },
+  "ImageIO": {
+    "requires": [
+      "numpy",
+      "pillow"
+    ],
+    "required_by": [
+      "scikit-image"
+    ]
+  },
+  "Jinja2": {
+    "requires": [
+      "MarkupSafe"
+    ],
+    "required_by": [
+      "cookiecutter",
+      "copyparty",
+      "Flask",
+      "jupyter_server",
+      "jupyterlab",
+      "jupyterlab_server",
+      "litellm",
+      "nbconvert",
+      "torch"
+    ]
+  },
+  "ManimPango": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "MarkupSafe": {
+    "requires": [],
+    "required_by": [
+      "Flask",
+      "Jinja2",
+      "nbconvert",
+      "Werkzeug"
+    ]
+  },
+  "PyJWT": {
+    "requires": [],
+    "required_by": [
+      "mcp",
+      "msal"
+    ]
+  },
+  "PyNaCl": {
+    "requires": [
+      "cffi"
+    ],
+    "required_by": [
+      "paramiko"
+    ]
+  },
+  "PySocks": {
+    "requires": [],
+    "required_by": [
+      "pyrofork"
+    ]
+  },
+  "PyYAML": {
+    "requires": [],
+    "required_by": [
+      "albumentations",
+      "cookiecutter",
+      "Crawl4AI",
+      "dask",
+      "huggingface_hub",
+      "jupyter-events",
+      "mistral-vibe",
+      "timm",
+      "transformers",
+      "ultralytics"
+    ]
+  },
+  "Pygments": {
+    "requires": [],
+    "required_by": [
+      "ipython",
+      "ipython_pygments_lexers",
+      "jupyter-console",
+      "manim",
+      "nbconvert",
+      "pytest",
+      "qtconsole",
+      "readme_renderer",
+      "rich",
+      "textual"
+    ]
+  },
+  "QtPy": {
+    "requires": [
+      "packaging"
+    ],
+    "required_by": [
+      "qtconsole"
+    ]
+  },
+  "RapidFuzz": {
+    "requires": [],
+    "required_by": [
+      "syncedlyrics"
+    ]
+  },
+  "Send2Trash": {
+    "requires": [],
+    "required_by": [
+      "jupyter_server"
+    ]
+  },
+  "SpeechRecognition": {
+    "requires": [
+      "typing-extensions"
+    ],
+    "required_by": []
+  },
+  "Unidecode": {
+    "requires": [],
+    "required_by": []
+  },
+  "Werkzeug": {
+    "requires": [
+      "markupsafe"
+    ],
+    "required_by": [
+      "Flask"
+    ]
+  },
+  "agent-client-protocol": {
+    "requires": [
+      "pydantic"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "aiocron": {
+    "requires": [
+      "cronsim",
+      "python-dateutil",
+      "tzlocal"
+    ],
+    "required_by": []
+  },
+  "aiofiles": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "aiohappyeyeballs": {
+    "requires": [],
+    "required_by": [
+      "aiohttp"
+    ]
+  },
+  "aiohttp": {
+    "requires": [
+      "aiohappyeyeballs",
+      "aiosignal",
+      "attrs",
+      "frozenlist",
+      "multidict",
+      "propcache",
+      "yarl"
+    ],
+    "required_by": [
+      "Crawl4AI",
+      "httpx-aiohttp",
+      "litellm"
+    ]
+  },
+  "aiosignal": {
+    "requires": [
+      "frozenlist",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "aiohttp"
+    ]
+  },
+  "aiosqlite": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "aiosqlite-black": {
+    "requires": [
+      "typing_extensions"
+    ],
+    "required_by": []
+  },
+  "albucore": {
+    "requires": [
+      "numkong",
+      "numpy",
+      "stringzilla"
+    ],
+    "required_by": [
+      "albumentations"
+    ]
+  },
+  "albumentations": {
+    "requires": [
+      "albucore",
+      "numpy",
+      "opencv-python-headless",
+      "pydantic",
+      "PyYAML",
+      "scipy"
+    ],
+    "required_by": []
+  },
+  "alphashape": {
+    "requires": [
+      "Click",
+      "click-log",
+      "networkx",
+      "numpy",
+      "rtree",
+      "scipy",
+      "shapely",
+      "trimesh"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "annotated-doc": {
+    "requires": [],
+    "required_by": [
+      "fastapi",
+      "typer"
+    ]
+  },
+  "annotated-types": {
+    "requires": [],
+    "required_by": [
+      "pydantic"
+    ]
+  },
+  "anyio": {
+    "requires": [
+      "idna",
+      "typing_extensions"
+    ],
+    "required_by": [
+      "Crawl4AI",
+      "httpx",
+      "jupyter_server",
+      "mcp",
+      "mistral-vibe",
+      "openai",
+      "sse-starlette",
+      "starlette",
+      "watchfiles"
+    ]
+  },
+  "argon2-cffi": {
+    "requires": [
+      "argon2-cffi-bindings"
+    ],
+    "required_by": [
+      "jupyter_server"
+    ]
+  },
+  "argon2-cffi-bindings": {
+    "requires": [
+      "cffi"
+    ],
+    "required_by": [
+      "argon2-cffi"
+    ]
+  },
+  "arrow": {
+    "requires": [
+      "python-dateutil",
+      "tzdata"
+    ],
+    "required_by": [
+      "cookiecutter",
+      "isoduration"
+    ]
+  },
+  "asttokens": {
+    "requires": [],
+    "required_by": [
+      "stack-data"
+    ]
+  },
+  "async-lru": {
+    "requires": [],
+    "required_by": [
+      "jupyterlab"
+    ]
+  },
+  "attrs": {
+    "requires": [],
+    "required_by": [
+      "aiohttp",
+      "jsonschema",
+      "referencing"
+    ]
+  },
+  "av": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "azure-ai-documentintelligence": {
+    "requires": [
+      "azure-core",
+      "isodate",
+      "typing-extensions"
+    ],
+    "required_by": []
+  },
+  "azure-core": {
+    "requires": [
+      "requests",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "azure-ai-documentintelligence",
+      "azure-identity"
+    ]
+  },
+  "azure-identity": {
+    "requires": [
+      "azure-core",
+      "cryptography",
+      "msal",
+      "msal-extensions",
+      "typing-extensions"
+    ],
+    "required_by": []
+  },
+  "babel": {
+    "requires": [],
+    "required_by": [
+      "jupyterlab_server"
+    ]
+  },
+  "base58check": {
+    "requires": [],
+    "required_by": []
+  },
+  "bcrypt": {
+    "requires": [],
+    "required_by": [
+      "paramiko"
+    ]
+  },
+  "beautifulsoup4": {
+    "requires": [
+      "soupsieve",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "bs4",
+      "Crawl4AI",
+      "manim",
+      "markdownify",
+      "markitdown",
+      "nbconvert",
+      "syncedlyrics"
+    ]
+  },
+  "binaryornot": {
+    "requires": [],
+    "required_by": [
+      "briefcase",
+      "cookiecutter"
+    ]
+  },
+  "black": {
+    "requires": [
+      "click",
+      "mypy-extensions",
+      "packaging",
+      "pathspec",
+      "platformdirs",
+      "pytokens"
+    ],
+    "required_by": []
+  },
+  "bleach": {
+    "requires": [
+      "webencodings"
+    ],
+    "required_by": [
+      "nbconvert"
+    ]
+  },
+  "blinker": {
+    "requires": [],
+    "required_by": [
+      "Flask"
+    ]
+  },
+  "briefcase": {
+    "requires": [
+      "binaryornot",
+      "build",
+      "chardet",
+      "cookiecutter",
+      "GitPython",
+      "httpx",
+      "packaging",
+      "pip",
+      "platformdirs",
+      "psutil",
+      "python-dateutil",
+      "rich",
+      "setuptools",
+      "tomli_w",
+      "truststore",
+      "wheel"
+    ],
+    "required_by": []
+  },
+  "brotli": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "bs4": {
+    "requires": [
+      "beautifulsoup4"
+    ],
+    "required_by": [
+      "parse_pip_search"
+    ]
+  },
+  "build": {
+    "requires": [
+      "colorama",
+      "packaging",
+      "pyproject_hooks"
+    ],
+    "required_by": [
+      "briefcase"
+    ]
+  },
+  "cachetools": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "certifi": {
+    "requires": [],
+    "required_by": [
+      "curl_cffi",
+      "httpcore",
+      "httpx",
+      "netCDF4",
+      "requests"
+    ]
+  },
+  "cffi": {
+    "requires": [
+      "pycparser"
+    ],
+    "required_by": [
+      "argon2-cffi-bindings",
+      "cryptography",
+      "curl_cffi",
+      "PyNaCl",
+      "sounddevice"
+    ]
+  },
+  "cftime": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "netCDF4"
+    ]
+  },
+  "chardet": {
+    "requires": [],
+    "required_by": [
+      "briefcase",
+      "Crawl4AI"
+    ]
+  },
+  "charset-normalizer": {
+    "requires": [],
+    "required_by": [
+      "markitdown",
+      "pdfminer.six",
+      "requests"
+    ]
+  },
+  "click": {
+    "requires": [
+      "colorama"
+    ],
+    "required_by": [
+      "alphashape",
+      "black",
+      "click-log",
+      "cloup",
+      "cookiecutter",
+      "Crawl4AI",
+      "dask",
+      "Flask",
+      "gitingest",
+      "litellm",
+      "magika",
+      "manim",
+      "nltk",
+      "rich-toolkit",
+      "typer",
+      "uvicorn"
+    ]
+  },
+  "click-log": {
+    "requires": [
+      "click"
+    ],
+    "required_by": [
+      "alphashape"
+    ]
+  },
+  "cloudpickle": {
+    "requires": [],
+    "required_by": [
+      "dask"
+    ]
+  },
+  "cloup": {
+    "requires": [
+      "click"
+    ],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "cmake": {
+    "requires": [],
+    "required_by": []
+  },
+  "cobble": {
+    "requires": [],
+    "required_by": [
+      "mammoth"
+    ]
+  },
+  "colorama": {
+    "requires": [],
+    "required_by": [
+      "build",
+      "click",
+      "HyFetch",
+      "ipython",
+      "loguru",
+      "pytest",
+      "thefuck",
+      "tqdm"
+    ]
+  },
+  "coloredlogs": {
+    "requires": [
+      "humanfriendly"
+    ],
+    "required_by": []
+  },
+  "comm": {
+    "requires": [],
+    "required_by": [
+      "ipykernel",
+      "ipywidgets"
+    ]
+  },
+  "construct": {
+    "requires": [],
+    "required_by": [
+      "construct-typing"
+    ]
+  },
+  "construct-typing": {
+    "requires": [
+      "construct",
+      "typing_extensions"
+    ],
+    "required_by": [
+      "pyflp"
+    ]
+  },
+  "contourpy": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "matplotlib"
+    ]
+  },
+  "cookiecutter": {
+    "requires": [
+      "arrow",
+      "binaryornot",
+      "click",
+      "Jinja2",
+      "python-slugify",
+      "pyyaml",
+      "requests",
+      "rich"
+    ],
+    "required_by": [
+      "briefcase"
+    ]
+  },
+  "copyparty": {
+    "requires": [
+      "Jinja2"
+    ],
+    "required_by": []
+  },
+  "croniter": {
+    "requires": [
+      "python-dateutil"
+    ],
+    "required_by": []
+  },
+  "cronsim": {
+    "requires": [],
+    "required_by": [
+      "aiocron"
+    ]
+  },
+  "cryptography": {
+    "requires": [
+      "cffi"
+    ],
+    "required_by": [
+      "azure-identity",
+      "google-auth",
+      "mistral-vibe",
+      "msal",
+      "paramiko",
+      "pdfminer.six",
+      "pyOpenSSL"
+    ]
+  },
+  "cssselect": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "curl_cffi": {
+    "requires": [
+      "certifi",
+      "cffi"
+    ],
+    "required_by": []
+  },
+  "cycler": {
+    "requires": [],
+    "required_by": [
+      "matplotlib"
+    ]
+  },
+  "dacite": {
+    "requires": [],
+    "required_by": [
+      "soundcloud-v2"
+    ]
+  },
+  "dask": {
+    "requires": [
+      "click",
+      "cloudpickle",
+      "fsspec",
+      "packaging",
+      "partd",
+      "pyyaml",
+      "toolz"
+    ],
+    "required_by": []
+  },
+  "debugpy": {
+    "requires": [],
+    "required_by": [
+      "ipykernel"
+    ]
+  },
+  "decorator": {
+    "requires": [],
+    "required_by": [
+      "ipython",
+      "manim",
+      "thefuck"
+    ]
+  },
+  "defusedxml": {
+    "requires": [],
+    "required_by": [
+      "markitdown",
+      "nbconvert",
+      "python3-openid",
+      "youtube-transcript-api"
+    ]
+  },
+  "distro": {
+    "requires": [],
+    "required_by": [
+      "openai"
+    ]
+  },
+  "dnspython": {
+    "requires": [],
+    "required_by": [
+      "email-validator",
+      "pymongo"
+    ]
+  },
+  "docutils": {
+    "requires": [],
+    "required_by": [
+      "readme_renderer"
+    ]
+  },
+  "efficientnet_pytorch": {
+    "requires": [
+      "torch"
+    ],
+    "required_by": []
+  },
+  "email-validator": {
+    "requires": [
+      "dnspython",
+      "idna"
+    ],
+    "required_by": []
+  },
+  "et_xmlfile": {
+    "requires": [],
+    "required_by": [
+      "openpyxl"
+    ]
+  },
+  "eval_type_backport": {
+    "requires": [],
+    "required_by": [
+      "mistralai"
+    ]
+  },
+  "executing": {
+    "requires": [],
+    "required_by": [
+      "stack-data"
+    ]
+  },
+  "fake-http-header": {
+    "requires": [],
+    "required_by": [
+      "tf-playwright-stealth"
+    ]
+  },
+  "fake-useragent": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "fastapi": {
+    "requires": [
+      "annotated-doc",
+      "pydantic",
+      "starlette",
+      "typing-extensions",
+      "typing-inspection"
+    ],
+    "required_by": []
+  },
+  "fastapi-cli": {
+    "requires": [
+      "rich-toolkit",
+      "typer",
+      "uvicorn"
+    ],
+    "required_by": []
+  },
+  "fastjsonschema": {
+    "requires": [],
+    "required_by": [
+      "nbformat"
+    ]
+  },
+  "fastuuid": {
+    "requires": [],
+    "required_by": [
+      "litellm"
+    ]
+  },
+  "faust-cchardet": {
+    "requires": [],
+    "required_by": []
+  },
+  "filelock": {
+    "requires": [],
+    "required_by": [
+      "huggingface_hub",
+      "torch"
+    ]
+  },
+  "flatbuffers": {
+    "requires": [],
+    "required_by": [
+      "onnxruntime"
+    ]
+  },
+  "fonttools": {
+    "requires": [],
+    "required_by": [
+      "matplotlib"
+    ]
+  },
+  "fqdn": {
+    "requires": [],
+    "required_by": []
+  },
+  "frozenlist": {
+    "requires": [],
+    "required_by": [
+      "aiohttp",
+      "aiosignal"
+    ]
+  },
+  "fsspec": {
+    "requires": [],
+    "required_by": [
+      "dask",
+      "huggingface_hub",
+      "torch"
+    ]
+  },
+  "gallery_dl": {
+    "requires": [
+      "requests"
+    ],
+    "required_by": []
+  },
+  "geographiclib": {
+    "requires": [],
+    "required_by": [
+      "geopy"
+    ]
+  },
+  "geopy": {
+    "requires": [
+      "geographiclib"
+    ],
+    "required_by": []
+  },
+  "gitdb": {
+    "requires": [
+      "smmap"
+    ],
+    "required_by": [
+      "GitPython"
+    ]
+  },
+  "gitingest": {
+    "requires": [
+      "click",
+      "httpx",
+      "loguru",
+      "pathspec",
+      "pydantic",
+      "python-dotenv",
+      "starlette",
+      "tiktoken"
+    ],
+    "required_by": []
+  },
+  "giturlparse": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "glcontext": {
+    "requires": [],
+    "required_by": [
+      "moderngl"
+    ]
+  },
+  "google-auth": {
+    "requires": [
+      "cryptography",
+      "pyasn1-modules"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "googleapis-common-protos": {
+    "requires": [
+      "protobuf"
+    ],
+    "required_by": [
+      "opentelemetry-exporter-otlp-proto-http"
+    ]
+  },
+  "greenlet": {
+    "requires": [],
+    "required_by": [
+      "patchright",
+      "playwright"
+    ]
+  },
+  "grpcio": {
+    "requires": [
+      "typing-extensions"
+    ],
+    "required_by": []
+  },
+  "h11": {
+    "requires": [],
+    "required_by": [
+      "httpcore",
+      "uvicorn"
+    ]
+  },
+  "h2": {
+    "requires": [
+      "hpack",
+      "hyperframe"
+    ],
+    "required_by": []
+  },
+  "hf-xet": {
+    "requires": [],
+    "required_by": [
+      "huggingface_hub"
+    ]
+  },
+  "hpack": {
+    "requires": [],
+    "required_by": [
+      "h2"
+    ]
+  },
+  "httpcore": {
+    "requires": [
+      "certifi",
+      "h11"
+    ],
+    "required_by": [
+      "httpx"
+    ]
+  },
+  "httptools": {
+    "requires": [],
+    "required_by": []
+  },
+  "httpx": {
+    "requires": [
+      "anyio",
+      "certifi",
+      "httpcore",
+      "idna"
+    ],
+    "required_by": [
+      "briefcase",
+      "Crawl4AI",
+      "gitingest",
+      "httpx-aiohttp",
+      "huggingface_hub",
+      "jupyterlab",
+      "litellm",
+      "mcp",
+      "mistral-vibe",
+      "mistralai",
+      "openai"
+    ]
+  },
+  "httpx-aiohttp": {
+    "requires": [
+      "aiohttp",
+      "httpx"
+    ],
+    "required_by": []
+  },
+  "httpx-sse": {
+    "requires": [],
+    "required_by": [
+      "mcp"
+    ]
+  },
+  "huggingface_hub": {
+    "requires": [
+      "filelock",
+      "fsspec",
+      "hf-xet",
+      "httpx",
+      "packaging",
+      "pyyaml",
+      "tqdm",
+      "typer",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "segmentation_models_pytorch",
+      "sentence-transformers",
+      "timm",
+      "tokenizers",
+      "transformers"
+    ]
+  },
+  "humanfriendly": {
+    "requires": [
+      "pyreadline3"
+    ],
+    "required_by": [
+      "coloredlogs"
+    ]
+  },
+  "humanize": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "hyperframe": {
+    "requires": [],
+    "required_by": [
+      "h2"
+    ]
+  },
+  "id": {
+    "requires": [
+      "urllib3"
+    ],
+    "required_by": [
+      "twine"
+    ]
+  },
+  "idna": {
+    "requires": [],
+    "required_by": [
+      "anyio",
+      "email-validator",
+      "httpx",
+      "requests",
+      "yarl"
+    ]
+  },
+  "importlib_metadata": {
+    "requires": [
+      "zipp"
+    ],
+    "required_by": [
+      "litellm",
+      "opentelemetry-api"
+    ]
+  },
+  "iniconfig": {
+    "requires": [],
+    "required_by": [
+      "pytest"
+    ]
+  },
+  "intel-cmplr-lib-ur": {
+    "requires": [
+      "umf"
+    ],
+    "required_by": [
+      "intel-openmp"
+    ]
+  },
+  "intel-openmp": {
+    "requires": [
+      "intel-cmplr-lib-ur"
+    ],
+    "required_by": [
+      "mkl"
+    ]
+  },
+  "invoke": {
+    "requires": [],
+    "required_by": [
+      "paramiko"
+    ]
+  },
+  "ipykernel": {
+    "requires": [
+      "comm",
+      "debugpy",
+      "ipython",
+      "jupyter-client",
+      "jupyter-core",
+      "matplotlib-inline",
+      "nest-asyncio",
+      "packaging",
+      "psutil",
+      "pyzmq",
+      "tornado",
+      "traitlets"
+    ],
+    "required_by": [
+      "jupyter",
+      "jupyter-console",
+      "jupyterlab",
+      "qtconsole"
+    ]
+  },
+  "ipympl": {
+    "requires": [
+      "ipython",
+      "ipywidgets",
+      "matplotlib",
+      "numpy",
+      "pillow",
+      "traitlets"
+    ],
+    "required_by": []
+  },
+  "ipython": {
+    "requires": [
+      "colorama",
+      "decorator",
+      "ipython-pygments-lexers",
+      "jedi",
+      "matplotlib-inline",
+      "prompt_toolkit",
+      "pygments",
+      "stack_data",
+      "traitlets"
+    ],
+    "required_by": [
+      "ipykernel",
+      "ipympl",
+      "ipywidgets",
+      "jupyter-console"
+    ]
+  },
+  "ipython-genutils": {
+    "requires": [],
+    "required_by": []
+  },
+  "ipython_pygments_lexers": {
+    "requires": [
+      "pygments"
+    ],
+    "required_by": [
+      "ipython",
+      "qtconsole"
+    ]
+  },
+  "ipywidgets": {
+    "requires": [
+      "comm",
+      "ipython",
+      "jupyterlab_widgets",
+      "traitlets",
+      "widgetsnbextension"
+    ],
+    "required_by": [
+      "ipympl",
+      "jupyter"
+    ]
+  },
+  "isodate": {
+    "requires": [],
+    "required_by": [
+      "azure-ai-documentintelligence"
+    ]
+  },
+  "isoduration": {
+    "requires": [
+      "arrow"
+    ],
+    "required_by": []
+  },
+  "isosurfaces": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "itsdangerous": {
+    "requires": [],
+    "required_by": [
+      "Flask"
+    ]
+  },
+  "jaconv": {
+    "requires": [],
+    "required_by": [
+      "pykakasi"
+    ]
+  },
+  "jaraco.classes": {
+    "requires": [
+      "more-itertools"
+    ],
+    "required_by": [
+      "keyring"
+    ]
+  },
+  "jaraco.context": {
+    "requires": [],
+    "required_by": [
+      "keyring"
+    ]
+  },
+  "jaraco.functools": {
+    "requires": [
+      "more_itertools"
+    ],
+    "required_by": [
+      "keyring"
+    ]
+  },
+  "jedi": {
+    "requires": [
+      "parso"
+    ],
+    "required_by": [
+      "ipython"
+    ]
+  },
+  "jiter": {
+    "requires": [],
+    "required_by": [
+      "openai"
+    ]
+  },
+  "joblib": {
+    "requires": [],
+    "required_by": [
+      "nltk",
+      "scikit-learn"
+    ]
+  },
+  "json5": {
+    "requires": [],
+    "required_by": [
+      "jupyterlab_server"
+    ]
+  },
+  "jsonpath-python": {
+    "requires": [],
+    "required_by": [
+      "mistralai"
+    ]
+  },
+  "jsonpointer": {
+    "requires": [],
+    "required_by": []
+  },
+  "jsonschema": {
+    "requires": [
+      "attrs",
+      "jsonschema-specifications",
+      "referencing",
+      "rpds-py"
+    ],
+    "required_by": [
+      "jupyter-events",
+      "jupyterlab_server",
+      "litellm",
+      "mcp",
+      "nbformat"
+    ]
+  },
+  "jsonschema-specifications": {
+    "requires": [
+      "referencing"
+    ],
+    "required_by": [
+      "jsonschema"
+    ]
+  },
+  "jupyter": {
+    "requires": [
+      "ipykernel",
+      "ipywidgets",
+      "jupyter-console",
+      "jupyterlab",
+      "nbconvert",
+      "notebook"
+    ],
+    "required_by": []
+  },
+  "jupyter-console": {
+    "requires": [
+      "ipykernel",
+      "ipython",
+      "jupyter-client",
+      "jupyter-core",
+      "prompt-toolkit",
+      "pygments",
+      "pyzmq",
+      "traitlets"
+    ],
+    "required_by": [
+      "jupyter"
+    ]
+  },
+  "jupyter-events": {
+    "requires": [
+      "jsonschema",
+      "packaging",
+      "python-json-logger",
+      "pyyaml",
+      "referencing",
+      "rfc3339-validator",
+      "rfc3986-validator",
+      "traitlets"
+    ],
+    "required_by": [
+      "jupyter_server"
+    ]
+  },
+  "jupyter-lsp": {
+    "requires": [
+      "jupyter_server"
+    ],
+    "required_by": [
+      "jupyterlab"
+    ]
+  },
+  "jupyter_client": {
+    "requires": [
+      "jupyter-core",
+      "python-dateutil",
+      "pyzmq",
+      "tornado",
+      "traitlets"
+    ],
+    "required_by": [
+      "ipykernel",
+      "jupyter-console",
+      "jupyter_server",
+      "nbclient",
+      "qtconsole",
+      "voila"
+    ]
+  },
+  "jupyter_core": {
+    "requires": [
+      "platformdirs",
+      "traitlets"
+    ],
+    "required_by": [
+      "ipykernel",
+      "jupyter-console",
+      "jupyter_client",
+      "jupyter_server",
+      "jupyterlab",
+      "nbclient",
+      "nbconvert",
+      "nbformat",
+      "qtconsole",
+      "voila"
+    ]
+  },
+  "jupyter_server": {
+    "requires": [
+      "anyio",
+      "argon2-cffi",
+      "jinja2",
+      "jupyter-client",
+      "jupyter-core",
+      "jupyter-events",
+      "jupyter-server-terminals",
+      "nbconvert",
+      "nbformat",
+      "packaging",
+      "prometheus-client",
+      "pywinpty",
+      "pyzmq",
+      "send2trash",
+      "terminado",
+      "tornado",
+      "traitlets",
+      "websocket-client"
+    ],
+    "required_by": [
+      "jupyter-lsp",
+      "jupyterlab",
+      "jupyterlab_server",
+      "notebook",
+      "notebook_shim",
+      "voila"
+    ]
+  },
+  "jupyter_server_terminals": {
+    "requires": [
+      "pywinpty",
+      "terminado"
+    ],
+    "required_by": [
+      "jupyter_server"
+    ]
+  },
+  "jupyterlab": {
+    "requires": [
+      "async-lru",
+      "httpx",
+      "ipykernel",
+      "jinja2",
+      "jupyter-core",
+      "jupyter-lsp",
+      "jupyter-server",
+      "jupyterlab-server",
+      "notebook-shim",
+      "packaging",
+      "setuptools",
+      "tornado",
+      "traitlets"
+    ],
+    "required_by": [
+      "jupyter",
+      "notebook"
+    ]
+  },
+  "jupyterlab_pygments": {
+    "requires": [],
+    "required_by": [
+      "nbconvert"
+    ]
+  },
+  "jupyterlab_server": {
+    "requires": [
+      "babel",
+      "jinja2",
+      "json5",
+      "jsonschema",
+      "jupyter-server",
+      "packaging",
+      "requests"
+    ],
+    "required_by": [
+      "jupyterlab",
+      "notebook",
+      "voila"
+    ]
+  },
+  "jupyterlab_widgets": {
+    "requires": [],
+    "required_by": [
+      "ipywidgets"
+    ]
+  },
+  "keyring": {
+    "requires": [
+      "jaraco.classes",
+      "jaraco.context",
+      "jaraco.functools",
+      "pywin32-ctypes"
+    ],
+    "required_by": [
+      "mistral-vibe",
+      "twine"
+    ]
+  },
+  "kiwisolver": {
+    "requires": [],
+    "required_by": [
+      "matplotlib"
+    ]
+  },
+  "lark": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI",
+      "rfc3987-syntax"
+    ]
+  },
+  "lazy-loader": {
+    "requires": [
+      "packaging"
+    ],
+    "required_by": [
+      "scikit-image"
+    ]
+  },
+  "limits": {
+    "requires": [
+      "deprecated",
+      "packaging",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "slowapi"
+    ]
+  },
+  "linkify-it-py": {
+    "requires": [
+      "uc-micro-py"
+    ],
+    "required_by": []
+  },
+  "litellm": {
+    "requires": [
+      "aiohttp",
+      "click",
+      "fastuuid",
+      "httpx",
+      "importlib-metadata",
+      "jinja2",
+      "jsonschema",
+      "openai",
+      "pydantic",
+      "python-dotenv",
+      "tiktoken",
+      "tokenizers"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "llvmlite": {
+    "requires": [],
+    "required_by": [
+      "numba"
+    ]
+  },
+  "locket": {
+    "requires": [],
+    "required_by": [
+      "partd"
+    ]
+  },
+  "loguru": {
+    "requires": [
+      "colorama",
+      "win32-setctime"
+    ],
+    "required_by": [
+      "gitingest"
+    ]
+  },
+  "lxml": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI",
+      "python-pptx"
+    ]
+  },
+  "madoka": {
+    "requires": [],
+    "required_by": [
+      "pondpond"
+    ]
+  },
+  "magika": {
+    "requires": [
+      "click",
+      "onnxruntime"
+    ],
+    "required_by": [
+      "markitdown"
+    ]
+  },
+  "mammoth": {
+    "requires": [
+      "cobble"
+    ],
+    "required_by": []
+  },
+  "manim": {
+    "requires": [
+      "av",
+      "beautifulsoup4",
+      "click",
+      "cloup",
+      "decorator",
+      "isosurfaces",
+      "manimpango",
+      "mapbox-earcut",
+      "moderngl",
+      "moderngl-window",
+      "networkx",
+      "numpy",
+      "pillow",
+      "pycairo",
+      "pydub",
+      "pygments",
+      "rich",
+      "scipy",
+      "screeninfo",
+      "skia-pathops",
+      "srt",
+      "svgelements",
+      "tqdm",
+      "typing-extensions",
+      "watchdog"
+    ],
+    "required_by": []
+  },
+  "mapbox_earcut": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "markdown-it-py": {
+    "requires": [
+      "mdurl"
+    ],
+    "required_by": [
+      "mdit-py-plugins",
+      "rich",
+      "textual"
+    ]
+  },
+  "markdownify": {
+    "requires": [
+      "beautifulsoup4",
+      "six"
+    ],
+    "required_by": [
+      "markitdown",
+      "mistral-vibe"
+    ]
+  },
+  "markitdown": {
+    "requires": [
+      "beautifulsoup4",
+      "charset-normalizer",
+      "defusedxml",
+      "magika",
+      "markdownify",
+      "requests"
+    ],
+    "required_by": []
+  },
+  "matplotlib": {
+    "requires": [
+      "contourpy",
+      "cycler",
+      "fonttools",
+      "kiwisolver",
+      "numpy",
+      "packaging",
+      "pillow",
+      "pyparsing",
+      "python-dateutil"
+    ],
+    "required_by": [
+      "ipympl",
+      "seaborn",
+      "ultralytics"
+    ]
+  },
+  "matplotlib-inline": {
+    "requires": [
+      "traitlets"
+    ],
+    "required_by": [
+      "ipykernel",
+      "ipython"
+    ]
+  },
+  "mcp": {
+    "requires": [
+      "anyio",
+      "httpx",
+      "httpx-sse",
+      "jsonschema",
+      "pydantic",
+      "pydantic-settings",
+      "pyjwt",
+      "python-multipart",
+      "pywin32",
+      "sse-starlette",
+      "starlette",
+      "typing-extensions",
+      "typing-inspection",
+      "uvicorn"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "mdit-py-plugins": {
+    "requires": [
+      "markdown-it-py"
+    ],
+    "required_by": [
+      "textual"
+    ]
+  },
+  "mdurl": {
+    "requires": [],
+    "required_by": [
+      "markdown-it-py"
+    ]
+  },
+  "mistral-vibe": {
+    "requires": [
+      "agent-client-protocol",
+      "anyio",
+      "cachetools",
+      "cryptography",
+      "gitpython",
+      "giturlparse",
+      "google-auth",
+      "httpx",
+      "keyring",
+      "markdownify",
+      "mcp",
+      "mistralai",
+      "opentelemetry-api",
+      "opentelemetry-exporter-otlp-proto-http",
+      "opentelemetry-sdk",
+      "opentelemetry-semantic-conventions",
+      "packaging",
+      "pexpect",
+      "pydantic",
+      "pydantic-settings",
+      "pyperclip",
+      "python-dotenv",
+      "pyyaml",
+      "requests",
+      "rich",
+      "sounddevice",
+      "textual",
+      "textual-speedups",
+      "tomli-w",
+      "tree-sitter",
+      "tree-sitter-bash",
+      "watchfiles",
+      "websockets",
+      "zstandard"
+    ],
+    "required_by": []
+  },
+  "mistralai": {
+    "requires": [
+      "eval-type-backport",
+      "httpx",
+      "jsonpath-python",
+      "opentelemetry-api",
+      "opentelemetry-semantic-conventions",
+      "pydantic",
+      "python-dateutil",
+      "typing-inspection"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "mistune": {
+    "requires": [],
+    "required_by": [
+      "nbconvert"
+    ]
+  },
+  "mkl": {
+    "requires": [
+      "intel-openmp",
+      "onemkl-license",
+      "tbb"
+    ],
+    "required_by": []
+  },
+  "mockito": {
+    "requires": [],
+    "required_by": [
+      "pytest-mockito"
+    ]
+  },
+  "moderngl": {
+    "requires": [
+      "glcontext"
+    ],
+    "required_by": [
+      "manim",
+      "moderngl-window"
+    ]
+  },
+  "moderngl-window": {
+    "requires": [
+      "moderngl",
+      "numpy",
+      "Pillow",
+      "pyglet",
+      "pyglm"
+    ],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "more-itertools": {
+    "requires": [],
+    "required_by": [
+      "jaraco.classes",
+      "jaraco.functools",
+      "openai-whisper"
+    ]
+  },
+  "motor": {
+    "requires": [
+      "pymongo"
+    ],
+    "required_by": []
+  },
+  "mpmath": {
+    "requires": [],
+    "required_by": [
+      "sympy"
+    ]
+  },
+  "msal": {
+    "requires": [
+      "cryptography",
+      "PyJWT",
+      "requests"
+    ],
+    "required_by": [
+      "azure-identity",
+      "msal-extensions"
+    ]
+  },
+  "msal-extensions": {
+    "requires": [
+      "msal"
+    ],
+    "required_by": [
+      "azure-identity"
+    ]
+  },
+  "multidict": {
+    "requires": [],
+    "required_by": [
+      "aiohttp",
+      "yarl"
+    ]
+  },
+  "multipledispatch": {
+    "requires": [],
+    "required_by": [
+      "pyrr"
+    ]
+  },
+  "munch": {
+    "requires": [],
+    "required_by": [
+      "pretrainedmodels"
+    ]
+  },
+  "mutagen": {
+    "requires": [],
+    "required_by": []
+  },
+  "mypy_extensions": {
+    "requires": [],
+    "required_by": [
+      "black"
+    ]
+  },
+  "narwhals": {
+    "requires": [],
+    "required_by": [
+      "plotly"
+    ]
+  },
+  "nbclient": {
+    "requires": [
+      "jupyter-client",
+      "jupyter-core",
+      "nbformat",
+      "traitlets"
+    ],
+    "required_by": [
+      "nbconvert",
+      "voila"
+    ]
+  },
+  "nbconvert": {
+    "requires": [
+      "beautifulsoup4",
+      "bleach",
+      "defusedxml",
+      "jinja2",
+      "jupyter-core",
+      "jupyterlab-pygments",
+      "markupsafe",
+      "mistune",
+      "nbclient",
+      "nbformat",
+      "packaging",
+      "pandocfilters",
+      "pygments",
+      "traitlets"
+    ],
+    "required_by": [
+      "jupyter",
+      "jupyter_server",
+      "voila"
+    ]
+  },
+  "nbformat": {
+    "requires": [
+      "fastjsonschema",
+      "jsonschema",
+      "jupyter-core",
+      "traitlets"
+    ],
+    "required_by": [
+      "jupyter_server",
+      "nbclient",
+      "nbconvert"
+    ]
+  },
+  "nest-asyncio": {
+    "requires": [],
+    "required_by": [
+      "ipykernel"
+    ]
+  },
+  "netCDF4": {
+    "requires": [
+      "certifi",
+      "cftime",
+      "numpy"
+    ],
+    "required_by": []
+  },
+  "networkx": {
+    "requires": [],
+    "required_by": [
+      "alphashape",
+      "manim",
+      "scikit-image",
+      "torch"
+    ]
+  },
+  "nh3": {
+    "requires": [],
+    "required_by": [
+      "readme_renderer"
+    ]
+  },
+  "nltk": {
+    "requires": [
+      "click",
+      "joblib",
+      "regex",
+      "tqdm"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "notebook": {
+    "requires": [
+      "jupyter-server",
+      "jupyterlab",
+      "jupyterlab-server",
+      "notebook-shim",
+      "tornado"
+    ],
+    "required_by": [
+      "jupyter"
+    ]
+  },
+  "notebook_shim": {
+    "requires": [
+      "jupyter-server"
+    ],
+    "required_by": [
+      "jupyterlab",
+      "notebook"
+    ]
+  },
+  "numba": {
+    "requires": [
+      "llvmlite",
+      "numpy"
+    ],
+    "required_by": [
+      "openai-whisper"
+    ]
+  },
+  "numkong": {
+    "requires": [],
+    "required_by": [
+      "albucore"
+    ]
+  },
+  "numpy": {
+    "requires": [],
+    "required_by": [
+      "albucore",
+      "albumentations",
+      "alphashape",
+      "cftime",
+      "contourpy",
+      "Crawl4AI",
+      "ImageIO",
+      "ipympl",
+      "isosurfaces",
+      "manim",
+      "mapbox_earcut",
+      "matplotlib",
+      "moderngl-window",
+      "netCDF4",
+      "numba",
+      "onnxruntime",
+      "openai-whisper",
+      "opencv-python",
+      "opencv-python-headless",
+      "pandas",
+      "pyrr",
+      "rank-bm25",
+      "scikit-image",
+      "scikit-learn",
+      "scipy",
+      "seaborn",
+      "segmentation_models_pytorch",
+      "sentence-transformers",
+      "shapely",
+      "tifffile",
+      "torchvision",
+      "transformers",
+      "trimesh",
+      "ultralytics",
+      "ultralytics-thop",
+      "xarray"
+    ]
+  },
+  "oauthlib": {
+    "requires": [],
+    "required_by": [
+      "requests-oauthlib"
+    ]
+  },
+  "olefile": {
+    "requires": [],
+    "required_by": []
+  },
+  "onemkl-license": {
+    "requires": [],
+    "required_by": [
+      "mkl"
+    ]
+  },
+  "onnxruntime": {
+    "requires": [
+      "flatbuffers",
+      "numpy",
+      "packaging",
+      "protobuf",
+      "sympy"
+    ],
+    "required_by": [
+      "magika"
+    ]
+  },
+  "openai": {
+    "requires": [
+      "anyio",
+      "distro",
+      "httpx",
+      "jiter",
+      "pydantic",
+      "sniffio",
+      "tqdm",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "litellm"
+    ]
+  },
+  "openai-whisper": {
+    "requires": [
+      "more-itertools",
+      "numba",
+      "numpy",
+      "tiktoken",
+      "torch",
+      "tqdm"
+    ],
+    "required_by": []
+  },
+  "opencv-python": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "ultralytics"
+    ]
+  },
+  "opencv-python-headless": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "albumentations"
+    ]
+  },
+  "openpyxl": {
+    "requires": [
+      "et-xmlfile"
+    ],
+    "required_by": []
+  },
+  "opentelemetry-api": {
+    "requires": [
+      "importlib-metadata",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "mistral-vibe",
+      "mistralai",
+      "opentelemetry-exporter-otlp-proto-http",
+      "opentelemetry-sdk",
+      "opentelemetry-semantic-conventions"
+    ]
+  },
+  "opentelemetry-exporter-otlp-proto-common": {
+    "requires": [
+      "opentelemetry-proto"
+    ],
+    "required_by": [
+      "opentelemetry-exporter-otlp-proto-http"
+    ]
+  },
+  "opentelemetry-exporter-otlp-proto-http": {
+    "requires": [
+      "googleapis-common-protos",
+      "opentelemetry-api",
+      "opentelemetry-exporter-otlp-proto-common",
+      "opentelemetry-proto",
+      "opentelemetry-sdk",
+      "requests",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "opentelemetry-proto": {
+    "requires": [
+      "protobuf"
+    ],
+    "required_by": [
+      "opentelemetry-exporter-otlp-proto-common",
+      "opentelemetry-exporter-otlp-proto-http"
+    ]
+  },
+  "opentelemetry-sdk": {
+    "requires": [
+      "opentelemetry-api",
+      "opentelemetry-semantic-conventions",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "mistral-vibe",
+      "opentelemetry-exporter-otlp-proto-http"
+    ]
+  },
+  "opentelemetry-semantic-conventions": {
+    "requires": [
+      "opentelemetry-api",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "mistral-vibe",
+      "mistralai",
+      "opentelemetry-sdk"
+    ]
+  },
+  "overrides": {
+    "requires": [],
+    "required_by": []
+  },
+  "packaging": {
+    "requires": [],
+    "required_by": [
+      "black",
+      "briefcase",
+      "build",
+      "dask",
+      "huggingface_hub",
+      "ipykernel",
+      "jupyter-events",
+      "jupyter_server",
+      "jupyterlab",
+      "jupyterlab_server",
+      "lazy-loader",
+      "limits",
+      "matplotlib",
+      "mistral-vibe",
+      "nbconvert",
+      "onnxruntime",
+      "pipdeptree",
+      "plotly",
+      "pytest",
+      "qtconsole",
+      "QtPy",
+      "scikit-image",
+      "transformers",
+      "twine",
+      "wheel",
+      "xarray"
+    ]
+  },
+  "pandas": {
+    "requires": [
+      "numpy",
+      "python-dateutil",
+      "tzdata"
+    ],
+    "required_by": [
+      "seaborn",
+      "xarray"
+    ]
+  },
+  "pandocfilters": {
+    "requires": [],
+    "required_by": [
+      "nbconvert"
+    ]
+  },
+  "paramiko": {
+    "requires": [
+      "bcrypt",
+      "cryptography",
+      "invoke",
+      "pynacl"
+    ],
+    "required_by": []
+  },
+  "parse_pip_search": {
+    "requires": [
+      "bs4",
+      "requests",
+      "rich"
+    ],
+    "required_by": []
+  },
+  "parso": {
+    "requires": [],
+    "required_by": [
+      "jedi"
+    ]
+  },
+  "partd": {
+    "requires": [
+      "locket",
+      "toolz"
+    ],
+    "required_by": [
+      "dask"
+    ]
+  },
+  "patchright": {
+    "requires": [
+      "greenlet",
+      "pyee"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "pathspec": {
+    "requires": [],
+    "required_by": [
+      "black",
+      "gitingest"
+    ]
+  },
+  "pathvalidate": {
+    "requires": [],
+    "required_by": []
+  },
+  "pdfminer.six": {
+    "requires": [
+      "charset-normalizer",
+      "cryptography"
+    ],
+    "required_by": []
+  },
+  "pdfsyntax": {
+    "requires": [],
+    "required_by": []
+  },
+  "pexpect": {
+    "requires": [
+      "ptyprocess"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "pillow": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI",
+      "ImageIO",
+      "ipympl",
+      "manim",
+      "matplotlib",
+      "moderngl-window",
+      "python-pptx",
+      "scikit-image",
+      "segmentation_models_pytorch",
+      "torchvision",
+      "ultralytics"
+    ]
+  },
+  "pipdeptree": {
+    "requires": [
+      "packaging"
+    ],
+    "required_by": []
+  },
+  "pkginfo": {
+    "requires": [],
+    "required_by": []
+  },
+  "platformdirs": {
+    "requires": [],
+    "required_by": [
+      "black",
+      "briefcase",
+      "jupyter_core",
+      "textual"
+    ]
+  },
+  "playwright": {
+    "requires": [
+      "greenlet",
+      "pyee"
+    ],
+    "required_by": [
+      "Crawl4AI",
+      "playwright-stealth",
+      "tf-playwright-stealth"
+    ]
+  },
+  "playwright-stealth": {
+    "requires": [
+      "playwright"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "plotly": {
+    "requires": [
+      "narwhals",
+      "packaging"
+    ],
+    "required_by": []
+  },
+  "pluggy": {
+    "requires": [],
+    "required_by": [
+      "pytest"
+    ]
+  },
+  "plumbum": {
+    "requires": [
+      "pywin32"
+    ],
+    "required_by": [
+      "rpyc"
+    ]
+  },
+  "pondpond": {
+    "requires": [
+      "madoka"
+    ],
+    "required_by": []
+  },
+  "portalocker": {
+    "requires": [
+      "pywin32"
+    ],
+    "required_by": []
+  },
+  "pretrainedmodels": {
+    "requires": [
+      "munch",
+      "torch",
+      "torchvision",
+      "tqdm"
+    ],
+    "required_by": []
+  },
+  "prometheus_client": {
+    "requires": [],
+    "required_by": [
+      "jupyter_server"
+    ]
+  },
+  "prompt_toolkit": {
+    "requires": [
+      "wcwidth"
+    ],
+    "required_by": [
+      "ipython",
+      "jupyter-console"
+    ]
+  },
+  "propcache": {
+    "requires": [],
+    "required_by": [
+      "aiohttp",
+      "yarl"
+    ]
+  },
+  "protobuf": {
+    "requires": [],
+    "required_by": [
+      "googleapis-common-protos",
+      "onnxruntime",
+      "opentelemetry-proto"
+    ]
+  },
+  "psutil": {
+    "requires": [],
+    "required_by": [
+      "briefcase",
+      "Crawl4AI",
+      "HyFetch",
+      "ipykernel",
+      "thefuck",
+      "ultralytics"
+    ]
+  },
+  "ptyprocess": {
+    "requires": [],
+    "required_by": [
+      "pexpect"
+    ]
+  },
+  "pure_eval": {
+    "requires": [],
+    "required_by": [
+      "stack-data"
+    ]
+  },
+  "puremagic": {
+    "requires": [],
+    "required_by": []
+  },
+  "py-cpuinfo": {
+    "requires": [],
+    "required_by": []
+  },
+  "pyOpenSSL": {
+    "requires": [
+      "cryptography",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "pyaes": {
+    "requires": [],
+    "required_by": [
+      "pyrofork"
+    ]
+  },
+  "pyasn1": {
+    "requires": [],
+    "required_by": [
+      "pyasn1_modules",
+      "rsa"
+    ]
+  },
+  "pyasn1_modules": {
+    "requires": [
+      "pyasn1"
+    ],
+    "required_by": [
+      "google-auth"
+    ]
+  },
+  "pycairo": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "pycosat": {
+    "requires": [],
+    "required_by": []
+  },
+  "pycparser": {
+    "requires": [],
+    "required_by": [
+      "cffi"
+    ]
+  },
+  "pycryptodomex": {
+    "requires": [],
+    "required_by": []
+  },
+  "pydantic": {
+    "requires": [
+      "annotated-types",
+      "pydantic-core",
+      "typing-extensions",
+      "typing-inspection"
+    ],
+    "required_by": [
+      "agent-client-protocol",
+      "albumentations",
+      "Crawl4AI",
+      "fastapi",
+      "gitingest",
+      "litellm",
+      "mcp",
+      "mistral-vibe",
+      "mistralai",
+      "openai",
+      "pydantic-settings"
+    ]
+  },
+  "pydantic-settings": {
+    "requires": [
+      "pydantic",
+      "python-dotenv",
+      "typing-inspection"
+    ],
+    "required_by": [
+      "mcp",
+      "mistral-vibe"
+    ]
+  },
+  "pydantic_core": {
+    "requires": [
+      "typing-extensions"
+    ],
+    "required_by": [
+      "pydantic"
+    ]
+  },
+  "pydub": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "pyee": {
+    "requires": [
+      "typing-extensions"
+    ],
+    "required_by": [
+      "patchright",
+      "playwright"
+    ]
+  },
+  "pyflp": {
+    "requires": [
+      "construct-typing",
+      "sortedcontainers",
+      "typing-extensions"
+    ],
+    "required_by": []
+  },
+  "pygame": {
+    "requires": [],
+    "required_by": []
+  },
+  "pyglet": {
+    "requires": [],
+    "required_by": [
+      "moderngl-window"
+    ]
+  },
+  "pyglm": {
+    "requires": [],
+    "required_by": [
+      "moderngl-window"
+    ]
+  },
+  "pykakasi": {
+    "requires": [
+      "deprecated",
+      "jaconv"
+    ],
+    "required_by": []
+  },
+  "pykeyboard": {
+    "requires": [
+      "pyrogram",
+      "tgcrypto"
+    ],
+    "required_by": []
+  },
+  "pymediainfo-pyroblack": {
+    "requires": [],
+    "required_by": []
+  },
+  "pymediainfo-pyrofork": {
+    "requires": [],
+    "required_by": [
+      "pyrofork"
+    ]
+  },
+  "pymongo": {
+    "requires": [
+      "dnspython"
+    ],
+    "required_by": [
+      "motor"
+    ]
+  },
+  "pyparsing": {
+    "requires": [],
+    "required_by": [
+      "matplotlib"
+    ]
+  },
+  "pypdf": {
+    "requires": [],
+    "required_by": []
+  },
+  "pyperclip": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "pyproject_hooks": {
+    "requires": [],
+    "required_by": [
+      "build"
+    ]
+  },
+  "pyreadline3": {
+    "requires": [],
+    "required_by": [
+      "humanfriendly"
+    ]
+  },
+  "pyrefly": {
+    "requires": [],
+    "required_by": []
+  },
+  "pyrofork": {
+    "requires": [
+      "pyaes",
+      "pymediainfo-pyrofork",
+      "pysocks"
+    ],
+    "required_by": []
+  },
+  "pyrr": {
+    "requires": [
+      "multipledispatch",
+      "numpy"
+    ],
+    "required_by": []
+  },
+  "pyte": {
+    "requires": [
+      "wcwidth"
+    ],
+    "required_by": [
+      "thefuck"
+    ]
+  },
+  "pytest": {
+    "requires": [
+      "colorama",
+      "iniconfig",
+      "packaging",
+      "pluggy",
+      "pygments"
+    ],
+    "required_by": [
+      "pytest-mockito"
+    ]
+  },
+  "pytest-mockito": {
+    "requires": [
+      "mockito",
+      "pytest"
+    ],
+    "required_by": []
+  },
+  "pytgcrypto": {
+    "requires": [],
+    "required_by": []
+  },
+  "python-dateutil": {
+    "requires": [
+      "six"
+    ],
+    "required_by": [
+      "aiocron",
+      "arrow",
+      "briefcase",
+      "croniter",
+      "jupyter_client",
+      "matplotlib",
+      "mistralai",
+      "pandas",
+      "soundcloud-v2"
+    ]
+  },
+  "python-dotenv": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI",
+      "gitingest",
+      "litellm",
+      "mistral-vibe",
+      "pydantic-settings"
+    ]
+  },
+  "python-json-logger": {
+    "requires": [],
+    "required_by": [
+      "jupyter-events"
+    ]
+  },
+  "python-multipart": {
+    "requires": [],
+    "required_by": [
+      "mcp"
+    ]
+  },
+  "python-pptx": {
+    "requires": [
+      "lxml",
+      "Pillow",
+      "typing-extensions",
+      "XlsxWriter"
+    ],
+    "required_by": []
+  },
+  "python-sat": {
+    "requires": [
+      "six"
+    ],
+    "required_by": []
+  },
+  "python-slugify": {
+    "requires": [
+      "text-unidecode"
+    ],
+    "required_by": [
+      "cookiecutter"
+    ]
+  },
+  "python3-openid": {
+    "requires": [
+      "defusedxml"
+    ],
+    "required_by": []
+  },
+  "pytokens": {
+    "requires": [],
+    "required_by": [
+      "black"
+    ]
+  },
+  "pytube": {
+    "requires": [],
+    "required_by": []
+  },
+  "pytz": {
+    "requires": [],
+    "required_by": []
+  },
+  "pywin32": {
+    "requires": [],
+    "required_by": [
+      "mcp",
+      "plumbum",
+      "portalocker"
+    ]
+  },
+  "pywin32-ctypes": {
+    "requires": [],
+    "required_by": [
+      "keyring"
+    ]
+  },
+  "pywinpty": {
+    "requires": [],
+    "required_by": [
+      "jupyter_server",
+      "jupyter_server_terminals",
+      "terminado"
+    ]
+  },
+  "pyzmq": {
+    "requires": [],
+    "required_by": [
+      "ipykernel",
+      "jupyter-console",
+      "jupyter_client",
+      "jupyter_server"
+    ]
+  },
+  "qtconsole": {
+    "requires": [
+      "ipykernel",
+      "ipython_pygments_lexers",
+      "jupyter_client",
+      "jupyter_core",
+      "packaging",
+      "pygments",
+      "qtpy",
+      "traitlets"
+    ],
+    "required_by": []
+  },
+  "rank-bm25": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "readme_renderer": {
+    "requires": [
+      "docutils",
+      "nh3",
+      "Pygments"
+    ],
+    "required_by": [
+      "twine"
+    ]
+  },
+  "redis": {
+    "requires": [],
+    "required_by": [
+      "spotipy"
+    ]
+  },
+  "referencing": {
+    "requires": [
+      "attrs",
+      "rpds-py",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "jsonschema",
+      "jsonschema-specifications",
+      "jupyter-events"
+    ]
+  },
+  "regex": {
+    "requires": [],
+    "required_by": [
+      "nltk",
+      "tiktoken",
+      "transformers"
+    ]
+  },
+  "requests": {
+    "requires": [
+      "certifi",
+      "charset_normalizer",
+      "idna",
+      "urllib3"
+    ],
+    "required_by": [
+      "azure-core",
+      "cookiecutter",
+      "Crawl4AI",
+      "gallery_dl",
+      "jupyterlab_server",
+      "markitdown",
+      "mistral-vibe",
+      "msal",
+      "opentelemetry-exporter-otlp-proto-http",
+      "parse_pip_search",
+      "requests-oauthlib",
+      "requests-toolbelt",
+      "soundcloud-v2",
+      "spotipy",
+      "syncedlyrics",
+      "tiktoken",
+      "twine",
+      "ultralytics",
+      "youtube-transcript-api",
+      "ytmusicapi"
+    ]
+  },
+  "requests-oauthlib": {
+    "requires": [
+      "oauthlib",
+      "requests"
+    ],
+    "required_by": []
+  },
+  "requests-toolbelt": {
+    "requires": [
+      "requests"
+    ],
+    "required_by": [
+      "twine"
+    ]
+  },
+  "rfc3339-validator": {
+    "requires": [
+      "six"
+    ],
+    "required_by": [
+      "jupyter-events"
+    ]
+  },
+  "rfc3986": {
+    "requires": [],
+    "required_by": [
+      "twine"
+    ]
+  },
+  "rfc3986-validator": {
+    "requires": [],
+    "required_by": [
+      "jupyter-events"
+    ]
+  },
+  "rfc3987-syntax": {
+    "requires": [
+      "lark"
+    ],
+    "required_by": []
+  },
+  "rich": {
+    "requires": [
+      "markdown-it-py",
+      "pygments"
+    ],
+    "required_by": [
+      "briefcase",
+      "cookiecutter",
+      "Crawl4AI",
+      "manim",
+      "mistral-vibe",
+      "parse_pip_search",
+      "rich-toolkit",
+      "textual",
+      "twine",
+      "typer"
+    ]
+  },
+  "rich-toolkit": {
+    "requires": [
+      "click",
+      "rich",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "fastapi-cli"
+    ]
+  },
+  "rpds-py": {
+    "requires": [],
+    "required_by": [
+      "jsonschema",
+      "referencing"
+    ]
+  },
+  "rpyc": {
+    "requires": [
+      "plumbum"
+    ],
+    "required_by": []
+  },
+  "rsa": {
+    "requires": [
+      "pyasn1"
+    ],
+    "required_by": []
+  },
+  "rtree": {
+    "requires": [],
+    "required_by": [
+      "alphashape"
+    ]
+  },
+  "safetensors": {
+    "requires": [],
+    "required_by": [
+      "segmentation_models_pytorch",
+      "timm",
+      "transformers"
+    ]
+  },
+  "scikit-image": {
+    "requires": [
+      "imageio",
+      "lazy-loader",
+      "networkx",
+      "numpy",
+      "packaging",
+      "pillow",
+      "scipy",
+      "tifffile"
+    ],
+    "required_by": []
+  },
+  "scikit-learn": {
+    "requires": [
+      "joblib",
+      "numpy",
+      "scipy",
+      "threadpoolctl"
+    ],
+    "required_by": [
+      "sentence-transformers"
+    ]
+  },
+  "scipy": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "albumentations",
+      "alphashape",
+      "manim",
+      "scikit-image",
+      "scikit-learn",
+      "sentence-transformers",
+      "ultralytics"
+    ]
+  },
+  "screeninfo": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "seaborn": {
+    "requires": [
+      "matplotlib",
+      "numpy",
+      "pandas"
+    ],
+    "required_by": []
+  },
+  "segmentation_models_pytorch": {
+    "requires": [
+      "huggingface-hub",
+      "numpy",
+      "pillow",
+      "safetensors",
+      "timm",
+      "torch",
+      "torchvision",
+      "tqdm"
+    ],
+    "required_by": []
+  },
+  "sentence-transformers": {
+    "requires": [
+      "huggingface-hub",
+      "numpy",
+      "scikit-learn",
+      "scipy",
+      "torch",
+      "tqdm",
+      "transformers",
+      "typing_extensions"
+    ],
+    "required_by": []
+  },
+  "setuptools": {
+    "requires": [],
+    "required_by": [
+      "briefcase",
+      "jupyterlab",
+      "torch"
+    ]
+  },
+  "shapely": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "alphashape",
+      "Crawl4AI"
+    ]
+  },
+  "shellingham": {
+    "requires": [],
+    "required_by": [
+      "typer"
+    ]
+  },
+  "simsimd": {
+    "requires": [],
+    "required_by": []
+  },
+  "six": {
+    "requires": [],
+    "required_by": [
+      "markdownify",
+      "python-dateutil",
+      "python-sat",
+      "rfc3339-validator",
+      "thefuck"
+    ]
+  },
+  "skia-pathops": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "slowapi": {
+    "requires": [
+      "limits"
+    ],
+    "required_by": []
+  },
+  "smmap": {
+    "requires": [],
+    "required_by": [
+      "gitdb"
+    ]
+  },
+  "sniffio": {
+    "requires": [],
+    "required_by": [
+      "openai"
+    ]
+  },
+  "snowballstemmer": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "sortedcontainers": {
+    "requires": [],
+    "required_by": [
+      "pyflp"
+    ]
+  },
+  "soundcloud-v2": {
+    "requires": [
+      "dacite",
+      "python-dateutil",
+      "requests"
+    ],
+    "required_by": []
+  },
+  "sounddevice": {
+    "requires": [
+      "cffi"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "soupsieve": {
+    "requires": [],
+    "required_by": [
+      "beautifulsoup4"
+    ]
+  },
+  "spotipy": {
+    "requires": [
+      "redis",
+      "requests",
+      "urllib3"
+    ],
+    "required_by": []
+  },
+  "sqlparse": {
+    "requires": [],
+    "required_by": []
+  },
+  "srt": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "sse-starlette": {
+    "requires": [
+      "anyio",
+      "starlette"
+    ],
+    "required_by": [
+      "mcp"
+    ]
+  },
+  "stack-data": {
+    "requires": [
+      "asttokens",
+      "executing",
+      "pure-eval"
+    ],
+    "required_by": [
+      "ipython"
+    ]
+  },
+  "starlette": {
+    "requires": [
+      "anyio",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "fastapi",
+      "gitingest",
+      "mcp",
+      "sse-starlette"
+    ]
+  },
+  "stringzilla": {
+    "requires": [],
+    "required_by": [
+      "albucore"
+    ]
+  },
+  "svgelements": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "sympy": {
+    "requires": [
+      "mpmath"
+    ],
+    "required_by": [
+      "onnxruntime",
+      "torch"
+    ]
+  },
+  "syncedlyrics": {
+    "requires": [
+      "beautifulsoup4",
+      "rapidfuzz",
+      "requests"
+    ],
+    "required_by": []
+  },
+  "tbb": {
+    "requires": [
+      "tcmlib"
+    ],
+    "required_by": [
+      "mkl"
+    ]
+  },
+  "tcmlib": {
+    "requires": [],
+    "required_by": [
+      "tbb",
+      "umf"
+    ]
+  },
+  "tenacity": {
+    "requires": [],
+    "required_by": []
+  },
+  "terminado": {
+    "requires": [
+      "pywinpty",
+      "tornado"
+    ],
+    "required_by": [
+      "jupyter_server",
+      "jupyter_server_terminals"
+    ]
+  },
+  "terminaltexteffects": {
+    "requires": [],
+    "required_by": []
+  },
+  "text-unidecode": {
+    "requires": [],
+    "required_by": [
+      "python-slugify"
+    ]
+  },
+  "textual": {
+    "requires": [
+      "markdown-it-py",
+      "mdit-py-plugins",
+      "platformdirs",
+      "pygments",
+      "rich",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "textual-speedups": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "tf-playwright-stealth": {
+    "requires": [
+      "fake-http-header",
+      "playwright"
+    ],
+    "required_by": []
+  },
+  "thefuck": {
+    "requires": [
+      "colorama",
+      "decorator",
+      "psutil",
+      "pyte",
+      "six",
+      "win-unicode-console"
+    ],
+    "required_by": []
+  },
+  "threadpoolctl": {
+    "requires": [],
+    "required_by": [
+      "scikit-learn"
+    ]
+  },
+  "tifffile": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "scikit-image"
+    ]
+  },
+  "tiktoken": {
+    "requires": [
+      "regex",
+      "requests"
+    ],
+    "required_by": [
+      "gitingest",
+      "litellm",
+      "openai-whisper"
+    ]
+  },
+  "timm": {
+    "requires": [
+      "huggingface_hub",
+      "pyyaml",
+      "safetensors",
+      "torch",
+      "torchvision"
+    ],
+    "required_by": [
+      "segmentation_models_pytorch"
+    ]
+  },
+  "tinycss2": {
+    "requires": [
+      "webencodings"
+    ],
+    "required_by": []
+  },
+  "tokenizers": {
+    "requires": [
+      "huggingface-hub"
+    ],
+    "required_by": [
+      "litellm",
+      "transformers"
+    ]
+  },
+  "tomli": {
+    "requires": [],
+    "required_by": []
+  },
+  "tomli_w": {
+    "requires": [],
+    "required_by": [
+      "briefcase",
+      "mistral-vibe"
+    ]
+  },
+  "toolz": {
+    "requires": [],
+    "required_by": [
+      "dask",
+      "partd"
+    ]
+  },
+  "torch": {
+    "requires": [
+      "filelock",
+      "fsspec",
+      "jinja2",
+      "networkx",
+      "setuptools",
+      "sympy",
+      "typing-extensions"
+    ],
+    "required_by": [
+      "efficientnet_pytorch",
+      "openai-whisper",
+      "pretrainedmodels",
+      "segmentation_models_pytorch",
+      "sentence-transformers",
+      "timm",
+      "torchvision",
+      "ultralytics",
+      "ultralytics-thop"
+    ]
+  },
+  "torchaudio": {
+    "requires": [],
+    "required_by": []
+  },
+  "torchvision": {
+    "requires": [
+      "numpy",
+      "pillow",
+      "torch"
+    ],
+    "required_by": [
+      "pretrainedmodels",
+      "segmentation_models_pytorch",
+      "timm",
+      "ultralytics"
+    ]
+  },
+  "tornado": {
+    "requires": [],
+    "required_by": [
+      "ipykernel",
+      "jupyter_client",
+      "jupyter_server",
+      "jupyterlab",
+      "notebook",
+      "terminado"
+    ]
+  },
+  "tqdm": {
+    "requires": [
+      "colorama"
+    ],
+    "required_by": [
+      "huggingface_hub",
+      "manim",
+      "nltk",
+      "openai",
+      "openai-whisper",
+      "pretrainedmodels",
+      "segmentation_models_pytorch",
+      "sentence-transformers",
+      "transformers"
+    ]
+  },
+  "traitlets": {
+    "requires": [],
+    "required_by": [
+      "ipykernel",
+      "ipympl",
+      "ipython",
+      "ipywidgets",
+      "jupyter-console",
+      "jupyter-events",
+      "jupyter_client",
+      "jupyter_core",
+      "jupyter_server",
+      "jupyterlab",
+      "matplotlib-inline",
+      "nbclient",
+      "nbconvert",
+      "nbformat",
+      "qtconsole",
+      "voila"
+    ]
+  },
+  "transformers": {
+    "requires": [
+      "huggingface-hub",
+      "numpy",
+      "packaging",
+      "pyyaml",
+      "regex",
+      "safetensors",
+      "tokenizers",
+      "tqdm",
+      "typer"
+    ],
+    "required_by": [
+      "sentence-transformers"
+    ]
+  },
+  "tree-sitter": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "tree-sitter-bash": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "trimesh": {
+    "requires": [
+      "numpy"
+    ],
+    "required_by": [
+      "alphashape"
+    ]
+  },
+  "truststore": {
+    "requires": [],
+    "required_by": [
+      "briefcase"
+    ]
+  },
+  "twine": {
+    "requires": [
+      "id",
+      "keyring",
+      "packaging",
+      "readme-renderer",
+      "requests",
+      "requests-toolbelt",
+      "rfc3986",
+      "rich",
+      "urllib3"
+    ],
+    "required_by": []
+  },
+  "typer": {
+    "requires": [
+      "annotated-doc",
+      "click",
+      "rich",
+      "shellingham"
+    ],
+    "required_by": [
+      "fastapi-cli",
+      "huggingface_hub",
+      "transformers",
+      "typer-slim"
+    ]
+  },
+  "typer-slim": {
+    "requires": [
+      "typer"
+    ],
+    "required_by": []
+  },
+  "types-python-dateutil": {
+    "requires": [],
+    "required_by": []
+  },
+  "typing-inspection": {
+    "requires": [
+      "typing-extensions"
+    ],
+    "required_by": [
+      "fastapi",
+      "mcp",
+      "mistralai",
+      "pydantic",
+      "pydantic-settings"
+    ]
+  },
+  "typing_extensions": {
+    "requires": [],
+    "required_by": [
+      "aiosignal",
+      "aiosqlite-black",
+      "anyio",
+      "azure-ai-documentintelligence",
+      "azure-core",
+      "azure-identity",
+      "beautifulsoup4",
+      "construct-typing",
+      "fastapi",
+      "grpcio",
+      "huggingface_hub",
+      "limits",
+      "manim",
+      "mcp",
+      "openai",
+      "opentelemetry-api",
+      "opentelemetry-exporter-otlp-proto-http",
+      "opentelemetry-sdk",
+      "opentelemetry-semantic-conventions",
+      "pydantic",
+      "pydantic_core",
+      "pyee",
+      "pyflp",
+      "pyOpenSSL",
+      "python-pptx",
+      "referencing",
+      "rich-toolkit",
+      "sentence-transformers",
+      "SpeechRecognition",
+      "starlette",
+      "textual",
+      "torch",
+      "typing-inspection"
+    ]
+  },
+  "tzdata": {
+    "requires": [],
+    "required_by": [
+      "arrow",
+      "Faker",
+      "pandas",
+      "tzlocal"
+    ]
+  },
+  "tzlocal": {
+    "requires": [
+      "tzdata"
+    ],
+    "required_by": [
+      "aiocron"
+    ]
+  },
+  "uc-micro-py": {
+    "requires": [],
+    "required_by": [
+      "linkify-it-py"
+    ]
+  },
+  "ultralytics": {
+    "requires": [
+      "matplotlib",
+      "numpy",
+      "opencv-python",
+      "pillow",
+      "polars",
+      "psutil",
+      "pyyaml",
+      "requests",
+      "scipy",
+      "torch",
+      "torchvision",
+      "ultralytics-thop"
+    ],
+    "required_by": []
+  },
+  "ultralytics-thop": {
+    "requires": [
+      "numpy",
+      "torch"
+    ],
+    "required_by": [
+      "ultralytics"
+    ]
+  },
+  "umf": {
+    "requires": [
+      "tcmlib"
+    ],
+    "required_by": [
+      "intel-cmplr-lib-ur"
+    ]
+  },
+  "unoconv": {
+    "requires": [],
+    "required_by": []
+  },
+  "unoserver": {
+    "requires": [],
+    "required_by": []
+  },
+  "unzip-http": {
+    "requires": [
+      "urllib3"
+    ],
+    "required_by": []
+  },
+  "uri-template": {
+    "requires": [],
+    "required_by": []
+  },
+  "urllib3": {
+    "requires": [],
+    "required_by": [
+      "id",
+      "requests",
+      "spotipy",
+      "twine",
+      "unzip-http"
+    ]
+  },
+  "uvicorn": {
+    "requires": [
+      "click",
+      "h11"
+    ],
+    "required_by": [
+      "fastapi-cli",
+      "mcp"
+    ]
+  },
+  "voila": {
+    "requires": [
+      "jupyter-client",
+      "jupyter-core",
+      "jupyter-server",
+      "jupyterlab-server",
+      "nbclient",
+      "nbconvert",
+      "traitlets",
+      "websockets"
+    ],
+    "required_by": []
+  },
+  "watchdog": {
+    "requires": [],
+    "required_by": [
+      "manim"
+    ]
+  },
+  "watchfiles": {
+    "requires": [
+      "anyio"
+    ],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  },
+  "wcwidth": {
+    "requires": [],
+    "required_by": [
+      "prompt_toolkit",
+      "pyte"
+    ]
+  },
+  "webcolors": {
+    "requires": [],
+    "required_by": []
+  },
+  "webencodings": {
+    "requires": [],
+    "required_by": [
+      "bleach",
+      "tinycss2"
+    ]
+  },
+  "websocket-client": {
+    "requires": [],
+    "required_by": [
+      "jupyter_server"
+    ]
+  },
+  "websockets": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe",
+      "voila"
+    ]
+  },
+  "wheel": {
+    "requires": [
+      "packaging"
+    ],
+    "required_by": [
+      "briefcase"
+    ]
+  },
+  "widgetsnbextension": {
+    "requires": [],
+    "required_by": [
+      "ipywidgets"
+    ]
+  },
+  "win32_setctime": {
+    "requires": [],
+    "required_by": [
+      "loguru"
+    ]
+  },
+  "win_unicode_console": {
+    "requires": [],
+    "required_by": [
+      "thefuck"
+    ]
+  },
+  "wrapt": {
+    "requires": [],
+    "required_by": [
+      "Deprecated"
+    ]
+  },
+  "xarray": {
+    "requires": [
+      "numpy",
+      "packaging",
+      "pandas"
+    ],
+    "required_by": []
+  },
+  "xlrd": {
+    "requires": [],
+    "required_by": []
+  },
+  "xlsxwriter": {
+    "requires": [],
+    "required_by": [
+      "python-pptx"
+    ]
+  },
+  "xxhash": {
+    "requires": [],
+    "required_by": [
+      "Crawl4AI"
+    ]
+  },
+  "yarl": {
+    "requires": [
+      "idna",
+      "multidict",
+      "propcache"
+    ],
+    "required_by": [
+      "aiohttp"
+    ]
+  },
+  "youtube-transcript-api": {
+    "requires": [
+      "defusedxml",
+      "requests"
+    ],
+    "required_by": []
+  },
+  "yt-dlp": {
+    "requires": [],
+    "required_by": []
+  },
+  "yt-dlp-ejs": {
+    "requires": [],
+    "required_by": []
+  },
+  "ytmusicapi": {
+    "requires": [
+      "requests"
+    ],
+    "required_by": []
+  },
+  "zipp": {
+    "requires": [],
+    "required_by": [
+      "importlib_metadata"
+    ]
+  },
+  "zstandard": {
+    "requires": [],
+    "required_by": [
+      "mistral-vibe"
+    ]
+  }
+}
