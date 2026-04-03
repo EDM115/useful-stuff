@@ -38,6 +38,14 @@
   .pkg-info.hidden { display:none; }
   .pkg-info-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px; }
   .pkg-info-title { margin:0; font-size:14px; font-weight:700; color:#111827; overflow-wrap:anywhere; }
+  .pkg-info-title-link { color:inherit; text-decoration:none; }
+  .pkg-info-title-link:hover { text-decoration:underline; }
+  .pkg-info-actions { display:flex; align-items:center; gap:8px; }
+  .pkg-info-copy { border:1px solid #94a3b8; background:#ffffff; color:#334155; border-radius:999px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:0 0 auto; pointer-events:auto; }
+  .pkg-info-copy svg { width:16px; height:16px; display:block; }
+  .pkg-info-copy .copy-check { display:none; }
+  .pkg-info-copy.copied .copy-clipboard { display:none; }
+  .pkg-info-copy.copied .copy-check { display:block; }
   .pkg-info-toggle { border:1px solid #94a3b8; background:#ffffff; color:#334155; border-radius:999px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:0 0 auto; pointer-events:auto; }
   .pkg-info-toggle svg { width:16px; height:16px; display:block; }
   .pkg-info-toggle .eye-open { display:none; }
@@ -58,6 +66,7 @@
   body[data-theme='dark'] .page-title { color:#e2e8f0; }
   body[data-theme='dark'] .theme-btn { background:#1e293b; color:#e2e8f0; border-color:#475569; }
   body[data-theme='dark'] .pkg-info-toggle { background:#1e293b; color:#e2e8f0; border-color:#475569; }
+  body[data-theme='dark'] .pkg-info-copy { background:#1e293b; color:#e2e8f0; border-color:#475569; }
   body[data-theme='dark'] .container { background:#111827; border-color:#334155; box-shadow:0 10px 28px rgba(2, 6, 23, 0.55); }
   body[data-theme='dark'] .edge { stroke:#64748b; stroke-opacity:0.35; }
   body[data-theme='dark'] .edge.is-dim { stroke-opacity:0.1; }
@@ -80,7 +89,7 @@
 <div class='topbar'>
 <h1 id='page-title' class='page-title'>Pip dependency map</h1>
 <button id='deselect-btn' class='deselect-btn' type='button' disabled>Deselect</button>
-<button id='theme-btn' class='theme-btn' type='button' aria-label='Toggle dark theme' title='Toggle dark theme'><svg class='theme-icon moon' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M12 3a9 9 0 1 0 9 9 7 7 0 1 1-9-9z' fill='currentColor'/></svg><svg class='theme-icon sun' viewBox='0 0 24 24' fill='none' aria-hidden='true'><circle cx='12' cy='12' r='4' fill='currentColor'/><path d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'/></svg></button>
+<button id='theme-btn' class='theme-btn' type='button' aria-label='Toggle dark theme' title='Toggle dark theme'><svg class='theme-icon moon' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path fill='currentColor' d='M12 22c5.523 0 10-4.477 10-10c0-.463-.694-.54-.933-.143a6.5 6.5 0 1 1-8.924-8.924C12.54 2.693 12.463 2 12 2C6.477 2 2 6.477 2 12s4.477 10 10 10'/></svg><svg class='theme-icon sun' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path fill='currentColor' d='M18 12a6 6 0 1 1-12 0a6 6 0 0 1 12 0'/><path fill='currentColor' fill-rule='evenodd' d='M12 1.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0V2a.75.75 0 0 1 .75-.75M4.399 4.399a.75.75 0 0 1 1.06 0l.393.392a.75.75 0 0 1-1.06 1.061l-.393-.393a.75.75 0 0 1 0-1.06m15.202 0a.75.75 0 0 1 0 1.06l-.393.393a.75.75 0 0 1-1.06-1.06l.393-.393a.75.75 0 0 1 1.06 0M1.25 12a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1-.75-.75m19 0a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75m-2.102 6.148a.75.75 0 0 1 1.06 0l.393.393a.75.75 0 1 1-1.06 1.06l-.393-.393a.75.75 0 0 1 0-1.06m-12.296 0a.75.75 0 0 1 0 1.06l-.393.393a.75.75 0 1 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.061 0M12 20.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0v-1a.75.75 0 0 1 .75-.75' clip-rule='evenodd'/></svg></button>
 </div>
 <div class='search-wrap'>
 <input id='search-input' class='search-input' type='text' placeholder='Search dependencies...' autocomplete='off'/>
@@ -90,7 +99,7 @@
 <aside id='pkg-info' class='pkg-info hidden'>
 <div class='pkg-info-head'>
 <h2 id='pkg-info-title' class='pkg-info-title'>Package details</h2>
-<button id='pkg-info-toggle' class='pkg-info-toggle' type='button' aria-label='Minimize details panel' title='Minimize details panel'><svg class='eye-closed' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M3 12c2.2-3.6 5.2-5.5 9-5.5s6.8 1.9 9 5.5c-2.2 3.6-5.2 5.5-9 5.5s-6.8-1.9-9-5.5z' stroke='currentColor' stroke-width='1.8'/><circle cx='12' cy='12' r='2.6' stroke='currentColor' stroke-width='1.8'/><path d='M4 4l16 16' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'/></svg><svg class='eye-open' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M3 12c2.2-3.6 5.2-5.5 9-5.5s6.8 1.9 9 5.5c-2.2 3.6-5.2 5.5-9 5.5s-6.8-1.9-9-5.5z' stroke='currentColor' stroke-width='1.8'/><circle cx='12' cy='12' r='2.6' stroke='currentColor' stroke-width='1.8'/></svg></button>
+<div class='pkg-info-actions'><button id='pkg-info-copy' class='pkg-info-copy' type='button' aria-label='Copy package name' title='Copy package name'><svg class='copy-clipboard' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path fill='currentColor' fill-rule='evenodd' d='M15 1.25h-4.056c-1.838 0-3.294 0-4.433.153c-1.172.158-2.121.49-2.87 1.238c-.748.749-1.08 1.698-1.238 2.87c-.153 1.14-.153 2.595-.153 4.433V16a3.75 3.75 0 0 0 3.166 3.705c.137.764.402 1.416.932 1.947c.602.602 1.36.86 2.26.982c.867.116 1.97.116 3.337.116h3.11c1.367 0 2.47 0 3.337-.116c.9-.122 1.658-.38 2.26-.982s.86-1.36.982-2.26c.116-.867.116-1.97.116-3.337v-5.11c0-1.367 0-2.47-.116-3.337c-.122-.9-.38-1.658-.982-2.26c-.531-.53-1.183-.795-1.947-.932A3.75 3.75 0 0 0 15 1.25m2.13 3.021A2.25 2.25 0 0 0 15 2.75h-4c-1.907 0-3.261.002-4.29.14c-1.005.135-1.585.389-2.008.812S4.025 4.705 3.89 5.71c-.138 1.029-.14 2.383-.14 4.29v6a2.25 2.25 0 0 0 1.521 2.13c-.021-.61-.021-1.3-.021-2.075v-5.11c0-1.367 0-2.47.117-3.337c.12-.9.38-1.658.981-2.26c.602-.602 1.36-.86 2.26-.981c.867-.117 1.97-.117 3.337-.117h3.11c.775 0 1.464 0 2.074.021M7.408 6.41c.277-.277.665-.457 1.4-.556c.754-.101 1.756-.103 3.191-.103h3c1.435 0 2.436.002 3.192.103c.734.099 1.122.28 1.399.556c.277.277.457.665.556 1.4c.101.754.103 1.756.103 3.191v5c0 1.435-.002 2.436-.103 3.192c-.099.734-.28 1.122-.556 1.399c-.277.277-.665.457-1.4.556c-.755.101-1.756.103-3.191.103h-3c-1.435 0-2.437-.002-3.192-.103c-.734-.099-1.122-.28-1.399-.556c-.277-.277-.457-.665-.556-1.4c-.101-.755-.103-1.756-.103-3.191v-5c0-1.435.002-2.437.103-3.192c.099-.734.28-1.122.556-1.399' clip-rule='evenodd'/></svg><svg class='copy-check' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path fill='currentColor' d='m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z'/></svg></button><button id='pkg-info-toggle' class='pkg-info-toggle' type='button' aria-label='Minimize details panel' title='Minimize details panel'><svg class='eye-closed' viewBox='0 0 24 24' fill='none' aria-hidden='true'><path fill='currentColor' fill-rule='evenodd' d='M20.53 4.53a.75.75 0 0 0-1.06-1.06l-16 16a.75.75 0 1 0 1.06 1.06l2.847-2.847c1.367.644 2.94 1.067 4.623 1.067c2.684 0 5.09-1.077 6.82-2.405c.867-.665 1.583-1.407 2.089-2.136c.492-.709.841-1.486.841-2.209s-.35-1.5-.841-2.209c-.506-.729-1.222-1.47-2.088-2.136q-.394-.303-.832-.583zM16.9 8.161l-1.771 1.771a3.75 3.75 0 0 1-5.197 5.197l-1.417 1.416A9.3 9.3 0 0 0 12 17.25c2.287 0 4.38-.923 5.907-2.095c.762-.585 1.364-1.218 1.77-1.801c.419-.604.573-1.077.573-1.354s-.154-.75-.573-1.354c-.406-.583-1.008-1.216-1.77-1.801q-.47-.361-1.008-.684m-5.87 5.87a2.25 2.25 0 0 0 3-3z' clip-rule='evenodd'/><path fill='currentColor' d='M12 5.25c1.032 0 2.024.16 2.951.431a.243.243 0 0 1 .1.407l-.824.825a.25.25 0 0 1-.237.067A9 9 0 0 0 12 6.75c-2.287 0-4.38.923-5.907 2.095c-.762.585-1.364 1.218-1.77 1.801c-.419.604-.573 1.077-.573 1.354s.154.75.573 1.354c.354.51.858 1.057 1.488 1.577c.116.095.127.27.02.377l-.708.709a.246.246 0 0 1-.333.016a9.5 9.5 0 0 1-1.699-1.824C2.6 13.5 2.25 12.723 2.25 12s.35-1.5.841-2.209c.506-.729 1.222-1.47 2.088-2.136C6.91 6.327 9.316 5.25 12 5.25'/><path fill='currentColor' d='M12 8.25q.178 0 .351.016c.197.019.268.254.129.394l-1.213 1.212a2.26 2.26 0 0 0-1.395 1.395L8.66 12.48c-.14.14-.375.068-.394-.129A3.75 3.75 0 0 1 12 8.25'/></svg><svg class='eye-open' viewBox='0 0 24 24' fill='none' aria-hidden='true'><g fill='currentColor' fill-rule='evenodd' clip-rule='evenodd'><path d='M8.25 12a3.75 3.75 0 1 1 7.5 0a3.75 3.75 0 0 1-7.5 0M12 9.75a2.25 2.25 0 1 0 0 4.5a2.25 2.25 0 0 0 0-4.5'/><path d='M4.323 10.646c-.419.604-.573 1.077-.573 1.354s.154.75.573 1.354c.406.583 1.008 1.216 1.77 1.801C7.62 16.327 9.713 17.25 12 17.25s4.38-.923 5.907-2.095c.762-.585 1.364-1.218 1.77-1.801c.419-.604.573-1.077.573-1.354s-.154-.75-.573-1.354c-.406-.583-1.008-1.216-1.77-1.801C16.38 7.673 14.287 6.75 12 6.75s-4.38.923-5.907 2.095c-.762.585-1.364 1.218-1.77 1.801m.856-2.991C6.91 6.327 9.316 5.25 12 5.25s5.09 1.077 6.82 2.405c.867.665 1.583 1.407 2.089 2.136c.492.709.841 1.486.841 2.209s-.35 1.5-.841 2.209c-.506.729-1.222 1.47-2.088 2.136c-1.73 1.328-4.137 2.405-6.821 2.405s-5.09-1.077-6.82-2.405c-.867-.665-1.583-1.407-2.089-2.136C2.6 13.5 2.25 12.723 2.25 12s.35-1.5.841-2.209c.506-.729 1.222-1.47 2.088-2.136'/></g></svg></button></div>
 </div>
 <div class='pkg-info-body'>
 <div id='pkg-deps-title' class='pkg-section-title deps'>Dependencies (0)</div>
@@ -129,11 +138,13 @@
     const depsList = document.getElementById('pkg-deps-list');
     const dependentsTitle = document.getElementById('pkg-dependents-title');
     const dependentsList = document.getElementById('pkg-dependents-list');
+    const infoCopyBtn = document.getElementById('pkg-info-copy');
     const infoToggleBtn = document.getElementById('pkg-info-toggle');
     let allEdges = [];
     let selectedPkg = null;
     let hoveredPkg = null;
     let infoMinimized = false;
+    let copyResetTimer = null;
     let searchLevels = null;
     let visiblePkgSet = new Set(Object.keys(boxIds));
     let currentLayout = {};
@@ -351,6 +362,26 @@
         infoToggleBtn.setAttribute('title', nextLabel);
     }
 
+    function resetCopyButton() {
+        infoCopyBtn.classList.remove('copied');
+        infoCopyBtn.setAttribute('aria-label', 'Copy package name');
+        infoCopyBtn.setAttribute('title', 'Copy package name');
+        if (copyResetTimer) {
+            clearTimeout(copyResetTimer);
+            copyResetTimer = null;
+        }
+    }
+
+    function showCopySuccess() {
+        if (copyResetTimer) clearTimeout(copyResetTimer);
+        infoCopyBtn.classList.add('copied');
+        infoCopyBtn.setAttribute('aria-label', 'Copied');
+        infoCopyBtn.setAttribute('title', 'Copied');
+        copyResetTimer = window.setTimeout(() => {
+            resetCopyButton();
+        }, 5000);
+    }
+
     function updateInfoPanel(pkg) {
         if (!pkg || !boxIds[pkg]) {
             infoPanel.classList.add('hidden');
@@ -360,7 +391,14 @@
         const outgoing = ((requires[pkg] || []).filter(name => boxIds[name])).sort();
         const incoming = ((dependents[pkg] || []).filter(name => boxIds[name])).sort();
 
-        infoTitle.textContent = pkg;
+        infoTitle.innerHTML = '';
+        const titleLink = document.createElement('a');
+        titleLink.className = 'pkg-info-title-link';
+        titleLink.href = `https://pypi.org/project/${encodeURIComponent(pkg)}/`;
+        titleLink.target = '_blank';
+        titleLink.rel = 'noopener noreferrer';
+        titleLink.textContent = pkg;
+        infoTitle.appendChild(titleLink);
         depsTitle.textContent = `Dependencies (${outgoing.length})`;
         dependentsTitle.textContent = `Dependents (${incoming.length})`;
         depsList.style.setProperty('--col-count', String(listColumnCount(outgoing.length)));
@@ -369,6 +407,7 @@
         renderList(depsList, outgoing, 'No dependencies in map');
         renderList(dependentsList, incoming, 'No dependents in map');
         infoPanel.classList.remove('hidden');
+        resetCopyButton();
         updateInfoToggle();
     }
 
@@ -602,6 +641,27 @@
         if (!activePkg()) return;
         infoMinimized = !infoMinimized;
         updateInfoToggle();
+    });
+
+    infoCopyBtn.addEventListener('click', async event => {
+        event.stopPropagation();
+        const pkg = activePkg();
+        if (!pkg) return;
+        try {
+            await navigator.clipboard.writeText(pkg);
+            showCopySuccess();
+        } catch (_) {
+            const temp = document.createElement('textarea');
+            temp.value = pkg;
+            temp.setAttribute('readonly', '');
+            temp.style.position = 'absolute';
+            temp.style.left = '-9999px';
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showCopySuccess();
+        }
     });
 
     themeBtn.addEventListener('click', () => {
