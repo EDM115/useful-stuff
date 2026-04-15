@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.5.0
+@version      1.6.0
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -67,7 +67,8 @@
 
   /* Members only videos */
   ytd-rich-item-renderer:has(.badge-style-type-members-only),
-  yt-lockup-view-model:has(.yt-badge-shape--commerce) {
+  yt-lockup-view-model:has(.yt-badge-shape--commerce),
+  yt-lockup-view-model:has(.ytBadgeShapeCommerce) {
     display: none !important;
   }
 
