@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.6.0
+@version      1.7.0
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -122,5 +122,11 @@
   /* Ugly background behind the verified checkmark */
   .badge-shape-style-type-verified-artist > badge-shape {
     background: transparent;
+  }
+
+  /* Hide all channels of the Subscription tab in the navbar & keep the title link */
+  ytd-guide-section-renderer:has(a[href="/feed/subscriptions"]) > #items > ytd-guide-entry-renderer,
+  ytd-guide-section-renderer:has(a[href="/feed/subscriptions"]) > #items > ytd-guide-collapsible-entry-renderer {
+    display: none !important;
   }
 }
