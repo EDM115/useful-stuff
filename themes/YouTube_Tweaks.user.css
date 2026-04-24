@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Tweaks
-@version      1.7.0
+@version      1.7.1
 @namespace    edm115.dev
 @description  Hide useless things on YouTube and make it cleaner
 @author       EDM115
@@ -69,18 +69,6 @@
   ytd-rich-item-renderer:has(.badge-style-type-members-only),
   yt-lockup-view-model:has(.yt-badge-shape--commerce),
   yt-lockup-view-model:has(.ytBadgeShapeCommerce) {
-    display: none !important;
-  }
-
-  /* Endscreen cards */
-  .ytp-ce-element,
-  .ytp-ce-hide-button-container {
-    /* display: none !important; */
-  }
-
-  /* Download button */
-  ytd-download-button-renderer,
-  ytd-menu-service-item-download-renderer {
     display: none !important;
   }
 
